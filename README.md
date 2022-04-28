@@ -176,6 +176,12 @@ Project Link: [https://github.com/TroopekYT/TropX](https://github.com/TroopekYT/
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+<!-- DISCLAIMER -->
+## DISCLAIMER
+
+I am not held responsible for any misdeeds done with the help of this tool, i provide it to you for educational purposes only. By using this tool you accept that i am not held responsible for any consequences your usage of my tool might yield.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 
 <!-- MARKDOWN LINKS & IMAGES -->

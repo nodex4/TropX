@@ -76,9 +76,13 @@ title
 
 echo -e "$BOLD_RED  Available Scripts: "
 echo -e -n "$BOLD_WHITE"
-
-#List out scripts
 echo " "
+
+#Add custom script option
+default_scripts=5
+echo -e "$BOLD_WHITE    (\e[1;31m0$BOLD_WHITE) Add Custom Script"
+echo "    ------------------"
+#List out scripts
 echo -e "$BOLD_WHITE    (\e[1;31m1$BOLD_WHITE) ScriptOne"
 sleep 0.1  
 echo -e "$BOLD_WHITE    (\e[1;31m2$BOLD_WHITE) ScriptTwo"
@@ -88,6 +92,13 @@ sleep 0.1
 echo -e "$BOLD_WHITE    (\e[1;31m4$BOLD_WHITE) ScriptFour"
 sleep 0.1
 echo -e "$BOLD_WHITE    (\e[1;31m5$BOLD_WHITE) ScriptFive"
+
+
+
+
+awk '{ print "    (\033[1;31m" NR+ENVIRON["default_scripts"] "\033[1;37m) " $0 }' <customScripts.txt 
+
+
 
 
 echo -e " "
@@ -119,8 +130,14 @@ getScript error ;;
 esac
 
 
+if [ $SS == 0 ]; then
+  clear
+	echo [Under Construction]
+fi
+
+
 if [ $SS == 1 ]; then
   clear
-	echo ScriptOne here blahhh
+	echo This will activate the first script
 fi
 
