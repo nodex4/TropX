@@ -13,7 +13,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/TroopekYT/TropX">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="images/logo.png" alt="logo" width="80" height="80">
   </a>
 
 <h3 align="center">TropX</h3>
@@ -21,10 +21,6 @@
   <p align="center">
     The best penetration testing and tech tools unified into one beatiful command line interface!
     <br />
-    <a href="https://github.com/TroopekYT/TropX"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/TroopekYT/TropX">View Demo</a>
     ·
     <a href="https://github.com/TroopekYT/TropX/issues">Report Bug</a>
     ·
