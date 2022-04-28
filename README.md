@@ -61,7 +61,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+<img src="images/image.png" alt="image">
 
 The best penetration testing and tech tools unified into one beatiful command line interface! Make penetration testing something you look forward to. 
 
@@ -109,9 +109,10 @@ Prerequisites can be installed by running the `setup.sh` file.
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
+A short example usage guide on how to use this tool.
+* Firstly, run the `main.sh` file.
+* Then you will be able to select out of a number of tools
+* After selecting a number like `3` and pressing `Enter`, the tool you have choosen will replace the current CLI
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -120,10 +121,9 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
+- [ ] Fixing Bugs
+- [ ] Fixing More Bugs XD
+
 
 See the [open issues](https://github.com/TroopekYT/TropX/issues) for a full list of proposed features (and known issues).
 
@@ -172,9 +172,7 @@ Project Link: [https://github.com/TroopekYT/TropX](https://github.com/TroopekYT/
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* []()
-* []()
-* []()
+* None yet!
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
