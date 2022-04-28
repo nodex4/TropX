@@ -38,7 +38,7 @@ echo -e "$BOLD_CYAN bold cyan ★"
 echo -e "$BLUE cyan"
 echo -e "$BOLD_BLUE bold cyan ★"
 echo -e "$RED red"
-echo -e "$BOLD_Red bold red"
+echo -e "$BOLD_RED bold red"
 echo -e "$NO_COLOR -------------------------------"
 }
 
@@ -53,6 +53,7 @@ exit
 
 
 function title() {
+clear
 echo -e "$WHITE ▄▄▄█████▓ ██▀███   ▒█████   ██▓███   $RED  ▒██   ██▒
 $WHITE▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒▓██░  ██▒  $RED ▒▒ █ █ ▒░
 $WHITE▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒▓██░ ██▓▒  $RED ░░  █   ░
@@ -70,124 +71,56 @@ echo " "
 
 
 
+function getScript() {
 title
-sleep 1
-echo -e "$BOLD_GREEN  Available Scripts: "
+
+echo -e "$BOLD_RED  Available Scripts: "
 echo -e -n "$BOLD_WHITE"
 
+#List out scripts
+echo " "
+echo -e "$BOLD_WHITE    (\e[1;31m1$BOLD_WHITE) ScriptOne"
+sleep 0.1  
+echo -e "$BOLD_WHITE    (\e[1;31m2$BOLD_WHITE) ScriptTwo"
+sleep 0.1 
+echo -e "$BOLD_WHITE    (\e[1;31m3$BOLD_WHITE) ScriptThree"
+sleep 0.1
+echo -e "$BOLD_WHITE    (\e[1;31m4$BOLD_WHITE) ScriptFour"
+sleep 0.1
+echo -e "$BOLD_WHITE    (\e[1;31m5$BOLD_WHITE) ScriptFive"
 
-echo -e "
-(1) ScriptOne
-(2) ScriptTwo
-"
 
 echo -e " "
-echo -n -e "$BOLD_BLUE  Select desired script > "
-echo -n -e "$BOLD_WHITE"
-read AD
+
+if [ "$1" == "error" ]
+then
+echo -n -e "$BOLD_RED  Choose a number like \e[3m\e[1m1 \e[0m> "
+else
+echo -n -e "$BOLD_RED  Select desired script > "
+fi
+
+echo -n -e "$WHITE"
+read SS
+}
+
+
+
+
+getScript
+
 clear
 title
-echo -e "$BOLD_BLUE  Choose an option:"
-echo " "
-echo -e "$BOLD_BLUE  1.$BOLD_WHITE Use the default word list (1000 SSIDs)"
-echo -e "$BOLD_BLUE  2.$BOLD_WHITE Create a custom word list and use it"
-echo -e "$BOLD_BLUE  3.$BOLD_WHITE Use an existent word list"
-echo -e "$BOLD_BLUE  4.$BOLD_WHITE Use a random SSIDs word list"
-echo " "
-echo -n -e "$BOLD_BLUE  > "
-echo -n -e "$BOLD_WHITE"
-read DD
-clear
-if [ $DD == 1 ]; then
-	nmcli device disconnect $AD > /dev/null 2>&1
-	clear
-	title
-	echo -e "$BOLD_GREEN Starting process..."
-	echo " If you want to stop it, press CTRL+C."
-	echo " "
-	trap coolexit EXIT
-	sleep 1
-	ifconfig $AD down
-	macchanger -r $AD
-	iwconfig $AD mode monitor
-	ifconfig $AD up
-	trap coolexit EXIT
-	mdk3 $AD b -f ./SSID_List.txt -a -s 1000
+
+case $SS in
+    ''|*[!0-9]*) 
+echo -e "$BOLD_RED Not a number!"
+getScript error ;;
+    *) ;;
+esac
+
+
+if [ $SS == 1 ]; then
+  clear
+	echo ScriptOne here blahhh
 fi
-if [ $DD == 2 ]; then
-	nmcli device disconnect $AD > /dev/null 2>&1
-	clear
-	title
-	echo -n -e "$BOLD_BLUE Type a string (Max. length: 12) > "
-	echo -n -e "$BOLD_WHITE"
-	read WORD
-	echo -n -e "$BOLD_BLUE How many SSIDs do you want? > "
-	echo -n -e "$BOLD_WHITE"
-	read N
-	COUNT=1
-	while [ $COUNT -lt $N ] || [ $COUNT -eq $N ]; do
-		echo $WORD $COUNT >> $WORD"_wordlist.txt"
-		let COUNT=COUNT+1
-	done
-	clear
-	title
-	echo -e "$BOLD_GREEN Starting process..."
-	echo " If you want to stop it, press CTRL+C."
-	echo " "
-	trap coolexit EXIT
-	sleep 1
-	ifconfig $AD down
-	macchanger -r $AD
-	iwconfig $AD mode monitor
-	ifconfig $AD up
-	trap coolexit EXIT
-	mdk3 $AD b -f ./$WORD"_wordlist.txt" -a -s 1000
-fi
-if [ $DD == 3 ]; then
-	nmcli device disconnect $AD > /dev/null 2>&1
-	clear
-	title
-	echo -e "$BOLD_WHITE Note: your word list must have the same structure as"
-	echo -e " SSID_List.txt, otherwise the process won't work."
-	echo " "
-	echo -n -e "$BOLD_BLUE Type the name of your own word list > "
-	echo -n -e "$BOLD_WHITE"
-	read OWN
-	clear
-	title
-	echo -e "$BOLD_GREEN Starting process..."
-	echo " If you want to stop it, press CTRL+C."
-	echo -e "$BOLD_WHITE"
-	sleep 1
-	ifconfig $AD down
-	macchanger -r $AD
-	iwconfig $AD mode monitor
-	ifconfig $AD up
-	trap coolexit EXIT
-	mdk3 $AD b -f ./$OWN -a -s $(wc -l $OWN | cut -f1 -d ' ')
-fi
-if [ $DD == 4 ]; then
-	nmcli device disconnect $AD > /dev/null 2>&1
-	clear
-	title
-	echo -n -e "$BOLD_BLUE How many SSIDs do you want? > "
-	echo -n -e "$BOLD_WHITE"
-	read N
-	COUNT=1
-	while [ $COUNT -lt $N ] || [ $COUNT -eq $N ]; do
-		echo $(pwgen 14 1) >> "RANDOM_wordlist.txt"
-		let COUNT=COUNT+1
-	done
-	clear
-	title
-	echo -e "$BOLD_GREEN Starting process..."
-	echo " If you want to stop it, press CTRL+C."
-	echo " "
-	sleep 1
-	ifconfig $AD down
-	macchanger -r $AD
-	iwconfig $AD mode monitor
-	ifconfig $AD up
-	trap coolexit EXIT
-	mdk3 $AD b -f ./RANDOM_wordlist.txt -a -s $N
-fi
+
