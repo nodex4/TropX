@@ -22,9 +22,9 @@
     The best penetration testing and tech tools unified into one beatiful command line interface!
     <br />
     ·
-    <a href="https://github.com/TroopekYT/TropX/issues">Report Bug</a>
+    <a href="https://github.com/TroopekYT/TropX/issues/new">Report Bug</a>
     ·
-    <a href="https://github.com/TroopekYT/TropX/issues">Request Feature</a>
+    <a href="https://github.com/TroopekYT/TropX/issues/new">Request Feature</a>
   </p>
 </div>
 

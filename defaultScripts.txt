@@ -1,0 +1,5 @@
+Set IF to mode: monitor
+Set IF to mode: managed
+Change Mac Address
+WiFi Spammer
+Next tool or script

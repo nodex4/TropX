@@ -10,7 +10,7 @@
 #        |___/                       |_|               
 # Github: https://github.com/TroopekYT/
 
-
+source functions.sh
 
 #Terminal Colors
 NO_COLOR="\e[0m"
@@ -52,28 +52,17 @@ exit
 
 
 
-function title() {
-clear
-echo -e "$WHITE ▄▄▄█████▓ ██▀███   ▒█████   ██▓███   $RED  ▒██   ██▒
-$WHITE▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒▓██░  ██▒  $RED ▒▒ █ █ ▒░
-$WHITE▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒▓██░ ██▓▒  $RED ░░  █   ░
-$WHITE░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░▒██▄█▓▒ ▒  $RED  ░ █ █ ▒ 
-$WHITE  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░▒██▒ ░  ░  $RED ▒██▒ ▒██▒
-$WHITE  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ ▒▓▒░ ░  ░  $RED ▒▒ ░ ░▓ ░
-$WHITE    ░      ░▒ ░ ▒░  ░ ▒ ▒░ ░▒ ░      $RED  ░░   ░▒ ░
-$WHITE  ░        ░░   ░ ░ ░ ░ ▒  ░░        $RED   ░    ░  
-$WHITE            ░         ░ ░            $RED   ░    ░  "
-                                                
-                                 
-echo -e "$WHITE                                   By$RED Troopek  "
-echo " "
-}
 
 function containsElement() {
-  local e match="$1"
+  match="$1"
   shift
-  for e; do [[ "$e" == "$match" ]] && return 0; done
-  return 1
+  for e in "$@"; do 
+    if [[ "$e" == "$match" ]]; then
+      echo "0"
+      return
+    fi
+  done
+  echo "1"
 }
 
 
@@ -85,24 +74,17 @@ echo -e "$BOLD_RED  Available Scripts: "
 echo -e -n "$BOLD_WHITE"
 echo " "
 
-#Add custom script option
-
-echo -e "$BOLD_WHITE    (\e[1;31m0$BOLD_WHITE) Add Custom Script"
+#Some Options
+echo -e "$BOLD_WHITE    (\e[1;31mS$BOLD_WHITE) Settings"
+echo -e "$BOLD_WHITE    (\e[1;31mA$BOLD_WHITE) Add Custom Script"
+echo -e "$BOLD_WHITE    (\e[1;31mH$BOLD_WHITE) Help"
 echo "    ------------------"
-#List out scripts
-echo -e "$BOLD_WHITE    (\e[1;31m1$BOLD_WHITE) ScriptOne"
-sleep 0.1  
-echo -e "$BOLD_WHITE    (\e[1;31m2$BOLD_WHITE) ScriptTwo"
-sleep 0.1 
-echo -e "$BOLD_WHITE    (\e[1;31m3$BOLD_WHITE) ScriptThree"
-sleep 0.1
-echo -e "$BOLD_WHITE    (\e[1;31m4$BOLD_WHITE) ScriptFour"
-sleep 0.1
-echo -e "$BOLD_WHITE    (\e[1;31m5$BOLD_WHITE) ScriptFive"
-
 
 
 export default_scripts=5
+
+awk '{ print "    (\033[1;31m" NR "\033[1;37m) " $0 }' < defaultScripts.txt
+
 awk '{ print "    (\033[1;31m" NR+ENVIRON["default_scripts"] "\033[1;37m) " $0 }' < customScripts.txt
 
 
@@ -112,19 +94,26 @@ echo -e " "
 
 if [ "$1" == "error" ]
 then
-echo -n -e "$BOLD_RED  Choose a number like \e[3m\e[1m1 \e[0m> "
+echo -n -e "$BOLD_RED  Select a Valid option> "
 else
-echo -n -e "$BOLD_RED  Select desired script > "
+echo -n -e "$BOLD_RED  Select Desired Script > "
 fi
 
 echo -n -e "$WHITE"
+
 read SS
+SS=${SS,,}
 }
 
 
 
 
+
+
+
 getScript
+
+
 
 clear
 title
@@ -132,29 +121,64 @@ title
 
 
 
-#check if settings is selcted
-if [ $SS == "settings" ] || [ $SS == "Settings" ] [$SS == "s"] || [ $SS == "S" ]; then
-  echo heyther78
-fi
-
-
-if [ $SS == 0 ]; then
-  clear
-	echo [Under Construction]
-fi
-
-
-if [ $SS == 1 ]; then
-  clear
-	echo This will activate the first script
-fi
-
-######################
+##########################################
 #check if the input is valid
-options=("settings" "Settings" "S" "s")
-containsElement "s" "${optiony[@]}"
+#all possible options for each tool and script concatenated into a singular array
+customScriptOptions=("add" "custom" "custom add" "custom script" "add custom" "add script" "a")
+settingsOptions=("s" "set" "options" "settings" "add custom" "add script" "custom script")
 
-echo 
-#if 
-#getScript error
+
+options=("${customScriptOptions[@]}" "${settingsOptions[@]}")
+
+
+
+######################################
+
+result="$(containsElement "$SS" "${options[@]}")"
+
+if [[ "$result" != "0" ]]; then 
+  until [[ "$result" == "0" ]] #unti the result is not an error
+  do
+    getScript error
+    result="$(containsElement "$SS" "${options[@]}")"
+  done
+fi
+
+
+################################################
+#check which option is selected
+
+
+if [[ $SS == "add" ]] || [[ $SS == "custom" ]] || [[ $SS == "custom add" ]] || [[ $SS == "custom script" ]] || [[ $SS == "add custom" ]] || [[ $SS == "add script" ]] || [[ $SS == "a" ]] || [[ $SS == "a" ]] || [[ $SS == "ad" ]]; then
+  
+  current="Add Custom Script"
+  echo -e "$BOLD_WHITE  You have selected: ${BOLD_RED}${current}$BOLD_WHITE"
+  echo " "
+
+
+#   Get a name (normal and lowercase version)
+#   paste the script in rn or put the file in the scripts and then paste the     script path command to run it
+  
+  
+  ./scripts/changeIFmode.sh
+  # sleep 100000
+  selectOptions "" "$current" "New" "Modify Existing" 
+  
+
+
+
+
+fi
+
+
+
+if [[ $SS == "settings" ]] || [[ $SS == "Settings" ]] || [[ $SS == "s" ]] || [[ $SS == "S" ]]; then
+  current="Settings"
+  echo -e "$BOLD_WHITE  You have selected: ${BOLD_RED}${current}$BOLD_WHITE"
+  echo " "
+ 
+
+
+
+fi
 

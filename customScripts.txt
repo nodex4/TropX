@@ -1,5 +1,2 @@
-first script
-second
-thiiirid
-hello
-world
+custom one
+custom two
