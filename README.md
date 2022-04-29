@@ -121,8 +121,7 @@ A short example usage guide on how to use this tool.
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Fixing Bugs
-- [ ] Fixing More Bugs XD
+View our Trello Roadmap: https://trello.com/b/GItUPVEs/tropx
 
 
 See the [open issues](https://github.com/TroopekYT/TropX/issues) for a full list of proposed features (and known issues).
