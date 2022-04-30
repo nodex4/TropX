@@ -133,7 +133,6 @@ function breadcrumbs() {
 
 
 function title() {
-stty -echo
 clear
 
 echo -e "$tropx"
@@ -141,14 +140,12 @@ echo -e "$tropx"
 
 echo -e "$PRIMARY                                     By$SECONDARY Troopek  "
 echo " "
-stty echo
 }
 
 ################################################################################################################
 
 
 function okTitle() {
-stty -echo
 clear
 echo -e "$tropx"
 sleep 0.1
@@ -156,14 +153,12 @@ sleep 0.1
 echo -e "$PRIMARY                                     By$SECONDARY Troopek  "
 echo " "
 
-stty echo
 }
 
 ################################################################################################################
 
 
 function niceTitle() {
-stty -echo
 clear
 
 
@@ -187,8 +182,6 @@ echo -e -n "$PRIMARY                                   "
 echo -e "  By$SECONDARY Troopek  "| pv -qL 15
 echo " "
 sleep 0.1
-
-stty echo
 }
 
 ################################################################################################################
@@ -200,7 +193,7 @@ okTitle
 else
 niceTitle
 fi
-
+current="Main Menu"
 
 sleep 0.1
 echo -e "$SECONDARY  Available Scripts: "
@@ -254,21 +247,16 @@ echo -n -e "$PRIMARY"
 stty echo
 read SS
 SS=${SS,,}
-stty -echo
+options=("s" "m" "h")
 
-options=("s" "")
-
-
-result="$(containsElement "$SS" "${options[@]}")"
-
-if [[ "$result" != "0" ]]; then 
-  until [[ "$result" == "0" ]] #unti the result is not an error
+if [[ $(containsElement "$SS" "${options[@]}") != "0" ]]; then 
+  until [[ $(containsElement "$SS" "${options[@]}") == "0" ]] #unti the result is not an error
   do
     mainMenu error
     result="$(containsElement "$SS" "${options[@]}")"
   done
 fi
-stty echo
+
 }
 
 
@@ -280,28 +268,36 @@ stty -echo
 title
 breadcrumbs "$2" "$3"
 
+
+# opts=${@:7}
+# echo "${#opts[@]}"
 #Add custom script option
 if [[ $6 == "settings.tropx" ]]; then
-awk -v SECONDARY="$SECONDARY" -v PRIMARY="$PRIMARY" '
-    {
-        system("sleep 0.1")
-        print "    ("SECONDARY NR PRIMARY") " $0
-    }
-' settings.tropx
+  awk -v SECONDARY="$SECONDARY" -v PRIMARY="$PRIMARY" '
+      {
+          system("sleep 0.1")
+          print "    ("SECONDARY NR PRIMARY") " $0
+      }
+  ' settings.tropx
+#   i=$(echo "${@:7}" | wc -w)
+
+# echo "${@:7}" | wc -w
+
 else
   if [[ $6 != "" ]]; then
   echo -e "$PRIMARY    (${SECONDARY}1$PRIMARY) $6"
+  i=2
   fi
 fi
 
-i=2
+
 for arg in "${@:7}"
 do
     echo -e "$PRIMARY    (${SECONDARY}${i}$PRIMARY) ${arg}"
     i=$((i+1))
 done
 
-stringed=$(echo "${@:7}" | sed -E 's/[^[:space:]]+/"&"/g')
+stringed=$(echo "${@:7}" | sed -E 's/[^[:space:]]+/"&"/g' )
 
 
 echo -e " "
@@ -325,21 +321,15 @@ fi
 selection=("1" "2" "3" "4" "5" "6" "7" "8" "9" "10" "11" "12" "13" "14" "15" "$6" $stringed)
 
 if [[ "$(containsElement "$SO" "${selection[@]}")" != "0" ]]; then 
-  until [[ "$result" == "0" ]] #unti the result is not an error
+  until [[ "$(containsElement "$SO" "${selection[@]}")" == "0" ]] #unti the result is not an error
   do
-    selectOptions error  "$2" "$3" "$4" "$5" "$6" $stringed
-    result="$(containsElement "$SO" "${selection[@]}")"
+    selectOptions "error"  "$2" "$3" "$4" "$5" "$6" "${@:7}" #$stringed
   done
 fi
-
 }
-
-
-
 
 ################################################################################################################
 
-# getInput "" "$current" "text" "do this"
 function getInput() {
 stty -echo
 current=$2
@@ -415,12 +405,10 @@ selected=`echo "$text" | sed -E "s/($selection)/(\1)/g"`
 
 function changeOption() {
 stty -echo
-
-
 current="Settings / $1"
+checkSettings "$1"
 selectOptions "" "$current" "New Value" "Select New Value" "Select a Valid New Value" $listOptions
 newValue=$SO
-checkSettings "$1"
 
 
 #get line text of the setting
@@ -443,4 +431,5 @@ selectSetting "$line" "$opt"
 # # sed -i '${newValue}s/.*/$newLine/' settings.tropx
 sed -i "${optionToChange}s/.*/$selected/" settings.tropx
 stty echo
+mainMenu back
 }

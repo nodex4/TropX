@@ -30,7 +30,7 @@ clear
 #check which option is selected
 
 
-if [[ $SS == "add" ]] || [[ $SS == "custom" ]] || [[ $SS == "custom add" ]] || [[ $SS == "custom script" ]] || [[ $SS == "add custom" ]] || [[ $SS == "add script" ]] || [[ $SS == "m" ]] || [[ $SS == "ad" ]]; then
+if [[ $SS == "m" ]]; then
   current="Manage Scripts"
 
 #   Get a name (normal and lowercase version)
@@ -94,7 +94,7 @@ fi
 
 #########################################################
 
-if [[ $SS == "settings" ]] || [[ $SS == "Settings" ]] || [[ $SS == "s" ]] || [[ $SS == "S" ]]; then
+if [[ $SS == "s" ]]; then
   current="Settings"
 
   selectOptions "" "$current" "Settings"  "Select Setting to Modify" "Select Existing Setting to modify" "settings.tropx"
@@ -102,9 +102,10 @@ if [[ $SS == "settings" ]] || [[ $SS == "Settings" ]] || [[ $SS == "s" ]] || [[ 
 
   if [[ $optionToChange == "1" ]]; then
     changeOption "Debug Mode"
+    
   fi
 
-
+  
 fi
 
 ######################################################
