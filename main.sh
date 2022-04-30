@@ -14,7 +14,6 @@ source functions.sh
 
 
 mainMenu
-clear
 
 
 ##########################################

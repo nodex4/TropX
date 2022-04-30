@@ -256,6 +256,7 @@ if [[ $(containsElement "$SS" "${options[@]}") != "0" ]]; then
     result="$(containsElement "$SS" "${options[@]}")"
   done
 fi
+clear
 }
 
 
