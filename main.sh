@@ -12,12 +12,8 @@
 source test.sh
 source functions.sh
 
-# ####################### TEST AREA START ######################
-
-# ###################### TEST AREA END ######################
 
 mainMenu
-
 clear
 
 
@@ -31,6 +27,7 @@ clear
 
 
 if [[ $SS == "m" ]]; then
+  SS=""
   current="Manage Scripts"
 
 #   Get a name (normal and lowercase version)
@@ -39,7 +36,7 @@ if [[ $SS == "m" ]]; then
   # bash changeIFmode.sh
   # cd ../
 
-  selectOptions "" "$current" "Options" "Select Desired Option" "Select a Valid Option" "New Script" "Modify Existing" "Delete Script" "hey" "test"
+  selectOptions "" "$current" "Options" "Select Desired Option" "Select a Valid Option" "New Script" "Modify Existing" "Delete Script"
   so1=$SO
 
   if [[ $so1 == "1" ]]; then
@@ -49,13 +46,14 @@ if [[ $SS == "m" ]]; then
     si1=$SI
     #check if filename exists
 
-    until [ ! -f "custom_scripts/${si1}.sh" ]
+    until [ ! -f "custom_scripts/${si1}/" ]
     do
       getInput error "$current" "Options" "Please choose a name for your new script: " "Do not incldue a file extension" "Other Script Name"
       si1=$SI
     done
 
     cd custom_scripts
+    touch "$si1/"
     touch "${si1}.sh"
     cd ../
     selectOptions "" "$current" "Options" "Select Desired Option" "Select a Valid Option" "Paste script into terminal" "Paste path to script into terminal"
@@ -90,11 +88,15 @@ echo \"\"
       # getInput "" "$current" "p: " "Do not incldue a file extension" "Script Name"
     fi
   fi
+
+
+
 fi
 
 #########################################################
 
 if [[ $SS == "s" ]]; then
+  SS=""
   current="Settings"
 
   selectOptions "" "$current" "Settings"  "Select Setting to Modify" "Select Existing Setting to modify" "settings.tropx"

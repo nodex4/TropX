@@ -193,12 +193,12 @@ okTitle
 else
 niceTitle
 fi
-current="Main Menu"
 
+current="Main Menu"
+breadcrumbs "$current" "Available Scripts"
 sleep 0.1
-echo -e "$SECONDARY  Available Scripts: "
 echo -e -n "$PRIMARY"
-echo " "
+
 
 #Some Options
 sleep 0.1
@@ -256,7 +256,6 @@ if [[ $(containsElement "$SS" "${options[@]}") != "0" ]]; then
     result="$(containsElement "$SS" "${options[@]}")"
   done
 fi
-
 }
 
 
@@ -268,10 +267,10 @@ stty -echo
 title
 breadcrumbs "$2" "$3"
 
+echo -e "$PRIMARY    (${SECONDARY}B$PRIMARY) Back To Main Menu"
+sleep 0.1
+echo "    ------------------"
 
-# opts=${@:7}
-# echo "${#opts[@]}"
-#Add custom script option
 if [[ $6 == "settings.tropx" ]]; then
   awk -v SECONDARY="$SECONDARY" -v PRIMARY="$PRIMARY" '
       {
@@ -315,7 +314,7 @@ read SO
 SO=${SO,,}
 
 if [[ $SO == "b" ]]; then
-  mainMenu back
+  mainMenu error
 fi
 
 selection=("1" "2" "3" "4" "5" "6" "7" "8" "9" "10" "11" "12" "13" "14" "15" "$6" $stringed)
