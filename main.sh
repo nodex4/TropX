@@ -26,7 +26,6 @@ mainMenu
 
 
 if [[ $SS == "m" ]]; then
-  SS=""
   current="Manage Scripts"
 
 #   Get a name (normal and lowercase version)
@@ -95,7 +94,6 @@ fi
 #########################################################
 
 if [[ $SS == "s" ]]; then
-  SS=""
   current="Settings"
 
   selectOptions "" "$current" "Settings"  "Select Setting to Modify" "Select Existing Setting to modify" "settings.tropx"

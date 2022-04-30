@@ -197,7 +197,6 @@ fi
 current="Main Menu"
 breadcrumbs "$current" "Available Scripts"
 sleep 0.1
-echo -e -n "$PRIMARY"
 
 
 #Some Options
