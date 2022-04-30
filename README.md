@@ -95,13 +95,6 @@ Prerequisites can be installed by running the `setup.sh` file.
   ./setup.sh
   ```
 
-### Installation
-
-* Clone the repo
-   ```sh
-   git clone https://github.com/TroopekYT/TropX.git
-   ```
-
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 

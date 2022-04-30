@@ -1,11 +1,57 @@
+#!/bin/bash
+
+
+function checkSettings() {
+clear
+  # str=$(sed '${1}!d' settings.tropx)
+ 
+  # this=$(echo "<${str%%nice *}>" )
+
+  setting=$(grep "^$1 :" settings.tropx | \
+    cut "-d:" -f2- | \
+      cut "-d " -f2-)
+
+  text=$1
+  value=$(echo "$setting" | awk -F"[()]" '{print $2}' )
+  options=$(echo "$value $setting" | awk '{gsub("[(][^)]*[)]","")}1' )
+  listOptions=$(echo "$setting" | sed 's/| //g' )
+  # listOptions2=$(echo "$options2" | sed 's/[^ ][^ ]*/"&"/g' ) 
+  
+}
+################################################################################################################
+
+
 #Terminal Colors
-WHITE=$"\033[1;37m"
+checkSettings "Primary Color"
+primary=$value
+case $primary in
+  "RED")PRIMARY=$"\033[1;31m";;
+  "WHITE")PRIMARY=$"\033[1;37m";;
+  "BLUE")PRIMARY=$"\033[1;34m";;
+  "GREEN")PRIMARY=$"\033[1;32m";;
+  "CYAN")PRIMARY=$"\033[1;36m";;
+  "PINK")PRIMARY=$"\033[1;35m";;
+  "YELLOW")PRIMARY=$"\033[1;33m";;
+  "GRAY")PRIMARY=$"\033[1;30m";;
+  *)PRIMARY=$"\033[1;37m";;
+esac
 
-COLOR=$"\033[1;31m"
+checkSettings "Secondary Color"
+accent=$value
+case $accent in
+  "RED")SECONDARY=$"\033[1;31m";;
+  "WHITE")SECONDARY=$"\033[1;37m";;
+  "BLUE")SECONDARY=$"\033[1;34m";;
+  "GREEN")SECONDARY=$"\033[1;32m";;
+  "CYAN")SECONDARY=$"\033[1;36m";;
+  "PINK")SECONDARY=$"\033[1;35m";;
+  "YELLOW")SECONDARY=$"\033[1;33m";;
+  "GRAY")SECONDARY=$"\033[1;30m";;
+  *)SECONDARY=$"\033[1;37m";;
+esac
 
 
-
-t="▄▄▄█████▓
+t="$PRIMARY▄▄▄█████▓
 ▓  ██▒ ▓▒
 ▒ ▓██░ ▒░
 ░ ▓██▓ ░ 
@@ -46,56 +92,79 @@ trop="▄▄▄█████▓ ██▀███   ▒█████   █�
             ░         ░ ░           
                                     "
 
-tropx="$WHITE▄▄▄█████▓ ██▀███   ▒█████   ██▓███   $COLOR  ▒██   ██▒
-$WHITE▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒▓██░  ██▒  $COLOR ▒▒ █ █ ▒░
-$WHITE▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒▓██░ ██▓▒  $COLOR ░░  █   ░
-$WHITE░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░▒██▄█▓▒ ▒  $COLOR  ░ █ █ ▒ 
-$WHITE  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░▒██▒ ░  ░  $COLOR ▒██▒ ▒██▒
-$WHITE  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ ▒▓▒░ ░  ░  $COLOR ▒▒ ░ ░▓ ░
-$WHITE    ░      ░▒ ░ ▒░  ░ ▒ ▒░ ░▒ ░      $COLOR  ░░   ░▒ ░
-$WHITE  ░        ░░   ░ ░ ░ ░ ▒  ░░        $COLOR   ░    ░  
-$WHITE            ░         ░ ░            $COLOR   ░    ░  "
+tropx="$PRIMARY▄▄▄█████▓ ██▀███   ▒█████   ██▓███   $SECONDARY  ▒██   ██▒
+$PRIMARY▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒▓██░  ██▒  $SECONDARY ▒▒ █ █ ▒░
+$PRIMARY▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒▓██░ ██▓▒  $SECONDARY ░░  █   ░
+$PRIMARY░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░▒██▄█▓▒ ▒  $SECONDARY  ░ █ █ ▒ 
+$PRIMARY  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░▒██▒ ░  ░  $SECONDARY ▒██▒ ▒██▒
+$PRIMARY  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ ▒▓▒░ ░  ░  $SECONDARY ▒▒ ░ ░▓ ░
+$PRIMARY    ░      ░▒ ░ ▒░  ░ ▒ ▒░ ░▒ ░      $SECONDARY  ░░   ░▒ ░
+$PRIMARY  ░        ░░   ░ ░ ░ ░ ▒  ░░        $SECONDARY   ░    ░  
+$PRIMARY            ░         ░ ░            $SECONDARY   ░    ░  "
 
 
+################################################################################################################
 
 
 function end() {
 clear
 echo -e "$BOLD_CYAN ★ $BOLD_BLUE Have a nice day! $BOLD_CYAN★"
-echo -e "$BOLD_BLUE My GitHub:$WHITE https://github.com/TroopekYT"
+echo -e "$BOLD_BLUE My GitHub:$PRIMARY https://github.com/TroopekYT"
 exit
 }
 
+################################################################################################################
+
+function breadcrumbs() {
+  echo -e "$PRIMARY  Current: $SECONDARY$1$PRIMARY"
+  echo -e "$PRIMARY  ---------------------------------------------"
+  echo -e "$PRIMARY  $2: "
+  echo -e -n "$PRIMARY"
+  echo " "
+}
+
+
+
+
+
+
+
+################################################################################################################
 
 
 function title() {
-clear
 stty -echo
+clear
 
 echo -e "$tropx"
 
 
-echo -e "$WHITE                                     By$COLOR Troopek  "
+echo -e "$PRIMARY                                     By$SECONDARY Troopek  "
 echo " "
 stty echo
 }
+
+################################################################################################################
 
 
 function okTitle() {
-clear
 stty -echo
+clear
 echo -e "$tropx"
 sleep 0.1
 
-echo -e "$WHITE                                     By$COLOR Troopek  "
+echo -e "$PRIMARY                                     By$SECONDARY Troopek  "
 echo " "
-sleep 0.1
+
 stty echo
 }
 
+################################################################################################################
+
+
 function niceTitle() {
-clear
 stty -echo
+clear
 
 
 echo -e "$t"
@@ -114,41 +183,57 @@ clear
 echo -e "$tropx"
 
 
-echo -e -n "$WHITE                                   "
-echo -e "  By$COLOR Troopek  "| pv -qL 15
+echo -e -n "$PRIMARY                                   "
+echo -e "  By$SECONDARY Troopek  "| pv -qL 15
 echo " "
 sleep 0.1
+
 stty echo
 }
 
 ################################################################################################################
 
-function getScript() {
-niceTitle
+function mainMenu() {
 stty -echo
+if [[ "$1" == "error" ]] || [[ "$1" == "back" ]]; then
+okTitle
+else
+niceTitle
+fi
+
 
 sleep 0.1
-echo -e "$COLOR  Available Scripts: "
-echo -e -n "$WHITE"
+echo -e "$SECONDARY  Available Scripts: "
+echo -e -n "$PRIMARY"
 echo " "
 
 #Some Options
 sleep 0.1
-echo -e "$WHITE    (\e[1;31mS$WHITE) Settings"
+echo -e "$PRIMARY    (${SECONDARY}S$PRIMARY) Settings"
 sleep 0.1
-echo -e "$WHITE    (\e[1;31mM$WHITE) Manage Scripts"
+echo -e "$PRIMARY    (${SECONDARY}M$PRIMARY) Manage Scripts"
 sleep 0.1
-echo -e "$WHITE    (\e[1;31mH$WHITE) Help"
+echo -e "$PRIMARY    (${SECONDARY}H$PRIMARY) Help"
 sleep 0.1
 echo "    ------------------"
 
 
 export default_scripts=5
 
-awk '{system("sleep 0.1");print "    (\033[1;31m" NR "\033[1;37m) " $0 }' < defaultScripts.txt
+awk -v SECONDARY="$SECONDARY" -v PRIMARY="$PRIMARY" '
+    {
+        system("sleep 0.1")
+        print "    ("SECONDARY NR PRIMARY") " $0
+    }
+' defaultScripts.txt
 
-awk '{system("sleep 0.1");print "    (\033[1;31m" NR+ENVIRON["default_scripts"] "\033[1;37m) " $0 }' < customScripts.txt
-
+awk -v SECONDARY="$SECONDARY" -v PRIMARY="$PRIMARY" '
+    {
+        system("sleep 0.1")
+        print "    ("SECONDARY NR+ENVIRON["default_scripts"] PRIMARY") " $0
+    }
+' customScripts.txt
+sleep 0.1
 
 
 
@@ -158,22 +243,20 @@ echo -e " "
 if [ "$1" == "error" ]
 then
 sleep 0.1
-echo -n -e "$COLOR  Select a Valid Option > "
+echo -n -e "$SECONDARY  Select a Valid Option > "
 else
 sleep 0.1
-echo -n -e "$COLOR  Select Desired Script > "
+echo -n -e "$SECONDARY  Select Desired Script > "
 fi
 
-echo -n -e "$WHITE"
+echo -n -e "$PRIMARY"
 
 stty echo
 read SS
 SS=${SS,,}
+stty -echo
 
-manageScripts=("add" "custom" "custom add" "custom script" "add custom" "add script" "m")
-settingsOptions=("s" "set" "options" "settings" "add custom" "add script" "custom script")
-
-options=("${manageScripts[@]}" "${settingsOptions[@]}")
+options=("s" "")
 
 
 result="$(containsElement "$SS" "${options[@]}")"
@@ -181,8 +264,7 @@ result="$(containsElement "$SS" "${options[@]}")"
 if [[ "$result" != "0" ]]; then 
   until [[ "$result" == "0" ]] #unti the result is not an error
   do
-    okTitle
-    getScript error
+    mainMenu error
     result="$(containsElement "$SS" "${options[@]}")"
   done
 fi
@@ -193,90 +275,59 @@ stty echo
 ################################################################################################################
 
 function selectOptions() {
-current=$2
-section=$3
-typehere=$4
-typehereagain=$5
+stty -echo
 
 title
+breadcrumbs "$2" "$3"
 
-echo -e "$WHITE  Current: ${COLOR}${current}$WHITE"
-echo -e "$WHITE  ---------------------------------------------"
-echo -e "$WHITE  ${section}: "
-echo -e -n "$WHITE"
-echo " "
 #Add custom script option
 if [[ $6 == "settings.tropx" ]]; then
-awk -v COLOR="$COLOR" -v WHITE="$WHITE" '
+awk -v SECONDARY="$SECONDARY" -v PRIMARY="$PRIMARY" '
     {
         system("sleep 0.1")
-        print "    ("COLOR NR WHITE") " $0
+        print "    ("SECONDARY NR PRIMARY") " $0
     }
 ' settings.tropx
-
-
-for arg
-do
-
-done
-
 else
   if [[ $6 != "" ]]; then
-  echo -e "$WHITE    (\e[1;31m1$WHITE) $6"
+  echo -e "$PRIMARY    (${SECONDARY}1$PRIMARY) $6"
   fi
 fi
 
+i=2
+for arg in "${@:7}"
+do
+    echo -e "$PRIMARY    (${SECONDARY}${i}$PRIMARY) ${arg}"
+    i=$((i+1))
+done
 
-
-if [[ $7 != "" ]]; then
-echo -e "$WHITE    (\e[1;31m2$WHITE) $7"
-fi
-
-if [[ $8 != "" ]]; then
-echo -e "$WHITE    (\e[1;31m3$WHITE) $8"
-fi
-
-if [[ $9 != "" ]]; then
-echo -e "$WHITE    (\e[1;31m4$WHITE) $9"
-fi
-
-if [[ $X != "" ]]; then
-echo -e "$WHITE    (\e[1;31m5$WHITE) $X"
-fi
-
-# if [[ $X1 != "" ]]; then
-# echo -e "$WHITE    (\e[1;31m6$WHITE) $X1"
-# fi
-
-
-
+stringed=$(echo "${@:7}" | sed -E 's/[^[:space:]]+/"&"/g')
 
 
 echo -e " "
 
 if [ "$1" == "error" ]
 then
-echo -n -e "$COLOR  $typehereagain > "
+echo -n -e "$SECONDARY  $5 > "
 else
-echo -n -e "$COLOR  $typehere > "
+echo -n -e "$SECONDARY  $4 > "
 fi
 
-echo -n -e "$WHITE"
-
+echo -n -e "$PRIMARY"
+stty echo
 read SO
 SO=${SO,,}
 
 if [[ $SO == "b" ]]; then
-  getScript
+  mainMenu back
 fi
 
-selection=("1" "2" "3" "4" "5" "6" "$6" "$7" "$8" "$9" "$X")
-result="$(containsElement "$SO" "${selection[@]}")"
+selection=("1" "2" "3" "4" "5" "6" "7" "8" "9" "10" "11" "12" "13" "14" "15" "$6" $stringed)
 
-if [[ "$result" != "0" ]]; then 
+if [[ "$(containsElement "$SO" "${selection[@]}")" != "0" ]]; then 
   until [[ "$result" == "0" ]] #unti the result is not an error
   do
-    selectOptions error  "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9"
+    selectOptions error  "$2" "$3" "$4" "$5" "$6" $stringed
     result="$(containsElement "$SO" "${selection[@]}")"
   done
 fi
@@ -290,6 +341,7 @@ fi
 
 # getInput "" "$current" "text" "do this"
 function getInput() {
+stty -echo
 current=$2
 text=$3
 description=$4
@@ -297,19 +349,19 @@ example=$5
 
 title
 
-echo -e "$WHITE  Current: ${COLOR}${current}$WHITE"
-echo -e "$WHITE  ---------------------------------------------"
-echo -e "$WHITE  $text: "
-echo -e -n "$WHITE"
+echo -e "$PRIMARY  Current: ${SECONDARY}${current}$PRIMARY"
+echo -e "$PRIMARY  ---------------------------------------------"
+echo -e "$PRIMARY  $text: "
+echo -e -n "$PRIMARY"
 echo " "
 
 #Add custom script option
 if [[ $description != "" ]]; then
-echo -e "$WHITE    (\e[1;31mDETAILS$WHITE) $description"
+echo -e "$PRIMARY    (\e[1;31mDETAILS$PRIMARY) $description"
 echo " "
 fi
 if [[ $example != "" ]]; then
-echo -e "$WHITE    (\e[1;31mEXAMPLE$WHITE) $example"
+echo -e "$PRIMARY    (\e[1;31mEXAMPLE$PRIMARY) $example"
 fi
 
 
@@ -318,13 +370,13 @@ echo -e " "
 
 if [ "$1" == "error" ]
 then
-echo -n -e "$COLOR  Try Again > "
+echo -n -e "$SECONDARY  Try Again > "
 else
-echo -n -e "$COLOR  Type Here > "
+echo -n -e "$SECONDARY  Type Here > "
 fi
 
-echo -n -e "$WHITE"
-
+echo -n -e "$PRIMARY"
+stty echo
 read SI
 SI=${SI,,}
 
@@ -349,23 +401,6 @@ function containsElement() {
 
 ################################################################################################################
 
-function checkSettings() {
-clear
-  # str=$(sed '${1}!d' settings.tropx)
- 
-  # this=$(echo "<${str%%nice *}>" )
-
-  setting=$(grep "^$1 :" settings.tropx | \
-    cut "-d:" -f2- | \
-      cut "-d " -f2-)
-
-  text=$1
-  value=$(echo "$setting" | awk -F"[()]" '{print $2}' )
-  options=$(echo "$value $setting" | awk '{gsub("[(][^)]*[)]","")}1' )
-  listOptions=$(echo "$setting" | sed 's/| //g' )
-  # listOptions2=$(echo "$options2" | sed 's/[^ ][^ ]*/"&"/g' ) 
-
-}
 
 ################################################################################################################
 
@@ -379,12 +414,13 @@ selected=`echo "$text" | sed -E "s/($selection)/(\1)/g"`
 ################################################################################################################
 
 function changeOption() {
-option=$1
+stty -echo
 
-checkSettings "$1"
+
 current="Settings / $1"
 selectOptions "" "$current" "New Value" "Select New Value" "Select a Valid New Value" $listOptions
 newValue=$SO
+checkSettings "$1"
 
 
 #get line text of the setting
@@ -406,5 +442,5 @@ selectSetting "$line" "$opt"
 # newLine=$(echo ${text}' : '$selected )
 # # sed -i '${newValue}s/.*/$newLine/' settings.tropx
 sed -i "${optionToChange}s/.*/$selected/" settings.tropx
-
+stty echo
 }

@@ -1,4 +1,6 @@
-Debug Mode : OFF | (ON)
+Debug Mode : (ON) | OFF
 Animations : (ALL) | SOME | NONE
 Default Scripts : (SHOW) | HIDE
-Accent Color : (RED) | BLUE | GREEN | CYAN | PURPLE | YELLOW | GRAY | NONE
+Primary Color : WHITE | RED | BLUE | GREEN | (CYAN) | PINK | YELLOW | GRAY
+Secondary Color : RED | WHITE | (BLUE) | GREEN | CYAN | PINK | YELLOW | GRAY
+Bread Crumbs : (ON) | OFF

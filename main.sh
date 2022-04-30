@@ -12,19 +12,11 @@
 source test.sh
 source functions.sh
 
-#Terminal Colors
-WHITE=$"\033[1;37m"
-
-COLOR=$"\033[1;31m"
-
-
-
-
 # ####################### TEST AREA START ######################
 
 # ###################### TEST AREA END ######################
 
-getScript
+mainMenu
 
 clear
 
@@ -47,7 +39,7 @@ if [[ $SS == "add" ]] || [[ $SS == "custom" ]] || [[ $SS == "custom add" ]] || [
   # bash changeIFmode.sh
   # cd ../
 
-  selectOptions "" "$current" "Options" "Select Desired Option" "Select a Valid Option" "New Script" "Modify Existing" "Delete Script"
+  selectOptions "" "$current" "Options" "Select Desired Option" "Select a Valid Option" "New Script" "Modify Existing" "Delete Script" "hey" "test"
   so1=$SO
 
   if [[ $so1 == "1" ]]; then
@@ -72,22 +64,22 @@ if [[ $SS == "add" ]] || [[ $SS == "custom" ]] || [[ $SS == "custom add" ]] || [
       clear
       title
       
-      echo -e "$WHITE  Current: ${COLOR}${current}$WHITE"
-      echo -e "$WHITE  ---------------------------------------------"
-      echo -e "$COLOR  $text"
-      echo -e -n "$WHITE"
+      echo -e "$PRIMARY  Current: ${SECONDARY}${current}$PRIMARY"
+      echo -e "$PRIMARY  ---------------------------------------------"
+      echo -e "$SECONDARY  $text"
+      echo -e -n "$PRIMARY"
       echo " "
       
-      echo -e "$WHITE    (\e[1;31mDETAILS$WHITE) press ctrl + d or type \"$COLOR~$WHITE\" when done"
+      echo -e "$PRIMARY    (\e[1;31mDETAILS$PRIMARY) press ctrl + d or type \"$SECONDARY~$PRIMARY\" when done"
       echo " "
-      echo -e "$COLOR  Paste Here >$WHITE"
+      echo -e "$SECONDARY  Paste Here >$PRIMARY"
       read -r -d '~' script
 boiler="
 source ../functions.sh
 
 title
-echo -e \"$WHITE  Current: ${COLOR}${current}$WHITE\"
-echo -e \"$WHITE  ---------------------------------------------\"
+echo -e \"$PRIMARY  Current: ${SECONDARY}${current}$PRIMARY\"
+echo -e \"$PRIMARY  ---------------------------------------------\"
 echo \"\"
 
 "
@@ -110,12 +102,6 @@ if [[ $SS == "settings" ]] || [[ $SS == "Settings" ]] || [[ $SS == "s" ]] || [[ 
 
   if [[ $optionToChange == "1" ]]; then
     changeOption "Debug Mode"
-
-    if [[ $newValue == "1" ]]; then
-    echo "---------"
-
-    
-    fi
   fi
 
 
