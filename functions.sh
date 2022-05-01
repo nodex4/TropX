@@ -399,12 +399,12 @@ source ../functions.sh
 current="hey"
 ready custom
 title
-breadcrumbs "$current" "Options"
+breadcrumbs \""$current"\" \"Options\"
 # END OF BOILER (DO NOT REMOVE ABOVE CODE OR MODIFY IT)
       "
 
 
-    getInput "" "$current" "Read Below" "Please choose a name for your new script: " "Do not incldue a file extension" "Script Name"
+    getInput "" "$current" "Please choose a name for your new script: " "Do not incldue a file extension" "Script Name"
     si1=$SI
     #check if filename exists
 
@@ -435,13 +435,14 @@ breadcrumbs "$current" "Options"
       read -r -d '~' script
       echo "$boiler" >> "custom_scripts/${si1}/${si1}.sh"
       echo "$script" >> "custom_scripts/${si1}/${si1}.sh"
-      #delete last line (which is the } that ends the function)
-      echo '  if [[ $SS == "${default_scripts+1}" ]]; then
-current="$(sed ${default_scripts+1}!d filename)"
-' > customIfs.sh
-      echo "bash custom_scripts/${si1}/${si1}.sh"
-      echo "fi
-}" > customIfs.sh
+
+      sed '$s/}$//' < customIfs.sh > customIfs.sh.tmp
+      mv customIfs.sh.tmp customIfs.sh
+      # sed 'x;${s/}$//;p;x;};1d' 
+
+      echo -e '\n  if [[ $SS == "${default_scripts+1}" ]]; then\n    current="$(sed ${default_scripts+1}!d filename)"' >> customIfs.sh
+      echo -e "    bash custom_scripts/${si1}/${si1}.sh" >> customIfs.sh
+      echo -e "  fi\n}" >> customIfs.sh
 
     fi
 
