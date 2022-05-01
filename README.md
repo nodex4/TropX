@@ -96,7 +96,7 @@ A local copy of TropX can be obtained using the `git clone` command
   cd TropX
   ```
 
-### Installation
+### SE
 Prerequisites can be installed by running the `setup.sh` file.
 
 * Run the `setup.sh` file with bash and wait until the proccess has finished

@@ -6,5 +6,4 @@ function customIFs() {
     current="$(sed ${default_scripts+1}!d filename)"
     
   fi
-
 }

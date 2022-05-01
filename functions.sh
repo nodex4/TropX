@@ -402,6 +402,8 @@ title
 breadcrumbs "$current" "Options"
 # END OF BOILER (DO NOT REMOVE ABOVE CODE OR MODIFY IT)
       "
+
+
     getInput "" "$current" "Read Below" "Please choose a name for your new script: " "Do not incldue a file extension" "Script Name"
     si1=$SI
     #check if filename exists
@@ -441,13 +443,37 @@ current="$(sed ${default_scripts+1}!d filename)"
       echo "fi
 }" > customIfs.sh
 
-
-
     fi
 
 
     if [[ $insertType == "2" ]]; then
+      getInput "" "$current" "Read Below" "Please type in the relative or full path of the script: " "Do not incldue a file extension" "root/desktop/scriptText.txt"
+    path=$SI
+    
+    if [[ $path = /* ]]; then
       :
+    else
+      until [ -f $path ]
+      do
+        getInput error "$current" "Read Below" "Please type in the relative or full path of the script: " "Do not incldue a file extension" "root/desktop/scriptText.txt"
+        path=$SI
+      done
+    fi
+
+    # echo "$boiler" >> "custom_scripts/${si1}/${si1}.sh"
+    script=$(<$path)
+    echo "$script"
+sleep 10
+    echo "$script" >> "custom_scripts/${si1}/${si1}.sh"
+
+
+
+
+
+
+
+
+
     fi
   fi
 

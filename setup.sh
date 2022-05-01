@@ -1,6 +1,6 @@
 #!/bin/bash
 #install necessary packages
-apt-get install pv
+# apt-get install pv
 
 if [ ! -d custom_scritps ]; then
   mkdir -p custom_scritps;
