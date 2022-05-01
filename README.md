@@ -12,7 +12,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/TroopekYT/TropX">
+  <a href="https://github.com/troopek/TropX">
     <img src="images/logo.png" alt="logo" width="80" height="80">
   </a>
 
@@ -22,9 +22,9 @@
     The best penetration testing and tech tools unified into one beatiful command line interface!
     <br />
     ·
-    <a href="https://github.com/TroopekYT/TropX/issues/new">Report Bug</a>
+    <a href="https://github.com/troopek/TropX/issues/new">Report Bug</a>
     ·
-    <a href="https://github.com/TroopekYT/TropX/issues/new">Request Feature</a>
+    <a href="https://github.com/troopek/TropX/issues/new">Request Feature</a>
   </p>
 </div>
 
@@ -82,19 +82,43 @@ The best penetration testing and tech tools unified into one beatiful command li
 
 To get a local copy up and running follow these simple example steps.
 
-### Prerequisites & Installation
+### Installation
+A local copy of TropX can be obtained using the `git clone` command
 
-Prerequisites can be installed by running the `setup.sh` file.
 * Navigate to your terminal (I use Terminator)
-* Make the file executable
+* Navigate to the directory you would like to have TropX saved
+* Clone the repository using the git command
   ```sh
-  chmod a+x setup.sh
+  git clone https://github.com/troopek/TropX 
   ```
-* Run the file and wait
+* Navigate to the TropX folder
   ```sh
-  ./setup.sh
+  cd TropX
   ```
 
+### Installation
+Prerequisites can be installed by running the `setup.sh` file.
+
+* Run the `setup.sh` file with bash and wait until the proccess has finished
+  ```sh
+  bash setup.sh
+  ```
+  
+### Updates
+
+You can update the tool to the newest version without losing progress. You can do this automatically by running the update.sh file or manually by enetering some commands
+
+**Automatic Method (recommended)**
+* Firstly, navigate to your terminal (I use Terminator)
+* Navigate to the directory where you cloned TropX
+* Run the `update.sh` file with bash and wait until the proccess has finished
+  ```sh
+  bash update.sh
+  ```
+
+**Manual Method**
+* [UNDER CONSTRUCTION]
+  
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
@@ -117,7 +141,7 @@ A short example usage guide on how to use this tool.
 View our Trello Roadmap: https://trello.com/b/GItUPVEs/tropx
 
 
-See the [open issues](https://github.com/TroopekYT/TropX/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/troopek/TropX/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -155,7 +179,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 eugene.chicevic@gmail.com
 
-Project Link: [https://github.com/TroopekYT/TropX](https://github.com/TroopekYT/TropX)
+Project Link: [https://github.com/troopek/TropX](https://github.com/troopek/TropX)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -178,13 +202,13 @@ I am not held responsible for any misdeeds done with the help of this tool, i pr
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/TroopekYT/TropX.svg?style=for-the-badge
-[contributors-url]: https://github.com/TroopekYT/TropX/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/TroopekYT/TropX.svg?style=for-the-badge
-[forks-url]: https://github.com/TroopekYT/TropX/network/members
-[stars-shield]: https://img.shields.io/github/stars/TroopekYT/TropX.svg?style=for-the-badge
-[stars-url]: https://github.com/TroopekYT/TropX/stargazers
-[issues-shield]: https://img.shields.io/github/issues/TroopekYT/TropX.svg?style=for-the-badge
-[issues-url]: https://github.com/TroopekYT/TropX/issues
-[license-shield]: https://img.shields.io/github/license/TroopekYT/TropX.svg?style=for-the-badge
-[license-url]: https://github.com/TroopekYT/TropX/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/troopek/TropX.svg?style=for-the-badge
+[contributors-url]: https://github.com/troopek/TropX/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/troopek/TropX.svg?style=for-the-badge
+[forks-url]: https://github.com/troopek/TropX/network/members
+[stars-shield]: https://img.shields.io/github/stars/troopek/TropX.svg?style=for-the-badge
+[stars-url]: https://github.com/troopek/TropX/stargazers
+[issues-shield]: https://img.shields.io/github/issues/troopek/TropX.svg?style=for-the-badge
+[issues-url]: https://github.com/troopek/TropX/issues
+[license-shield]: https://img.shields.io/github/license/troopek/TropX.svg?style=for-the-badge
+[license-url]: https://github.com/troopek/TropX/blob/master/LICENSE.txt
