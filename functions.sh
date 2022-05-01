@@ -10,21 +10,25 @@
 #        |___/                       |_|               
 # Github: https://github.com/TroopekYT/
 
-
-
-
 source customIfs.sh
 
 
 function checkSettings() {
-  if [[ "$2" == "custom" ]]; then
-  setting=$(grep "^$1 :" ../settings.tropx | \
-    cut "-d:" -f2- | \
-      cut "-d " -f2-)
+  dir=`pwd`
+  if [[ ${dir##*/} == "TropX" ]]; then
+    :
   else
-  setting=$(grep "^$1 :" settings.tropx | \
-    cut "-d:" -f2- | \
-      cut "-d " -f2-)
+    cd ../
+  fi
+
+  if [[ "$2" == "custom" ]]; then
+    setting=$(grep "^$1 :" ../settings.tropx | \
+      cut "-d:" -f2- | \
+        cut "-d " -f2-)
+  else
+    setting=$(grep "^$1 :" settings.tropx | \
+      cut "-d:" -f2- | \
+        cut "-d " -f2-)
   fi
 
   text=$1
@@ -246,7 +250,7 @@ $PRIMARY            ░         ░ ░            $SECONDARY   ░    ░  "
 
 
 clear
-
+sleep 1
 
 echo -e "$t"
 sleep 0.15
@@ -379,8 +383,6 @@ clear
 
 if [[ $SS == "m" ]]; then
   current="Manage Scripts"
-
-#   Get a name (normal and lowercase version)
 #   paste the script in rn or put the file in the scripts and then paste the     script path command to run it
   # cd scripts
   # bash changeIFmode.sh
@@ -400,32 +402,30 @@ title
 breadcrumbs "$current" "Options"
 # END OF BOILER (DO NOT REMOVE ABOVE CODE OR MODIFY IT)
       "
-    getInput "" "$current" "Options" "Please choose a name for your new script: " "Do not incldue a file extension" "Script Name"
+    getInput "" "$current" "Read Below" "Please choose a name for your new script: " "Do not incldue a file extension" "Script Name"
     si1=$SI
     #check if filename exists
 
-    until [ ! -f "custom_scripts/${si1}/" ]
+    until [ ! -f "custom_scripts/${si1}/${si1}.sh" ]
     do
       getInput error "$current" "Options" "Please choose a name for your new script: " "Do not incldue a file extension" "Other Script Name"
       si1=$SI
     done
 
+    echo "$si1" | sed -e "s/\b\(.\)/\u\1/g " >> "customScripts.txt"
     cd custom_scripts
-    mkdir "$si1/"
+    mkdir "$si1"
     cd $si1
     touch "${si1}.sh"
     cd ../
     selectOptions "" "$current" "Options" "Select Desired Option" "Select a Valid Option" "Paste script into terminal" "Paste path to script into terminal"
     insertType=$SO
+
+
     if [[ $insertType == "1" ]]; then
       clear
       title
-      
-      echo -e "$PRIMARY  Current: ${SECONDARY}${current}$PRIMARY"
-      echo -e "$PRIMARY  ---------------------------------------------"
-      echo -e "$SECONDARY  $text"
-      echo -e -n "$PRIMARY"
-      echo " "
+      breadcrumbs "$current" "Options"
       
       echo -e "$PRIMARY    (\e[1;31mDETAILS$PRIMARY) press ctrl + d or type \"$SECONDARY~$PRIMARY\" when done"
       echo " "
@@ -433,9 +433,21 @@ breadcrumbs "$current" "Options"
       read -r -d '~' script
       echo "$boiler" >> "custom_scripts/${si1}/${si1}.sh"
       echo "$script" >> "custom_scripts/${si1}/${si1}.sh"
-      echo "$si1" | sed -e "s/\b\(.\)/\u\1/g " >> "customScripts.txt"
-   
-      # getInput "" "$current" "p: " "Do not incldue a file extension" "Script Name"
+      #delete last line (which is the } that ends the function)
+      echo '  if [[ $SS == "${default_scripts+1}" ]]; then
+current="$(sed ${default_scripts+1}!d filename)"
+' > customIfs.sh
+      echo "bash custom_scripts/${si1}/${si1}.sh"
+      echo "fi
+}" > customIfs.sh
+
+
+
+    fi
+
+
+    if [[ $insertType == "2" ]]; then
+      :
     fi
   fi
 
