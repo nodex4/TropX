@@ -1,28 +1,47 @@
 #!/bin/bash
 
+#  ____          _______                         _     
+# |  _ \        |__   __|                       | |    
+# | |_) |_   _     | |_ __ ___   ___  _ __   ___| | __ 
+# |  _ <| | | |    | | '__/ _ \ / _ \| '_ \ / _ \ |/ / 
+# | |_) | |_| |    | | | | (_) | (_) | |_) |  __/   <  
+# |____/ \__, |    |_|_|  \___/ \___/| .__/ \___|_|\_\ 
+#         __/ |                      | |               
+#        |___/                       |_|               
+# Github: https://github.com/TroopekYT/
+
+
+
+
+source customIfs.sh
+
 
 function checkSettings() {
-clear
-  # str=$(sed '${1}!d' settings.tropx)
- 
-  # this=$(echo "<${str%%nice *}>" )
-
+  if [[ "$2" == "custom" ]]; then
+  setting=$(grep "^$1 :" ../settings.tropx | \
+    cut "-d:" -f2- | \
+      cut "-d " -f2-)
+  else
   setting=$(grep "^$1 :" settings.tropx | \
     cut "-d:" -f2- | \
       cut "-d " -f2-)
+  fi
 
   text=$1
   value=$(echo "$setting" | awk -F"[()]" '{print $2}' )
   options=$(echo "$value $setting" | awk '{gsub("[(][^)]*[)]","")}1' )
   listOptions=$(echo "$setting" | sed 's/| //g' )
-  # listOptions2=$(echo "$options2" | sed 's/[^ ][^ ]*/"&"/g' ) 
-  
 }
 ################################################################################################################
 
-
+function ready() {
 #Terminal Colors
+if [[ "$1" == "custom" ]]; then
+checkSettings "Primary Color" custom
+else
 checkSettings "Primary Color"
+fi
+
 primary=$value
 case $primary in
   "RED")PRIMARY=$"\033[1;31m";;
@@ -36,9 +55,15 @@ case $primary in
   *)PRIMARY=$"\033[1;37m";;
 esac
 
+
+if [[ "$1" == "custom" ]]; then
+checkSettings "Secondary Color" custom
+else
 checkSettings "Secondary Color"
-accent=$value
-case $accent in
+fi
+
+secondary=$value
+case $secondary in
   "RED")SECONDARY=$"\033[1;31m";;
   "WHITE")SECONDARY=$"\033[1;37m";;
   "BLUE")SECONDARY=$"\033[1;34m";;
@@ -49,7 +74,57 @@ case $accent in
   "GRAY")SECONDARY=$"\033[1;30m";;
   *)SECONDARY=$"\033[1;37m";;
 esac
+}
+ready
 
+
+
+################################################################################################################
+
+
+function end() {
+clear
+echo -e "$BOLD_CYAN ★ $BOLD_BLUE Have a nice day! $BOLD_CYAN★"
+echo -e "$BOLD_BLUE My GitHub:$PRIMARY https://github.com/TroopekYT"
+exit
+}
+
+################################################################################################################
+
+function breadcrumbs() {
+  checkSettings "Animations"
+  animations=$value
+
+  checkSettings "Breadcrumbs"
+  breadcrumbs=$value
+  
+  if [[ "$3" == "error" ]] || [[ "$3" == "back" ]] || [[ $animations == "OFF" ]] || ([[ $animations == "MINIMAL" ]] && [[ "$3" == "back" ]]) || ([[ $animations == "MINIMAL" ]] && [[ "$3" != "main" ]]); then
+    if [[ "$breadcrumbs" == "ON" ]]; then
+      echo -e "$PRIMARY  Current: $SECONDARY$1$PRIMARY"
+      echo -e "$PRIMARY  ---------------------------------------------"
+    else
+      :
+    fi
+
+    echo -e "$PRIMARY  $2: "
+    echo -e -n "$PRIMARY"
+    echo " "
+  else
+    echo -e "$PRIMARY  Current: $SECONDARY$1$PRIMARY"
+    sleep 0.1
+    echo -e "$PRIMARY  ---------------------------------------------"
+    sleep 0.1
+    echo -e "$PRIMARY  $2: "
+    sleep 0.1
+    echo -e -n "$PRIMARY"
+    echo " "
+  fi
+}
+
+################################################################################################################
+
+
+function title() {
 
 t="$PRIMARY▄▄▄█████▓
 ▓  ██▒ ▓▒
@@ -103,36 +178,7 @@ $PRIMARY  ░        ░░   ░ ░ ░ ░ ▒  ░░        $SECONDARY   �
 $PRIMARY            ░         ░ ░            $SECONDARY   ░    ░  "
 
 
-################################################################################################################
 
-
-function end() {
-clear
-echo -e "$BOLD_CYAN ★ $BOLD_BLUE Have a nice day! $BOLD_CYAN★"
-echo -e "$BOLD_BLUE My GitHub:$PRIMARY https://github.com/TroopekYT"
-exit
-}
-
-################################################################################################################
-
-function breadcrumbs() {
-  echo -e "$PRIMARY  Current: $SECONDARY$1$PRIMARY"
-  echo -e "$PRIMARY  ---------------------------------------------"
-  echo -e "$PRIMARY  $2: "
-  echo -e -n "$PRIMARY"
-  echo " "
-}
-
-
-
-
-
-
-
-################################################################################################################
-
-
-function title() {
 clear
 
 echo -e "$tropx"
@@ -140,25 +186,65 @@ echo -e "$tropx"
 
 echo -e "$PRIMARY                                     By$SECONDARY Troopek  "
 echo " "
-}
-
-################################################################################################################
-
-
-function okTitle() {
-clear
-echo -e "$tropx"
-sleep 0.1
-
-echo -e "$PRIMARY                                     By$SECONDARY Troopek  "
-echo " "
-
 }
 
 ################################################################################################################
 
 
 function niceTitle() {
+
+t="$PRIMARY▄▄▄█████▓
+▓  ██▒ ▓▒
+▒ ▓██░ ▒░
+░ ▓██▓ ░ 
+  ▒██▒ ░ 
+  ▒ ░░   
+    ░    
+  ░      
+         
+         "
+tr="▄▄▄█████▓ ██▀███  
+▓  ██▒ ▓▒▓██ ▒ ██▒
+▒ ▓██░ ▒░▓██ ░▄█ ▒
+░ ▓██▓ ░ ▒██▀▀█▄  
+  ▒██▒ ░ ░██▓ ▒██▒
+  ▒ ░░   ░ ▒▓ ░▒▓░
+    ░      ░▒ ░ ▒░
+  ░        ░░   ░ 
+            ░     
+                  "
+tro="▄▄▄█████▓ ██▀███   ▒█████  
+▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+  ░        ░░   ░ ░ ░ ░ ▒  
+            ░         ░ ░  
+                           "
+trop="▄▄▄█████▓ ██▀███   ▒█████   ██▓███  
+▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒▓██░  ██▒
+▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒▓██░ ██▓▒
+░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░▒██▄█▓▒ ▒
+  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░▒██▒ ░  ░
+  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ ▒▓▒░ ░  ░
+    ░      ░▒ ░ ▒░  ░ ▒ ▒░ ░▒ ░     
+  ░        ░░   ░ ░ ░ ░ ▒  ░░       
+            ░         ░ ░           
+                                    "
+
+tropx="$PRIMARY▄▄▄█████▓ ██▀███   ▒█████   ██▓███   $SECONDARY  ▒██   ██▒
+$PRIMARY▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒▓██░  ██▒  $SECONDARY ▒▒ █ █ ▒░
+$PRIMARY▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒▓██░ ██▓▒  $SECONDARY ░░  █   ░
+$PRIMARY░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░▒██▄█▓▒ ▒  $SECONDARY  ░ █ █ ▒ 
+$PRIMARY  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░▒██▒ ░  ░  $SECONDARY ▒██▒ ▒██▒
+$PRIMARY  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ ▒▓▒░ ░  ░  $SECONDARY ▒▒ ░ ░▓ ░
+$PRIMARY    ░      ░▒ ░ ▒░  ░ ▒ ▒░ ░▒ ░      $SECONDARY  ░░   ░▒ ░
+$PRIMARY  ░        ░░   ░ ░ ░ ░ ▒  ░░        $SECONDARY   ░    ░  
+$PRIMARY            ░         ░ ░            $SECONDARY   ░    ░  "
+
+
 clear
 
 
@@ -188,18 +274,27 @@ sleep 0.1
 
 function mainMenu() {
 stty -echo
-if [[ "$1" == "error" ]] || [[ "$1" == "back" ]]; then
-okTitle
+current="Main Menu"
+
+checkSettings "Animations"
+animations=$value
+
+
+if [[ "$1" == "error" ]] || [[ "$1" == "back" ]] || [[ $animations == "OFF" ]]; then
+title
+breadcrumbs "$current" "Available Scripts" back
 else
 niceTitle
+breadcrumbs "$current" "Available Scripts" main
 fi
 
-current="Main Menu"
-breadcrumbs "$current" "Available Scripts"
-sleep 0.1
 
-
-#Some Options
+if [[ "$1" == "error" ]] || [[ "$1" == "back" ]] || [[ $animations == "OFF" ]]; then
+echo -e "$PRIMARY    (${SECONDARY}S$PRIMARY) Settings"
+echo -e "$PRIMARY    (${SECONDARY}M$PRIMARY) Manage Scripts"
+echo -e "$PRIMARY    (${SECONDARY}H$PRIMARY) Help"
+echo "    ------------------"
+else
 sleep 0.1
 echo -e "$PRIMARY    (${SECONDARY}S$PRIMARY) Settings"
 sleep 0.1
@@ -208,37 +303,61 @@ sleep 0.1
 echo -e "$PRIMARY    (${SECONDARY}H$PRIMARY) Help"
 sleep 0.1
 echo "    ------------------"
+fi
 
 
 export default_scripts=5
 
-awk -v SECONDARY="$SECONDARY" -v PRIMARY="$PRIMARY" '
-    {
-        system("sleep 0.1")
-        print "    ("SECONDARY NR PRIMARY") " $0
-    }
-' defaultScripts.txt
+if [[ "$1" == "error" ]] || [[ "$1" == "back" ]] || [[ $animations == "OFF" ]]; then
 
-awk -v SECONDARY="$SECONDARY" -v PRIMARY="$PRIMARY" '
-    {
-        system("sleep 0.1")
-        print "    ("SECONDARY NR+ENVIRON["default_scripts"] PRIMARY") " $0
-    }
-' customScripts.txt
-sleep 0.1
+  
+  awk -v SECONDARY="$SECONDARY" -v PRIMARY="$PRIMARY" '
+      {
+          print "    ("SECONDARY NR PRIMARY") " $0
+      }
+  ' defaultScripts.txt
+  
+  awk -v SECONDARY="$SECONDARY" -v PRIMARY="$PRIMARY" '
+      {
+          print "    ("SECONDARY NR+ENVIRON["default_scripts"] PRIMARY") " $0
+      }
+  ' customScripts.txt
+  
+
+else
+
+  
+  awk -v SECONDARY="$SECONDARY" -v PRIMARY="$PRIMARY" '
+      {
+          system("sleep 0.1")
+          print "    ("SECONDARY NR PRIMARY") " $0
+      }
+  ' defaultScripts.txt
+  
+  awk -v SECONDARY="$SECONDARY" -v PRIMARY="$PRIMARY" '
+      {
+          system("sleep 0.1")
+          print "    ("SECONDARY NR+ENVIRON["default_scripts"] PRIMARY") " $0
+      }
+  ' customScripts.txt
+  sleep 0.1
+
+fi
 
 
 
 
 echo -e " "
 
-if [ "$1" == "error" ]
-then
-sleep 0.1
-echo -n -e "$SECONDARY  Select a Valid Option > "
+if [[ "$1" == "error" ]] || [[ "$1" == "back" ]] || [[ $animations == "OFF" ]]; then
+  if [[ "$1" == "error" ]]; then
+  echo -n -e "$SECONDARY  Select a Valid Option > "
+  else
+  echo -n -e "$SECONDARY  Select Desired Option > "
+  fi
 else
-sleep 0.1
-echo -n -e "$SECONDARY  Select Desired Script > "
+  sleep 0.1
+  echo -n -e "$SECONDARY  Select Desired Option > "
 fi
 
 echo -n -e "$PRIMARY"
@@ -246,7 +365,7 @@ echo -n -e "$PRIMARY"
 stty echo
 read SS
 SS=${SS,,}
-options=("s" "m" "h")
+options=("s" "m" "h" "1" "2" "3" "4" "5" "6" "7" "8" "9" "10" "11" "12" "13" "14" "15" "16" "17" "18" "19" "20" "21" "22" "23" "24" "25" "26" "27" "28" "29" "30" "31" "32" "33")
 
 if [[ $(containsElement "$SS" "${options[@]}") != "0" ]]; then 
   until [[ $(containsElement "$SS" "${options[@]}") == "0" ]] #unti the result is not an error
@@ -256,6 +375,98 @@ if [[ $(containsElement "$SS" "${options[@]}") != "0" ]]; then
   done
 fi
 clear
+
+
+if [[ $SS == "m" ]]; then
+  current="Manage Scripts"
+
+#   Get a name (normal and lowercase version)
+#   paste the script in rn or put the file in the scripts and then paste the     script path command to run it
+  # cd scripts
+  # bash changeIFmode.sh
+  # cd ../
+
+  selectOptions "" "$current" "Options" "Select Desired Option" "Select a Valid Option" "New Script" "Modify Existing" "Delete Script"
+  so1=$SO
+
+  if [[ $so1 == "1" ]]; then
+    #(1) New has been selected
+          boiler="#!/bin/bash
+source ../functions.sh
+
+current="hey"
+ready custom
+title
+breadcrumbs "$current" "Options"
+# END OF BOILER (DO NOT REMOVE ABOVE CODE OR MODIFY IT)
+      "
+    getInput "" "$current" "Options" "Please choose a name for your new script: " "Do not incldue a file extension" "Script Name"
+    si1=$SI
+    #check if filename exists
+
+    until [ ! -f "custom_scripts/${si1}/" ]
+    do
+      getInput error "$current" "Options" "Please choose a name for your new script: " "Do not incldue a file extension" "Other Script Name"
+      si1=$SI
+    done
+
+    cd custom_scripts
+    mkdir "$si1/"
+    cd $si1
+    touch "${si1}.sh"
+    cd ../
+    selectOptions "" "$current" "Options" "Select Desired Option" "Select a Valid Option" "Paste script into terminal" "Paste path to script into terminal"
+    insertType=$SO
+    if [[ $insertType == "1" ]]; then
+      clear
+      title
+      
+      echo -e "$PRIMARY  Current: ${SECONDARY}${current}$PRIMARY"
+      echo -e "$PRIMARY  ---------------------------------------------"
+      echo -e "$SECONDARY  $text"
+      echo -e -n "$PRIMARY"
+      echo " "
+      
+      echo -e "$PRIMARY    (\e[1;31mDETAILS$PRIMARY) press ctrl + d or type \"$SECONDARY~$PRIMARY\" when done"
+      echo " "
+      echo -e "$SECONDARY  Paste Here >$PRIMARY"
+      read -r -d '~' script
+      echo "$boiler" >> "custom_scripts/${si1}/${si1}.sh"
+      echo "$script" >> "custom_scripts/${si1}/${si1}.sh"
+      echo "$si1" | sed -e "s/\b\(.\)/\u\1/g " >> "customScripts.txt"
+   
+      # getInput "" "$current" "p: " "Do not incldue a file extension" "Script Name"
+    fi
+  fi
+
+
+
+fi
+
+#########################################################
+
+if [[ $SS == "s" ]]; then
+  current="Settings"
+  selectOptions "" "$current" "Settings"  "Select Setting to Modify" "Select Existing Setting to modify" "settings.tropx"
+  optionToChange=$SO
+
+  if [[ $optionToChange == "1" ]]; then
+    setting=$(sed ${optionToChange}!d settings.tropx)
+    setting=$(echo $setting | sed 's/ :.*//')
+    changeOption "$setting"
+  fi
+
+  if [[ $optionToChange == "2" ]]; then
+    setting=$(sed ${optionToChange}!d settings.tropx)
+    setting=$(echo $setting | sed 's/ :.*//')
+    changeOption "$setting"
+  fi
+
+  
+fi
+
+customIFs
+
 }
 
 
@@ -264,24 +475,38 @@ clear
 function selectOptions() {
 stty -echo
 
+checkSettings "Animations"
+animations=$value
+
 title
 breadcrumbs "$2" "$3"
 
 echo -e "$PRIMARY    (${SECONDARY}B$PRIMARY) Back To Main Menu"
+
+if [[ $animations == "OFF" ]] || [[ $animations == "MINIMAL" ]]; then
+  :
+else
 sleep 0.1
+fi
+
+
 echo "    ------------------"
 
 if [[ $6 == "settings.tropx" ]]; then
+  if [[ $animations == "OFF" ]] || [[ $animations == "MINIMAL" ]]; then
+  awk -v SECONDARY="$SECONDARY" -v PRIMARY="$PRIMARY" '
+      {
+          print "    ("SECONDARY NR PRIMARY") " $0
+      }
+  ' settings.tropx
+  else
   awk -v SECONDARY="$SECONDARY" -v PRIMARY="$PRIMARY" '
       {
           system("sleep 0.1")
           print "    ("SECONDARY NR PRIMARY") " $0
       }
   ' settings.tropx
-#   i=$(echo "${@:7}" | wc -w)
-
-# echo "${@:7}" | wc -w
-
+  fi
 else
   if [[ $6 != "" ]]; then
   echo -e "$PRIMARY    (${SECONDARY}1$PRIMARY) $6"
@@ -289,12 +514,20 @@ else
   fi
 fi
 
-
-for arg in "${@:7}"
-do
-    echo -e "$PRIMARY    (${SECONDARY}${i}$PRIMARY) ${arg}"
-    i=$((i+1))
-done
+if [[ $animations == "OFF" ]] || [[ $animations == "MINIMAL" ]]; then
+  for arg in "${@:7}"
+  do
+      echo -e "$PRIMARY    (${SECONDARY}${i}$PRIMARY) ${arg}"
+      i=$((i+1))
+  done
+else
+  for arg in "${@:7}"
+  do
+      echo -e "$PRIMARY    (${SECONDARY}${i}$PRIMARY) ${arg}"
+      i=$((i+1))
+      sleep 0.1
+  done
+fi
 
 stringed=$(echo "${@:7}" | sed -E 's/[^[:space:]]+/"&"/g' )
 
@@ -316,8 +549,7 @@ SO=${SO,,}
 if [[ $SO == "b" ]]; then
   mainMenu error
 fi
-
-selection=("1" "2" "3" "4" "5" "6" "7" "8" "9" "10" "11" "12" "13" "14" "15" "$6" $stringed)
+selection=("1" "2" "3" "4" "5" "6" "7" "8" "9" "10" "11" "12" "13" "14" "15" "16" "17" "18" "19" "20" "21" "22" "23" "24" "25" "26" "27" "28" "29" "30" "31" "32" "33" "$6" $stringed)
 
 if [[ "$(containsElement "$SO" "${selection[@]}")" != "0" ]]; then 
   until [[ "$(containsElement "$SO" "${selection[@]}")" == "0" ]] #unti the result is not an error
@@ -331,37 +563,40 @@ fi
 
 function getInput() {
 stty -echo
-current=$2
-text=$3
-description=$4
-example=$5
 
 title
+breadcrumbs "$2" "$3"
 
-echo -e "$PRIMARY  Current: ${SECONDARY}${current}$PRIMARY"
-echo -e "$PRIMARY  ---------------------------------------------"
-echo -e "$PRIMARY  $text: "
-echo -e -n "$PRIMARY"
-echo " "
 
-#Add custom script option
-if [[ $description != "" ]]; then
-echo -e "$PRIMARY    (\e[1;31mDETAILS$PRIMARY) $description"
-echo " "
+if [[ $animations == "OFF" ]] || [[ $animations == "MINIMAL" ]]; then
+  # if [[ $4 != "" ]]; then
+    echo -e "$PRIMARY    (\e[1;31mDETAILS$PRIMARY) $4"
+    echo " "
+  # fi
+  # if [[ $5 != "" ]]; then
+    echo -e "$PRIMARY    (\e[1;31mEXAMPLE$PRIMARY) $5"
+  # fi
+
+
+else
+  # if [[ $4 != "" ]]; then
+    echo -e "$PRIMARY    (\e[1;31mDETAILS$PRIMARY) $4"
+    echo " "
+    sleep 0.1
+  # fi
+  # if [[ $5 != "" ]]; then
+    echo -e "$PRIMARY    (\e[1;31mEXAMPLE$PRIMARY) $5"
+    sleep 0.1
+    # fi
 fi
-if [[ $example != "" ]]; then
-echo -e "$PRIMARY    (\e[1;31mEXAMPLE$PRIMARY) $example"
-fi
-
-
 
 echo -e " "
 
 if [ "$1" == "error" ]
 then
-echo -n -e "$SECONDARY  Try Again > "
+  echo -n -e "$SECONDARY  Try Again > "
 else
-echo -n -e "$SECONDARY  Type Here > "
+  echo -n -e "$SECONDARY  Type Here > "
 fi
 
 echo -n -e "$PRIMARY"
@@ -369,6 +604,9 @@ stty echo
 read SI
 SI=${SI,,}
 
+if [[ $SI == "b" ]]; then
+  mainMenu error
+fi
 }
 
 ################################################################################################################

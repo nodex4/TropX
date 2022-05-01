@@ -1,6 +1,6 @@
 Debug Mode : (ON) | OFF
-Animations : (ALL) | SOME | NONE
+Animations : ON | MINIMAL | (OFF)
 Default Scripts : (SHOW) | HIDE
-Primary Color : WHITE | RED | BLUE | GREEN | (CYAN) | PINK | YELLOW | GRAY
-Secondary Color : RED | WHITE | (BLUE) | GREEN | CYAN | PINK | YELLOW | GRAY
-Bread Crumbs : (ON) | OFF
+Primary Color : (WHITE) | RED | BLUE | GREEN | CYAN | PINK | YELLOW | GRAY
+Secondary Color : (RED) | WHITE | BLUE | GREEN | CYAN | PINK | YELLOW | GRAY
+Breadcrumbs : (ON) | OFF
