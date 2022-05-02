@@ -310,7 +310,17 @@ echo "    ------------------"
 fi
 
 
-export default_scripts=5
+
+
+
+default_scripts=$(wc -l < defaultScripts.txt)
+
+custom_scripts=$(wc -l < customScripts.txt)
+scripts=$(expr $default_scripts + $custom_scripts)
+
+
+default_scripts=$((default_scripts+1))
+export default_scripts
 
 if [[ "$1" == "error" ]] || [[ "$1" == "back" ]] || [[ $animations == "OFF" ]]; then
 
@@ -369,7 +379,12 @@ echo -n -e "$PRIMARY"
 stty echo
 read SS
 SS=${SS,,}
-options=("s" "m" "h" "1" "2" "3" "4" "5" "6" "7" "8" "9" "10" "11" "12" "13" "14" "15" "16" "17" "18" "19" "20" "21" "22" "23" "24" "25" "26" "27" "28" "29" "30" "31" "32" "33")
+
+
+scriptCount=$((scripts + 1))
+numberOptions=$(echo $(seq $scriptCount))
+
+options=("s" "m" "h" $numberOptions)
 
 if [[ $(containsElement "$SS" "${options[@]}") != "0" ]]; then 
   until [[ $(containsElement "$SS" "${options[@]}") == "0" ]] #unti the result is not an error
@@ -393,20 +408,20 @@ if [[ $SS == "m" ]]; then
 
   if [[ $so1 == "1" ]]; then
     #(1) New has been selected
-          boiler="#!/bin/bash
-source ../functions.sh
-
-current="hey"
-ready custom
-title
-breadcrumbs \""$current"\" \"Options\"
-# END OF BOILER (DO NOT REMOVE ABOVE CODE OR MODIFY IT)
-      "
 
 
     getInput "" "$current" "Please choose a name for your new script: " "Do not incldue a file extension" "Script Name"
     si1=$SI
-    #check if filename exists
+
+    boiler='#!/bin/bash
+source functions.sh
+
+current='"$si1"'
+ready
+title
+breadcrumbs "$current" '"$si1"'
+# END OF BOILER (DO NOT REMOVE OR MODIFY ABOVE CODE)
+'
 
     until [ ! -f "custom_scripts/${si1}/${si1}.sh" ]
     do
@@ -435,13 +450,24 @@ breadcrumbs \""$current"\" \"Options\"
       read -r -d '~' script
       echo "$boiler" >> "custom_scripts/${si1}/${si1}.sh"
       echo "$script" >> "custom_scripts/${si1}/${si1}.sh"
-
       sed '$s/}$//' < customIfs.sh > customIfs.sh.tmp
       mv customIfs.sh.tmp customIfs.sh
-      # sed 'x;${s/}$//;p;x;};1d' 
 
-      echo -e '\n  if [[ $SS == "${default_scripts+1}" ]]; then\n    current="$(sed ${default_scripts+1}!d filename)"' >> customIfs.sh
-      echo -e "    bash custom_scripts/${si1}/${si1}.sh" >> customIfs.sh
+
+
+      # cd custom_scripts
+      # cd ${si}
+      # bash ${si1}.sh
+      # cd ../
+      # cd ../
+      # mainMenu back
+      echo -e '\n   if [[  $(sed $((SS - default_scripts))!d customScripts.txt) == '"${si1}"' ]]; then\n' >> customIfs.sh
+      echo -e "    cd custom_scripts" >> customIfs.sh
+      echo -e "    cd ${si}" >> customIfs.sh
+      echo -e "    bash ${si1}.sh" >> customIfs.sh
+      echo -e "    cd ../" >> customIfs.sh
+      echo -e "    cd ../" >> customIfs.sh
+      echo -e "    mainMenu back" >> customIfs.sh
       echo -e "  fi\n}" >> customIfs.sh
 
     fi
@@ -449,22 +475,28 @@ breadcrumbs \""$current"\" \"Options\"
 
     if [[ $insertType == "2" ]]; then
       getInput "" "$current" "Read Below" "Please type in the relative or full path of the script: " "Do not incldue a file extension" "root/desktop/scriptText.txt"
-    path=$SI
-    
-    if [[ $path = /* ]]; then
-      :
-    else
+    path=$( echo $SI | sed 's/ //g')
+
       until [ -f $path ]
       do
         getInput error "$current" "Read Below" "Please type in the relative or full path of the script: " "Do not incldue a file extension" "root/desktop/scriptText.txt"
         path=$SI
       done
-    fi
+
+    # if [[ $path = /* ]]; then
+    #   :
+    # else
+    #   until [ -f $path ]
+    #   do
+    #     getInput error "$current" "Read Below" "Please type in the relative or full path of the script: " "Do not incldue a file extension" "root/desktop/scriptText.txt"
+    #     path=$SI
+    #   done
+    # fi
 
     # echo "$boiler" >> "custom_scripts/${si1}/${si1}.sh"
     script=$(<$path)
     echo "$script"
-sleep 10
+sleep 3
     echo "$script" >> "custom_scripts/${si1}/${si1}.sh"
 
 
@@ -504,8 +536,26 @@ if [[ $SS == "s" ]]; then
   
 fi
 
-customIFs
 
+
+if [[ $SS == "1" ]]; then
+  echo "1"
+fi
+if [[ $SS == "2" ]]; then
+  echo "2"
+fi
+if [[ $SS == "3" ]]; then
+  echo "3"
+fi
+
+
+
+
+
+
+
+
+customIFs
 }
 
 
