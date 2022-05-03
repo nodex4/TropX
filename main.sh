@@ -8,7 +8,7 @@
 # |____/ \__, |    |_|_|  \___/ \___/| .__/ \___|_|\_\ 
 #         __/ |                      | |               
 #        |___/                       |_|               
-# Github: https://github.com/TroopekYT/
+# Github: https://github.com/troopek/
 
 source test.sh
 source functions.sh
@@ -19,6 +19,6 @@ source functions.sh
 # stty cols 100
 # printf '\e[8;50;10t'
 
-
 mainMenu
+
 

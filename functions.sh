@@ -8,7 +8,7 @@
 # |____/ \__, |    |_|_|  \___/ \___/| .__/ \___|_|\_\ 
 #         __/ |                      | |               
 #        |___/                       |_|               
-# Github: https://github.com/TroopekYT/
+# Github: https://github.com/troopek/
 
 source customIfs.sh
 
@@ -411,12 +411,16 @@ if [[ $SS == "m" ]]; then
 
 
     getInput "" "$current" "Please choose a name for your new script: " "Do not incldue a file extension" "Script Name"
-    si1=$SI
+    si1=$(echo "$SI" | awk '{print tolower($0)}' | sed -e "s/\b\(.\)/\u\1/g ")
+
+
+
+
 
     until [ ! -f "custom_scripts/${si1}/main.sh" ]
     do
       getInput error "$current" "Options" "Please choose a name for your new script: " "Do not incldue a file extension" "Other Script Name"
-      si1=$SI
+      si1=$(echo "$SI" | awk '{print tolower($0)}' | sed -e "s/\b\(.\)/\u\1/g ")
     done
 
     boiler='#!/bin/bash
@@ -434,6 +438,7 @@ cd "'"$si1"'/"
     selectOptions "" "$current" "Options" "Select Desired Option" "Select a Valid Option" "Paste script into terminal" "Paste path to script into terminal"
     insertType=$SO
 
+    
 
     echo "$si1" | sed -e "s/\b\(.\)/\u\1/g " >> "customScripts.txt"
     cd custom_scripts
@@ -441,7 +446,7 @@ cd "'"$si1"'/"
     cd "$si1"
     touch main.sh
     cd ../
-
+    
     if [[ $insertType == "1" ]]; then
       clear
       title
@@ -459,7 +464,7 @@ cd "'"$si1"'/"
 
 
       ifBoiler='
-  if [[ $(sed $((SS - default_scripts))!d customScripts.txt | awk '"'"'{print tolower($0)}'"'"') == "'"${si1}"'" ]]; then
+  if [[ $(sed $((SS - default_scripts))!d customScripts.txt) == "'"${si1}"'" ]]; then
     bash "custom_scripts/'${si1}'/main.sh"
   fi
 }'
@@ -502,9 +507,6 @@ cd "'"$si1"'/"
     echo "$script"
 sleep 3
     echo "$script" >> "custom_scripts/${si1}/${si1}.sh"
-
-
-
 
 
 
@@ -585,13 +587,16 @@ fi
 
 echo "    ------------------"
 
+tabs 4
+fold_width="$(($(tput cols)-4))"
+
 if [[ $6 == "settings.tropx" ]]; then
   if [[ $animations == "OFF" ]] || [[ $animations == "MINIMAL" ]]; then
   awk -v SECONDARY="$SECONDARY" -v PRIMARY="$PRIMARY" '
       {
-          print "    ("SECONDARY NR PRIMARY") " $0
+          print "("SECONDARY NR PRIMARY") " $0
       }
-  ' settings.tropx
+  ' settings.tropx | fold -s -w "$fold_width"  | sed -e "s|^|\t|g"
   # awk -v SECONDARY="$SECONDARY" -v PRIMARY="$PRIMARY" '
   #     {
   #         print "    ("SECONDARY NR PRIMARY") " $0 | fold -s -w "$fold_width" | sed -e "s|^|\t|g"
@@ -601,27 +606,27 @@ if [[ $6 == "settings.tropx" ]]; then
   awk -v SECONDARY="$SECONDARY" -v PRIMARY="$PRIMARY" '
       {
           system("sleep 0.1")
-          print "    ("SECONDARY NR PRIMARY") " $0
+          print "("SECONDARY NR PRIMARY") " $0
       }
-  ' settings.tropx
+  ' settings.tropx | fold -s -w "$fold_width"  | sed -e "s|^|\t|g"
   fi
 else
   if [[ $6 != "" ]]; then
-  echo -e "$PRIMARY    (${SECONDARY}1$PRIMARY) $6"
-  i=2
+    echo -e "$PRIMARY(${SECONDARY}1$PRIMARY) $6"  | fold -s -w "$fold_width"  | sed -e "s|^|\t|g"
+    i=2
   fi
 fi
 
 if [[ $animations == "OFF" ]] || [[ $animations == "MINIMAL" ]]; then
   for arg in "${@:7}"
   do
-      echo -e "${PRIMARY}    (${SECONDARY}${i}$PRIMARY) ${arg}"
+      echo -e "${PRIMARY}(${SECONDARY}${i}$PRIMARY) ${arg}" | fold -s -w "$fold_width"  | sed -e "s|^|\t|g"
       i=$((i+1))
   done
 else
   for arg in "${@:7}"
   do
-      echo -e "${PRIMARY}    (${SECONDARY}${i}$PRIMARY) ${arg}"
+      echo -e "${PRIMARY}(${SECONDARY}${i}$PRIMARY) ${arg}"  | fold -s -w "$fold_width"  | sed -e "s|^|\t|g"
       i=$((i+1))
       sleep 0.1
   done
@@ -666,24 +671,28 @@ title
 breadcrumbs "$2" "$3"
 
 
+tabs 4
+fold_width="$(($(tput cols)-4))"
+
+
 if [[ $animations == "OFF" ]] || [[ $animations == "MINIMAL" ]]; then
   # if [[ $4 != "" ]]; then
-    echo -e "$PRIMARY    (\e[1;31mDETAILS$PRIMARY) $4"
+    echo -e "$PRIMARY(\e[1;31mDETAILS$PRIMARY) $4"  | fold -s -w "$fold_width"  | sed -e "s|^|\t|g"
     echo " "
   # fi
   # if [[ $5 != "" ]]; then
-    echo -e "$PRIMARY    (\e[1;31mEXAMPLE$PRIMARY) $5"
+    echo -e "$PRIMARY(\e[1;31mEXAMPLE$PRIMARY) $5"  | fold -s -w "$fold_width"  | sed -e "s|^|\t|g"
   # fi
 
 
 else
   # if [[ $4 != "" ]]; then
-    echo -e "$PRIMARY    (\e[1;31mDETAILS$PRIMARY) $4"
+    echo -e "$PRIMARY(\e[1;31mDETAILS$PRIMARY) $4"  | fold -s -w "$fold_width"  | sed -e "s|^|\t|g"
     echo " "
     sleep 0.1
   # fi
   # if [[ $5 != "" ]]; then
-    echo -e "$PRIMARY    (\e[1;31mEXAMPLE$PRIMARY) $5"
+    echo -e "$PRIMARY(\e[1;31mEXAMPLE$PRIMARY) $5"  | fold -s -w "$fold_width"  | sed -e "s|^|\t|g"
     sleep 0.1
     # fi
 fi

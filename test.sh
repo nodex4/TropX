@@ -14,3 +14,7 @@
 
 ############################################
 
+
+# tabs 4
+# fold_width="$(($(tput cols)-4))"
+# echo "A very long line that I want to fold on the word boundary and indent as well" | fold -s -w "$fold_width"  | sed -e "s|^|\t|g"
