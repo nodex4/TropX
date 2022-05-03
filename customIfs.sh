@@ -23,5 +23,4 @@ function customIFs() {
     cd "custom one"
     bash "custom one.sh"
   fi
-
 }

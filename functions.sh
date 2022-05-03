@@ -420,8 +420,6 @@ if [[ $SS == "m" ]]; then
     done
 
     boiler='#!/bin/bash
-cd ../
-cd ../
 source functions.sh
 
 current="'"$si1"'"
@@ -462,9 +460,7 @@ cd "'"$si1"'/"
 
       ifBoiler='
   if [[ $(sed $((SS - default_scripts))!d customScripts.txt | awk '"'"'{print tolower($0)}'"'"') == "'"${si1}"'" ]]; then
-    cd custom_scripts
-    cd "'${si1}'"
-    bash "main.sh"
+    bash "custom_scripts/'${si1}'/main.sh"
   fi
 }'
       
