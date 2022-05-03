@@ -413,7 +413,7 @@ if [[ $SS == "m" ]]; then
     getInput "" "$current" "Please choose a name for your new script: " "Do not incldue a file extension" "Script Name"
     si1=$SI
 
-    until [ ! -f "custom_scripts/${si1}/${si1}.sh" ]
+    until [ ! -f "custom_scripts/${si1}/main.sh" ]
     do
       getInput error "$current" "Options" "Please choose a name for your new script: " "Do not incldue a file extension" "Other Script Name"
       si1=$SI
@@ -428,8 +428,8 @@ current="'"$si1"'"
 ready
 title
 breadcrumbs "$current" "'"$si1"'"
-cd "custom_scripts"
-cd "'"$si1"'"
+cd "custom_scripts/"
+cd "'"$si1"'/"
 # END OF BOILER (DO NOT REMOVE OR MODIFY ABOVE CODE)
 '
 
@@ -441,7 +441,7 @@ cd "'"$si1"'"
     cd custom_scripts
     mkdir "$si1"
     cd "$si1"
-    touch "${si1}.sh"
+    touch main.sh
     cd ../
 
     if [[ $insertType == "1" ]]; then
@@ -453,8 +453,8 @@ cd "'"$si1"'"
       echo " "
       echo -e "$SECONDARY  Paste Here >$PRIMARY"
       read -r -d '~' script
-      echo "$boiler" >> "custom_scripts/${si1}/${si1}.sh"
-      echo "$script" >> "custom_scripts/${si1}/${si1}.sh"
+      echo "$boiler" >> "custom_scripts/${si1}/main.sh"
+      echo "$script" >> "custom_scripts/${si1}/main.sh"
       sed '$s/}$//' < customIfs.sh > customIfs.sh.tmp
       mv customIfs.sh.tmp customIfs.sh
 
@@ -464,7 +464,7 @@ cd "'"$si1"'"
   if [[ $(sed $((SS - default_scripts))!d customScripts.txt | awk '"'"'{print tolower($0)}'"'"') == "'"${si1}"'" ]]; then
     cd custom_scripts
     cd "'${si1}'"
-    bash "'${si1}'.sh"
+    bash "main.sh"
   fi
 }'
       
