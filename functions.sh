@@ -22,7 +22,7 @@ function checkSettings() {
   fi
 
   if [[ "$2" == "custom" ]]; then
-    setting=$(grep "^$1 :" ../settings.tropx | \
+    setting=$(grep "^$1 :" ../../settings.tropx | \
       cut "-d:" -f2- | \
         cut "-d " -f2-)
   else
@@ -413,31 +413,36 @@ if [[ $SS == "m" ]]; then
     getInput "" "$current" "Please choose a name for your new script: " "Do not incldue a file extension" "Script Name"
     si1=$SI
 
-    boiler='#!/bin/bash
-source functions.sh
-
-current='"$si1"'
-ready
-title
-breadcrumbs "$current" '"$si1"'
-# END OF BOILER (DO NOT REMOVE OR MODIFY ABOVE CODE)
-'
-
     until [ ! -f "custom_scripts/${si1}/${si1}.sh" ]
     do
       getInput error "$current" "Options" "Please choose a name for your new script: " "Do not incldue a file extension" "Other Script Name"
       si1=$SI
     done
 
-    echo "$si1" | sed -e "s/\b\(.\)/\u\1/g " >> "customScripts.txt"
-    cd custom_scripts
-    mkdir "$si1"
-    cd $si1
-    touch "${si1}.sh"
-    cd ../
+    boiler='#!/bin/bash
+cd ../
+cd ../
+source functions.sh
+
+current="'"$si1"'"
+ready
+title
+breadcrumbs "$current" "'"$si1"'"
+cd "custom_scripts"
+cd "'"$si1"'"
+# END OF BOILER (DO NOT REMOVE OR MODIFY ABOVE CODE)
+'
+
     selectOptions "" "$current" "Options" "Select Desired Option" "Select a Valid Option" "Paste script into terminal" "Paste path to script into terminal"
     insertType=$SO
 
+
+    echo "$si1" | sed -e "s/\b\(.\)/\u\1/g " >> "customScripts.txt"
+    cd custom_scripts
+    mkdir "$si1"
+    cd "$si1"
+    touch "${si1}.sh"
+    cd ../
 
     if [[ $insertType == "1" ]]; then
       clear
@@ -455,20 +460,23 @@ breadcrumbs "$current" '"$si1"'
 
 
 
-      # cd custom_scripts
-      # cd ${si}
-      # bash ${si1}.sh
-      # cd ../
-      # cd ../
-      # mainMenu back
-      echo -e '\n   if [[  $(sed $((SS - default_scripts))!d customScripts.txt) == '"${si1}"' ]]; then\n' >> customIfs.sh
-      echo -e "    cd custom_scripts" >> customIfs.sh
-      echo -e "    cd ${si}" >> customIfs.sh
-      echo -e "    bash ${si1}.sh" >> customIfs.sh
-      echo -e "    cd ../" >> customIfs.sh
-      echo -e "    cd ../" >> customIfs.sh
-      echo -e "    mainMenu back" >> customIfs.sh
-      echo -e "  fi\n}" >> customIfs.sh
+      ifBoiler='
+  if [[ $(sed $((SS - default_scripts))!d customScripts.txt | awk '"'"'{print tolower($0)}'"'"') == "'"${si1}"'" ]]; then
+    cd custom_scripts
+    cd "'${si1}'"
+    bash "'${si1}'.sh"
+  fi
+}'
+      
+      echo "$ifBoiler" >> customIfs.sh
+
+      # echo -e '\n  if [[  $(sed $((SS - default_scripts))!d customScripts.txt) == "'"${si1}"'" ]]; then\n' >> customIfs.sh
+      # echo -e "    cd custom_scripts" >> customIfs.sh
+      # echo -e "    cd \"${si1}\"" >> customIfs.sh
+      # echo -e "    bash \"${si1}.sh\"" >> customIfs.sh
+      # echo -e "    cd ../" >> customIfs.sh
+      # echo -e "    cd ../" >> customIfs.sh
+      # echo -e "  fi\n}" >> customIfs.sh
 
     fi
 
@@ -551,11 +559,8 @@ fi
 
 
 
-
-
-
-
 customIFs
+mainMenu back
 }
 
 
@@ -563,6 +568,9 @@ customIFs
 
 function selectOptions() {
 stty -echo
+
+tabs 3
+fold_width="$(($(tput cols)-3))"
 
 checkSettings "Animations"
 animations=$value
@@ -588,6 +596,11 @@ if [[ $6 == "settings.tropx" ]]; then
           print "    ("SECONDARY NR PRIMARY") " $0
       }
   ' settings.tropx
+  # awk -v SECONDARY="$SECONDARY" -v PRIMARY="$PRIMARY" '
+  #     {
+  #         print "    ("SECONDARY NR PRIMARY") " $0 | fold -s -w "$fold_width" | sed -e "s|^|\t|g"
+  #     }
+  # ' settings.tropx
   else
   awk -v SECONDARY="$SECONDARY" -v PRIMARY="$PRIMARY" '
       {
@@ -606,13 +619,13 @@ fi
 if [[ $animations == "OFF" ]] || [[ $animations == "MINIMAL" ]]; then
   for arg in "${@:7}"
   do
-      echo -e "$PRIMARY    (${SECONDARY}${i}$PRIMARY) ${arg}"
+      echo -e "${PRIMARY}    (${SECONDARY}${i}$PRIMARY) ${arg}"
       i=$((i+1))
   done
 else
   for arg in "${@:7}"
   do
-      echo -e "$PRIMARY    (${SECONDARY}${i}$PRIMARY) ${arg}"
+      echo -e "${PRIMARY}    (${SECONDARY}${i}$PRIMARY) ${arg}"
       i=$((i+1))
       sleep 0.1
   done

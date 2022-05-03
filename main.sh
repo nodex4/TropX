@@ -13,6 +13,12 @@
 source test.sh
 source functions.sh
 
+# testing terminal resizing
+# resize -s 25 100
+# stty rows 25
+# stty cols 100
+# printf '\e[8;50;10t'
+
 
 mainMenu
 
