@@ -8,7 +8,7 @@
 # |____/ \__, |    |_|_|  \___/ \___/| .__/ \___|_|\_\ 
 #         __/ |                      | |               
 #        |___/                       |_|               
-# Github: https://github.com/troopek/
+# Github: https://github.com/Troopek/
 
 source customIfs.sh
 
@@ -88,6 +88,14 @@ ready
 
 function end() {
 clear
+
+ifconfig $WI down > /dev/null 2>&1
+macchanger -p $WI > /dev/null 2>&1
+iwconfig $WI mode managed > /dev/null 2>&1
+ifconfig $WI up > /dev/null 2>&1
+rm RANDOM_wordlist.txt > /dev/null 2>&1
+nmcli device connect $WI > /dev/null 2>&1
+
 echo -e "$BOLD_CYAN ★ $BOLD_BLUE Have a nice day! $BOLD_CYAN★"
 echo -e "$BOLD_BLUE My GitHub:$PRIMARY https://github.com/TroopekYT"
 exit
@@ -96,6 +104,10 @@ exit
 ################################################################################################################
 
 function breadcrumbs() {
+  checkSettings "Text Folding"; textfolding=$value;
+  tabs 2
+  fold_width="$(($(tput cols)-2))"
+
   checkSettings "Animations"
   animations=$value
 
@@ -104,25 +116,26 @@ function breadcrumbs() {
   
   if [[ "$3" == "error" ]] || [[ "$3" == "back" ]] || [[ $animations == "OFF" ]] || ([[ $animations == "MINIMAL" ]] && [[ "$3" == "back" ]]) || ([[ $animations == "MINIMAL" ]] && [[ "$3" != "main" ]]); then
     if [[ "$breadcrumbs" == "ON" ]]; then
-      echo -e "$PRIMARY  Current: $SECONDARY$1$PRIMARY"
+      echo -e "${PRIMARY}Current: $SECONDARY$1$PRIMARY"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/  /'; fi
       echo -e "$PRIMARY  ---------------------------------------------"
     else
       :
     fi
 
-    echo -e "$PRIMARY  $2: "
-    echo -e -n "$PRIMARY"
+    echo -e "$PRIMARY$2: "  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/  /'; fi
     echo " "
   else
-    echo -e "$PRIMARY  Current: $SECONDARY$1$PRIMARY"
+    echo -e "${PRIMARY}Current: $SECONDARY$1$PRIMARY"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/  /'; fi
     sleep 0.1
     echo -e "$PRIMARY  ---------------------------------------------"
     sleep 0.1
-    echo -e "$PRIMARY  $2: "
+    echo -e "$PRIMARY$2: "  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/  /'; fi
     sleep 0.1
-    echo -e -n "$PRIMARY"
     echo " "
   fi
+
+  tabs 4
+  fold_width="$(($(tput cols)-4))"
 }
 
 ################################################################################################################
@@ -277,6 +290,7 @@ sleep 0.1
 ################################################################################################################
 
 function mainMenu() {
+checkSettings "Text Folding"; textfolding=$value;
 stty -echo
 current="Main Menu"
 
@@ -292,21 +306,26 @@ niceTitle
 breadcrumbs "$current" "Available Scripts" main
 fi
 
+tabs 4
+fold_width="$(($(tput cols)-4))"
+
+
 
 if [[ "$1" == "error" ]] || [[ "$1" == "back" ]] || [[ $animations == "OFF" ]]; then
-echo -e "$PRIMARY    (${SECONDARY}S$PRIMARY) Settings"
-echo -e "$PRIMARY    (${SECONDARY}M$PRIMARY) Manage Scripts"
-echo -e "$PRIMARY    (${SECONDARY}H$PRIMARY) Help"
-echo "    ------------------"
+  echo -e "$PRIMARY(${SECONDARY}S$PRIMARY) Settings" | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
+  echo -e "$PRIMARY(${SECONDARY}M$PRIMARY) Manage Scripts"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
+  echo -e "$PRIMARY(${SECONDARY}H$PRIMARY) Help"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
+  echo "    ------------------"
 else
-sleep 0.1
-echo -e "$PRIMARY    (${SECONDARY}S$PRIMARY) Settings"
-sleep 0.1
-echo -e "$PRIMARY    (${SECONDARY}M$PRIMARY) Manage Scripts"
-sleep 0.1
-echo -e "$PRIMARY    (${SECONDARY}H$PRIMARY) Help"
-sleep 0.1
-echo "    ------------------"
+  sleep 0.1
+  echo -e "$PRIMARY(${SECONDARY}M$PRIMARY) Manage Scripts"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
+  echo -e "$PRIMARY(${SECONDARY}S$PRIMARY) Settings" 
+  sleep 0.1
+  echo -e "$PRIMARY(${SECONDARY}M$PRIMARY) Manage Scripts"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
+  sleep 0.1
+  echo -e "$PRIMARY(${SECONDARY}H$PRIMARY) Help"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
+  sleep 0.1
+  echo "    ------------------"
 fi
 
 
@@ -327,15 +346,15 @@ if [[ "$1" == "error" ]] || [[ "$1" == "back" ]] || [[ $animations == "OFF" ]]; 
   
   awk -v SECONDARY="$SECONDARY" -v PRIMARY="$PRIMARY" '
       {
-          print "    ("SECONDARY NR PRIMARY") " $0
+          print "("SECONDARY NR PRIMARY") " $0
       }
-  ' defaultScripts.txt
+  ' defaultScripts.txt  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
   
   awk -v SECONDARY="$SECONDARY" -v PRIMARY="$PRIMARY" '
       {
-          print "    ("SECONDARY NR+ENVIRON["default_scripts"] PRIMARY") " $0
+          print "("SECONDARY NR+ENVIRON["default_scripts"] PRIMARY") " $0
       }
-  ' customScripts.txt
+  ' customScripts.txt  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
   
 
 else
@@ -344,16 +363,16 @@ else
   awk -v SECONDARY="$SECONDARY" -v PRIMARY="$PRIMARY" '
       {
           system("sleep 0.1")
-          print "    ("SECONDARY NR PRIMARY") " $0
+          print "("SECONDARY NR PRIMARY") " $0
       }
-  ' defaultScripts.txt
+  ' defaultScripts.txt  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
   
   awk -v SECONDARY="$SECONDARY" -v PRIMARY="$PRIMARY" '
       {
           system("sleep 0.1")
-          print "    ("SECONDARY NR+ENVIRON["default_scripts"] PRIMARY") " $0
+          print "("SECONDARY NR+ENVIRON["default_scripts"] PRIMARY") " $0
       }
-  ' customScripts.txt
+  ' customScripts.txt  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
   sleep 0.1
 
 fi
@@ -363,16 +382,21 @@ fi
 
 echo -e " "
 
+tabs 2
+fold_width="$(($(tput cols)-2))"
+
+
 if [[ "$1" == "error" ]] || [[ "$1" == "back" ]] || [[ $animations == "OFF" ]]; then
   if [[ "$1" == "error" ]]; then
-  echo -n -e "$SECONDARY  Select a Valid Option > "
+  echo -n -e "${SECONDARY}Select a Valid Option > " | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/  /'; fi
   else
-  echo -n -e "$SECONDARY  Select Desired Option > "
+  echo -n -e "${SECONDARY}Select Desired Option > " | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/  /'; fi
   fi
 else
   sleep 0.1
-  echo -n -e "$SECONDARY  Select Desired Option > "
+  echo -n -e "${SECONDARY}Select Desired Option > " | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/  /'; fi
 fi
+
 
 echo -n -e "$PRIMARY"
 
@@ -406,16 +430,9 @@ if [[ $SS == "m" ]]; then
   selectOptions "" "$current" "Options" "Select Desired Option" "Select a Valid Option" "New Script" "Modify Existing" "Delete Script"
   so1=$SO
 
-  if [[ $so1 == "1" ]]; then
-    #(1) New has been selected
-
-
+  if [[ $so1 == "1" ]]; then #NEW
     getInput "" "$current" "Please choose a name for your new script: " "Do not incldue a file extension" "Script Name"
     si1=$(echo "$SI" | awk '{print tolower($0)}' | sed -e "s/\b\(.\)/\u\1/g ")
-
-
-
-
 
     until [ ! -f "custom_scripts/${si1}/main.sh" ]
     do
@@ -434,28 +451,26 @@ cd "custom_scripts/"
 cd "'"$si1"'/"
 # END OF BOILER (DO NOT REMOVE OR MODIFY ABOVE CODE)
 '
-
     selectOptions "" "$current" "Options" "Select Desired Option" "Select a Valid Option" "Paste script into terminal" "Paste path to script into terminal"
     insertType=$SO
 
-    
-
-    echo "$si1" | sed -e "s/\b\(.\)/\u\1/g " >> "customScripts.txt"
-    cd custom_scripts
-    mkdir "$si1"
-    cd "$si1"
-    touch main.sh
-    cd ../
-    
-    if [[ $insertType == "1" ]]; then
+    if [[ $insertType == "1" ]]; then #paste
       clear
       title
       breadcrumbs "$current" "Options"
       
       echo -e "$PRIMARY    (\e[1;31mDETAILS$PRIMARY) press ctrl + d or type \"$SECONDARY~$PRIMARY\" when done"
       echo " "
-      echo -e "$SECONDARY  Paste Here >$PRIMARY"
+      echo -e "$SECONDARY  Paste Here > $PRIMARY"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/  /'; fi
       read -r -d '~' script
+
+      cd custom_scripts
+      mkdir "$si1"
+      cd "$si1"
+      touch main.sh
+      cd ../../
+
+
       echo "$boiler" >> "custom_scripts/${si1}/main.sh"
       echo "$script" >> "custom_scripts/${si1}/main.sh"
       sed '$s/}$//' < customIfs.sh > customIfs.sh.tmp
@@ -470,53 +485,54 @@ cd "'"$si1"'/"
 }'
       
       echo "$ifBoiler" >> customIfs.sh
-
-      # echo -e '\n  if [[  $(sed $((SS - default_scripts))!d customScripts.txt) == "'"${si1}"'" ]]; then\n' >> customIfs.sh
-      # echo -e "    cd custom_scripts" >> customIfs.sh
-      # echo -e "    cd \"${si1}\"" >> customIfs.sh
-      # echo -e "    bash \"${si1}.sh\"" >> customIfs.sh
-      # echo -e "    cd ../" >> customIfs.sh
-      # echo -e "    cd ../" >> customIfs.sh
-      # echo -e "  fi\n}" >> customIfs.sh
-
     fi
 
-
-    if [[ $insertType == "2" ]]; then
-      getInput "" "$current" "Read Below" "Please type in the relative or full path of the script: " "Do not incldue a file extension" "root/desktop/scriptText.txt"
+    if [[ $insertType == "2" ]]; then #path
+      getInput "" "$current" "Read Below" "Please type in the relative or full path of the script: " "Do not incldue a file extension" "/root/desktop/script_text.txt"
     path=$( echo $SI | sed 's/ //g')
 
       until [ -f $path ]
       do
-        getInput error "$current" "Read Below" "Please type in the relative or full path of the script: " "Do not incldue a file extension" "root/desktop/scriptText.txt"
+        getInput error "$current" "Read Below" "Please type in the relative or full path of the script: " "Do not incldue a file extension" "/root/desktop/script_text.txt"
         path=$SI
       done
+      script=$(<$path)  
 
-    # if [[ $path = /* ]]; then
-    #   :
-    # else
-    #   until [ -f $path ]
-    #   do
-    #     getInput error "$current" "Read Below" "Please type in the relative or full path of the script: " "Do not incldue a file extension" "root/desktop/scriptText.txt"
-    #     path=$SI
-    #   done
-    # fi
 
-    # echo "$boiler" >> "custom_scripts/${si1}/${si1}.sh"
-    script=$(<$path)
-    echo "$script"
-sleep 3
-    echo "$script" >> "custom_scripts/${si1}/${si1}.sh"
+      cd custom_scripts
+      mkdir "$si1"
+      cd "$si1"
+      touch main.sh
+      cd ../../
+
+      echo "$boiler" >> "custom_scripts/${si1}/main.sh"
+      echo "$script" >> "custom_scripts/${si1}/main.sh"
+      sed '$s/}$//' < customIfs.sh > customIfs.sh.tmp
+      mv customIfs.sh.tmp customIfs.sh
 
 
 
+
+      ifBoiler='
+  if [[ $(sed $((SS - default_scripts))!d customScripts.txt) == "'"${si1}"'" ]]; then
+    bash "custom_scripts/'${si1}'/main.sh"
+  fi
+}'    
+      echo "$ifBoiler" >> customIfs.sh
 
 
 
     fi
+
+    echo "$si1" | sed -e "s/\b\(.\)/\u\1/g " >> "customScripts.txt"
+  
+
+
   fi
 
-
+  if [[ $so1 == "2" ]]; then
+        selectOptions "" "$current" "Existing Scripts" "Select Script to Edit" "Select a Valid Script" $linesofcustiomnscriptsfieltxt
+  fi
 
 fi
 
@@ -565,18 +581,25 @@ mainMenu back
 ################################################################################################################
 
 function selectOptions() {
+checkSettings "Text Folding"; textfolding=$value;
 stty -echo
 
-tabs 3
-fold_width="$(($(tput cols)-3))"
+tabs 4
+fold_width="$(($(tput cols)-4))"
 
 checkSettings "Animations"
 animations=$value
 
 title
-breadcrumbs "$2" "$3"
+if [[ "$1" != "setup" ]]; then
+  breadcrumbs "$2" "$3"
+else
+breadcrumbs "Setup" "Available Wireless Interfaces"
+fi
 
-echo -e "$PRIMARY    (${SECONDARY}B$PRIMARY) Back To Main Menu"
+if [[ "$1" != "setup" ]]; then
+echo -e "$PRIMARY(${SECONDARY}B$PRIMARY) Back To Main Menu" | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
+fi
 
 if [[ $animations == "OFF" ]] || [[ $animations == "MINIMAL" ]]; then
   :
@@ -584,11 +607,9 @@ else
 sleep 0.1
 fi
 
-
-echo "    ------------------"
-
-tabs 4
-fold_width="$(($(tput cols)-4))"
+if [[ "$1" != "setup" ]]; then
+  echo "    ------------------"
+fi
 
 if [[ $6 == "settings.tropx" ]]; then
   if [[ $animations == "OFF" ]] || [[ $animations == "MINIMAL" ]]; then
@@ -596,7 +617,7 @@ if [[ $6 == "settings.tropx" ]]; then
       {
           print "("SECONDARY NR PRIMARY") " $0
       }
-  ' settings.tropx | fold -s -w "$fold_width"  | sed -e "s|^|\t|g"
+  ' settings.tropx | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
   # awk -v SECONDARY="$SECONDARY" -v PRIMARY="$PRIMARY" '
   #     {
   #         print "    ("SECONDARY NR PRIMARY") " $0 | fold -s -w "$fold_width" | sed -e "s|^|\t|g"
@@ -608,11 +629,11 @@ if [[ $6 == "settings.tropx" ]]; then
           system("sleep 0.1")
           print "("SECONDARY NR PRIMARY") " $0
       }
-  ' settings.tropx | fold -s -w "$fold_width"  | sed -e "s|^|\t|g"
+  ' settings.tropx | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
   fi
 else
   if [[ $6 != "" ]]; then
-    echo -e "$PRIMARY(${SECONDARY}1$PRIMARY) $6"  | fold -s -w "$fold_width"  | sed -e "s|^|\t|g"
+    echo -e "$PRIMARY(${SECONDARY}1$PRIMARY) $6"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
     i=2
   fi
 fi
@@ -620,13 +641,14 @@ fi
 if [[ $animations == "OFF" ]] || [[ $animations == "MINIMAL" ]]; then
   for arg in "${@:7}"
   do
-      echo -e "${PRIMARY}(${SECONDARY}${i}$PRIMARY) ${arg}" | fold -s -w "$fold_width"  | sed -e "s|^|\t|g"
+      echo -e "${PRIMARY}(${SECONDARY}${i}$PRIMARY) ${arg}" | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
       i=$((i+1))
+
   done
 else
   for arg in "${@:7}"
   do
-      echo -e "${PRIMARY}(${SECONDARY}${i}$PRIMARY) ${arg}"  | fold -s -w "$fold_width"  | sed -e "s|^|\t|g"
+      echo -e "${PRIMARY}(${SECONDARY}${i}$PRIMARY) ${arg}"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
       i=$((i+1))
       sleep 0.1
   done
@@ -637,11 +659,14 @@ stringed=$(echo "${@:7}" | sed -E 's/[^[:space:]]+/"&"/g' )
 
 echo -e " "
 
+tabs 2
+fold_width="$(($(tput cols)-2))"
+
 if [ "$1" == "error" ]
 then
-echo -n -e "$SECONDARY  $5 > "
+echo -n -e "$SECONDARY$5 > "  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/  /'; fi
 else
-echo -n -e "$SECONDARY  $4 > "
+echo -n -e "$SECONDARY$4 > "  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/  /'; fi
 fi
 
 echo -n -e "$PRIMARY"
@@ -665,6 +690,7 @@ fi
 ################################################################################################################
 
 function getInput() {
+checkSettings "Text Folding"; textfolding=$value;
 stty -echo
 
 title
@@ -677,22 +703,22 @@ fold_width="$(($(tput cols)-4))"
 
 if [[ $animations == "OFF" ]] || [[ $animations == "MINIMAL" ]]; then
   # if [[ $4 != "" ]]; then
-    echo -e "$PRIMARY(\e[1;31mDETAILS$PRIMARY) $4"  | fold -s -w "$fold_width"  | sed -e "s|^|\t|g"
+    echo -e "$PRIMARY(\e[1;31mDETAILS$PRIMARY) $4"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
     echo " "
   # fi
   # if [[ $5 != "" ]]; then
-    echo -e "$PRIMARY(\e[1;31mEXAMPLE$PRIMARY) $5"  | fold -s -w "$fold_width"  | sed -e "s|^|\t|g"
+    echo -e "$PRIMARY(\e[1;31mEXAMPLE$PRIMARY) $5"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
   # fi
 
 
 else
   # if [[ $4 != "" ]]; then
-    echo -e "$PRIMARY(\e[1;31mDETAILS$PRIMARY) $4"  | fold -s -w "$fold_width"  | sed -e "s|^|\t|g"
+    echo -e "$PRIMARY(\e[1;31mDETAILS$PRIMARY) $4"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
     echo " "
     sleep 0.1
   # fi
   # if [[ $5 != "" ]]; then
-    echo -e "$PRIMARY(\e[1;31mEXAMPLE$PRIMARY) $5"  | fold -s -w "$fold_width"  | sed -e "s|^|\t|g"
+    echo -e "$PRIMARY(\e[1;31mEXAMPLE$PRIMARY) $5"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
     sleep 0.1
     # fi
 fi
@@ -701,9 +727,9 @@ echo -e " "
 
 if [ "$1" == "error" ]
 then
-  echo -n -e "$SECONDARY  Try Again > "
+  echo -n -e "$SECONDARY  Try Again > "  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/  /'; fi
 else
-  echo -n -e "$SECONDARY  Type Here > "
+  echo -n -e "$SECONDARY  Type Here > "  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/  /'; fi
 fi
 
 echo -n -e "$PRIMARY"
@@ -715,6 +741,8 @@ if [[ $SI == "b" ]]; then
   mainMenu error
 fi
 }
+
+
 
 ################################################################################################################
 
@@ -751,7 +779,11 @@ function changeOption() {
 stty -echo
 current="Settings / $1"
 checkSettings "$1"
-selectOptions "" "$current" "New Value" "Select New Value" "Select a Valid New Value" $listOptions
+if [[ "$2" == "setup" ]]; then
+  selectOptions setup "$current" "New Value" "Select New Value" "Select a Valid New Value" $listOptions
+else
+  selectOptions "" "$current" "New Value"  "Select New Value" "Select a Valid New Value" $listOptions
+fi
 newValue=$SO
 
 
