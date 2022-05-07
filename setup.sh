@@ -35,6 +35,9 @@ fi
 
 ##########################
 #make them select their wireless interface using changeOption 
-changeOption "Wireless Interface" setup
-sleep 5
-bash main.sh
+optionToChange=$(grep -n "Wireless Interface" settings.tropx | cut -d: -f1)
+setting=$(sed ${optionToChange}!d settings.tropx)
+    setting=$(echo $setting | sed 's/ :.*//')
+    changeOption "$setting" setup
+
+# bash main.sh

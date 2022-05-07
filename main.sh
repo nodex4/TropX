@@ -19,6 +19,10 @@ source functions.sh
 # stty cols 100
 # printf '\e[8;50;10t'
 
+
+
+
+
 mainMenu
 
 

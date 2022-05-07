@@ -107,6 +107,7 @@ exit
 ################################################################################################################
 
 function breadcrumbs() {
+  COLUMNS="$(tput cols)"
   checkSettings "Text Folding"; textfolding=$value;
   tabs 4
   fold_width="$(($(tput cols)-4))"
@@ -120,7 +121,17 @@ function breadcrumbs() {
   if [[ "$3" == "error" ]] || [[ "$3" == "back" ]] || [[ $animations == "OFF" ]] || ([[ $animations == "MINIMAL" ]] && [[ "$3" == "back" ]]) || ([[ $animations == "MINIMAL" ]] && [[ "$3" != "main" ]]); then
     if [[ "$breadcrumbs" == "ON" ]]; then
       echo -e "${PRIMARY}Current: $SECONDARY$1$PRIMARY"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
-      echo -e "$PRIMARY    ---------------------------------------------"
+
+
+      if [[ $COLUMNS > 53 ]]; then
+        echo -e "$PRIMARY    ---------------------------------------------"
+      else
+        echo -e "$PRIMARY    ----------------------"
+      fi
+
+      
+
+
     else
       :
     fi
@@ -203,14 +214,32 @@ tropx="
   $PRIMARY            ░         ░ ░            $SECONDARY   ░    ░  
                                                                     "
 
-
+minitropx="
+  $PRIMARY▄▄▄█████▓   $SECONDARY▒██   ██▒
+  $PRIMARY▓  ██▒ ▓▒   $SECONDARY▒▒ █ █ ▒░
+  $PRIMARY▒ ▓██░ ▒░   $SECONDARY░░  █   ░
+  $PRIMARY░ ▓██▓ ░    $SECONDARY ░ █ █ ▒ 
+  $PRIMARY  ▒██▒ ░    $SECONDARY▒██▒ ▒██▒
+  $PRIMARY  ▒ ░░     $SECONDARY ▒▒ ░ ░▓ ░
+  $PRIMARY    ░      $SECONDARY ░░   ░▒ ░
+  $PRIMARY  ░        $SECONDARY  ░    ░  
+  $PRIMARY           $SECONDARY  ░    ░  
+                     "
 
 clear
-echo -e "$tropx"
 
-echo -e -n "$PRIMARY                                       "
-echo -e "By$SECONDARY Troopek  "
-echo " "
+COLUMNS="$(tput cols)"
+if [[ $COLUMNS > 53 ]]; then
+  echo -e "$tropx"
+  
+  echo -e -n "$PRIMARY                                       "
+  echo -e "By$SECONDARY Troopek  "
+  echo " "
+else
+  echo -e "$minitropx"
+  echo -e -n "$PRIMARY"
+fi
+
 }
 
 ################################################################################################################
@@ -276,29 +305,58 @@ tropx="
   $PRIMARY            ░         ░ ░            $SECONDARY   ░    ░  
                                                                     "
 
-clear
-sleep 1
 
-echo -e "$t"
-sleep 0.15
-clear
-echo -e "$tr"
-sleep 0.15
-clear
-echo -e "$tro"
-sleep 0.15
-clear
-echo -e "$trop"
-
-sleep 0.3
-clear
-echo -e "$tropx"
+minitropx="
+  $PRIMARY▄▄▄█████▓   $SECONDARY▒██   ██▒
+  $PRIMARY▓  ██▒ ▓▒   $SECONDARY▒▒ █ █ ▒░
+  $PRIMARY▒ ▓██░ ▒░   $SECONDARY░░  █   ░
+  $PRIMARY░ ▓██▓ ░    $SECONDARY ░ █ █ ▒ 
+  $PRIMARY  ▒██▒ ░    $SECONDARY▒██▒ ▒██▒
+  $PRIMARY  ▒ ░░     $SECONDARY ▒▒ ░ ░▓ ░
+  $PRIMARY    ░      $SECONDARY ░░   ░▒ ░
+  $PRIMARY  ░        $SECONDARY  ░    ░  
+  $PRIMARY           $SECONDARY  ░    ░  
+                     "
 
 
-echo -e -n "$PRIMARY                                     "
-echo -e "By$SECONDARY Troopek  "| pv -qL 15
-echo " "
-sleep 0.1
+
+clear
+
+
+
+COLUMNS="$(tput cols)"
+if [[ $COLUMNS > 53 ]]; then
+  sleep 1
+  
+  echo -e "$t"
+  sleep 0.15
+  clear
+  echo -e "$tr"
+  sleep 0.15
+  clear
+  echo -e "$tro"
+  sleep 0.15
+  clear
+  echo -e "$trop"
+  
+  sleep 0.3
+  clear
+  echo -e "$tropx"
+  
+  
+  echo -e -n "$PRIMARY                                     "
+  echo -e "By$SECONDARY Troopek  "| pv -qL 15
+  echo " "
+  sleep 0.1
+
+else
+  sleep 1
+  echo -e "$minitropx"
+  sleep 0.3
+  echo -e -n "$PRIMARY"
+  sleep 0.1
+fi
+
 }
 
 ################################################################################################################
@@ -798,7 +856,7 @@ stty -echo
 current="Settings / $1"
 checkSettings "$1"
 if [[ "$2" == "setup" ]]; then
-  selectOptions setup "$current" "New Value" "Select New Value" "Select a Valid New Value" $listOptions
+  selectOptions "setup" "$current" "New Value" "Select New Value" "Select a Valid New Value" $listOptions
 else
   selectOptions "" "$current" "New Value"  "Select New Value" "Select a Valid New Value" $listOptions
 fi
@@ -811,10 +869,8 @@ line=`sed -n "${optionToChange}p" < settings.tropx`
 line=${line//(}
 line=${line//)}
 
-# opt=$line | cut -d ":" -f $newValue
 opt=$(echo "$line" | cut -d: -f2-)
 opt=$(echo "$opt" | sed 's/| //g' )
-# opt=$line | cut -d " " -f $newValue
 opt=$(echo "$opt" | awk -v nV="${newValue}" '{print $nV}')
 
 
