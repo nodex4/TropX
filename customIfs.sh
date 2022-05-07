@@ -18,4 +18,9 @@
 function customIFs() {
   :
 
+
+
+  if [[ $(sed $((SS - default_scripts))!d customScripts.txt) == "Test" ]]; then
+    bash "custom_scripts/Test/main.sh"
+  fi
 }

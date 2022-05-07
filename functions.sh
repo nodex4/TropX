@@ -14,22 +14,22 @@ source customIfs.sh
 
 
 function checkSettings() {
-  dir=`pwd`
-  if [[ ${dir##*/} == "TropX" ]]; then
-    :
-  else
-    cd ../
-  fi
+  # dir=`pwd`
+  # if [[ ${dir##*/} == "TropX" ]]; then
+  #   :
+  # else
+  #   cd ../
+  # fi
 
-  if [[ "$2" == "custom" ]]; then
-    setting=$(grep "^$1 :" ../../settings.tropx | \
-      cut "-d:" -f2- | \
-        cut "-d " -f2-)
-  else
-    setting=$(grep "^$1 :" settings.tropx | \
-      cut "-d:" -f2- | \
-        cut "-d " -f2-)
-  fi
+  # if [[ "$2" == "custom" ]]; then
+  #   setting=$(grep "^$1 :" ../../settings.tropx | \
+  #     cut "-d:" -f2- | \
+  #       cut "-d " -f2-)
+  # else
+  setting=$(grep "^$1 :" settings.tropx | \
+    cut "-d:" -f2- | \
+      cut "-d " -f2-)
+  # fi
 
   text=$1
   value=$(echo "$setting" | awk -F"[()]" '{print $2}' )
@@ -40,11 +40,12 @@ function checkSettings() {
 
 function ready() {
 #Terminal Colors
-if [[ "$1" == "custom" ]]; then
-checkSettings "Primary Color" custom
-else
+# if [[ "$1" == "custom" ]]; then
+# checkSettings "Primary Color" custom
+# else
+# fi
+
 checkSettings "Primary Color"
-fi
 
 primary=$value
 case $primary in
@@ -60,11 +61,13 @@ case $primary in
 esac
 
 
-if [[ "$1" == "custom" ]]; then
-checkSettings "Secondary Color" custom
-else
+# if [[ "$1" == "custom" ]]; then
+# checkSettings "Secondary Color" custom
+# else
+# checkSettings "Secondary Color"
+# fi
+
 checkSettings "Secondary Color"
-fi
 
 secondary=$value
 case $secondary in
@@ -323,20 +326,24 @@ fold_width="$(($(tput cols)-4))"
 
 
 if [[ "$1" == "error" ]] || [[ "$1" == "back" ]] || [[ $animations == "OFF" ]]; then
+
   echo -e "$PRIMARY(${SECONDARY}S$PRIMARY) Settings" | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
   echo -e "$PRIMARY(${SECONDARY}M$PRIMARY) Manage Scripts"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
   echo -e "$PRIMARY(${SECONDARY}H$PRIMARY) Help"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
   echo "      ------------------"
+
 else
+
   sleep 0.1
-  echo -e "$PRIMARY(${SECONDARY}M$PRIMARY) Manage Scripts"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
-  echo -e "$PRIMARY(${SECONDARY}S$PRIMARY) Settings" 
+  echo -e "$PRIMARY(${SECONDARY}S$PRIMARY) Settings" | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
   sleep 0.1
   echo -e "$PRIMARY(${SECONDARY}M$PRIMARY) Manage Scripts"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
   sleep 0.1
   echo -e "$PRIMARY(${SECONDARY}H$PRIMARY) Help"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
   sleep 0.1
   echo "      ------------------"
+
+
 fi
 
 

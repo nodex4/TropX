@@ -4,9 +4,10 @@ source functions.sh
 ##########################
 #install necessary packages
 
-
-##########################
-# apt-get install pv
+# apt install pv
+# apt install macchanger
+# apt install mdk3
+# apt install nmcli
 
 
 ##########################
@@ -35,3 +36,5 @@ fi
 ##########################
 #make them select their wireless interface using changeOption 
 changeOption "Wireless Interface" setup
+sleep 5
+bash main.sh
