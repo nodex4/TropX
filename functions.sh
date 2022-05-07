@@ -105,8 +105,8 @@ exit
 
 function breadcrumbs() {
   checkSettings "Text Folding"; textfolding=$value;
-  tabs 2
-  fold_width="$(($(tput cols)-2))"
+  tabs 4
+  fold_width="$(($(tput cols)-4))"
 
   checkSettings "Animations"
   animations=$value
@@ -116,25 +116,25 @@ function breadcrumbs() {
   
   if [[ "$3" == "error" ]] || [[ "$3" == "back" ]] || [[ $animations == "OFF" ]] || ([[ $animations == "MINIMAL" ]] && [[ "$3" == "back" ]]) || ([[ $animations == "MINIMAL" ]] && [[ "$3" != "main" ]]); then
     if [[ "$breadcrumbs" == "ON" ]]; then
-      echo -e "${PRIMARY}Current: $SECONDARY$1$PRIMARY"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/  /'; fi
-      echo -e "$PRIMARY  ---------------------------------------------"
+      echo -e "${PRIMARY}Current: $SECONDARY$1$PRIMARY"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
+      echo -e "$PRIMARY    ---------------------------------------------"
     else
       :
     fi
 
-    echo -e "$PRIMARY$2: "  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/  /'; fi
+    echo -e "$PRIMARY$2: "  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
     echo " "
   else
-    echo -e "${PRIMARY}Current: $SECONDARY$1$PRIMARY"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/  /'; fi
+    echo -e "${PRIMARY}Current: $SECONDARY$1$PRIMARY"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
     sleep 0.1
-    echo -e "$PRIMARY  ---------------------------------------------"
+    echo -e "$PRIMARY    ---------------------------------------------"
     sleep 0.1
-    echo -e "$PRIMARY$2: "  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/  /'; fi
+    echo -e "$PRIMARY$2: "  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
     sleep 0.1
     echo " "
   fi
 
-  tabs 4
+  tabs 6
   fold_width="$(($(tput cols)-4))"
 }
 
@@ -143,65 +143,70 @@ function breadcrumbs() {
 
 function title() {
 
-t="$PRIMARY▄▄▄█████▓
-▓  ██▒ ▓▒
-▒ ▓██░ ▒░
-░ ▓██▓ ░ 
-  ▒██▒ ░ 
-  ▒ ░░   
-    ░    
-  ░      
+t="
+  $PRIMARY▄▄▄█████▓
+  ▓  ██▒ ▓▒
+  ▒ ▓██░ ▒░
+  ░ ▓██▓ ░ 
+    ▒██▒ ░ 
+    ▒ ░░   
+      ░    
+    ░      
          
          "
-tr="▄▄▄█████▓ ██▀███  
-▓  ██▒ ▓▒▓██ ▒ ██▒
-▒ ▓██░ ▒░▓██ ░▄█ ▒
-░ ▓██▓ ░ ▒██▀▀█▄  
-  ▒██▒ ░ ░██▓ ▒██▒
-  ▒ ░░   ░ ▒▓ ░▒▓░
-    ░      ░▒ ░ ▒░
-  ░        ░░   ░ 
+tr="
+  ▄▄▄█████▓ ██▀███  
+  ▓  ██▒ ▓▒▓██ ▒ ██▒
+  ▒ ▓██░ ▒░▓██ ░▄█ ▒
+  ░ ▓██▓ ░ ▒██▀▀█▄  
+    ▒██▒ ░ ░██▓ ▒██▒
+    ▒ ░░   ░ ▒▓ ░▒▓░
+      ░      ░▒ ░ ▒░
+    ░        ░░   ░ 
             ░     
                   "
-tro="▄▄▄█████▓ ██▀███   ▒█████  
-▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
-▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
-░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
-  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
-  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
-    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
-  ░        ░░   ░ ░ ░ ░ ▒  
-            ░         ░ ░  
+tro="
+  ▄▄▄█████▓ ██▀███   ▒█████  
+  ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+  ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+  ░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+    ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+    ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+      ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+    ░        ░░   ░ ░ ░ ░ ▒  
+              ░         ░ ░  
                            "
-trop="▄▄▄█████▓ ██▀███   ▒█████   ██▓███  
-▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒▓██░  ██▒
-▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒▓██░ ██▓▒
-░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░▒██▄█▓▒ ▒
-  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░▒██▒ ░  ░
-  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ ▒▓▒░ ░  ░
-    ░      ░▒ ░ ▒░  ░ ▒ ▒░ ░▒ ░     
-  ░        ░░   ░ ░ ░ ░ ▒  ░░       
-            ░         ░ ░           
+trop="
+  ▄▄▄█████▓ ██▀███   ▒█████   ██▓███  
+  ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒▓██░  ██▒
+  ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒▓██░ ██▓▒
+  ░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░▒██▄█▓▒ ▒
+    ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░▒██▒ ░  ░
+    ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ ▒▓▒░ ░  ░
+      ░      ░▒ ░ ▒░  ░ ▒ ▒░ ░▒ ░     
+    ░        ░░   ░ ░ ░ ░ ▒  ░░       
+              ░         ░ ░           
                                     "
 
-tropx="$PRIMARY▄▄▄█████▓ ██▀███   ▒█████   ██▓███   $SECONDARY  ▒██   ██▒
-$PRIMARY▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒▓██░  ██▒  $SECONDARY ▒▒ █ █ ▒░
-$PRIMARY▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒▓██░ ██▓▒  $SECONDARY ░░  █   ░
-$PRIMARY░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░▒██▄█▓▒ ▒  $SECONDARY  ░ █ █ ▒ 
-$PRIMARY  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░▒██▒ ░  ░  $SECONDARY ▒██▒ ▒██▒
-$PRIMARY  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ ▒▓▒░ ░  ░  $SECONDARY ▒▒ ░ ░▓ ░
-$PRIMARY    ░      ░▒ ░ ▒░  ░ ▒ ▒░ ░▒ ░      $SECONDARY  ░░   ░▒ ░
-$PRIMARY  ░        ░░   ░ ░ ░ ░ ▒  ░░        $SECONDARY   ░    ░  
-$PRIMARY            ░         ░ ░            $SECONDARY   ░    ░  "
+tropx="
+  $PRIMARY▄▄▄█████▓ ██▀███   ▒█████   ██▓███   $SECONDARY  ▒██   ██▒
+  $PRIMARY▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒▓██░  ██▒  $SECONDARY ▒▒ █ █ ▒░
+  $PRIMARY▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒▓██░ ██▓▒  $SECONDARY ░░  █   ░
+  $PRIMARY░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░▒██▄█▓▒ ▒  $SECONDARY  ░ █ █ ▒ 
+  $PRIMARY  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░▒██▒ ░  ░  $SECONDARY ▒██▒ ▒██▒
+  $PRIMARY  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ ▒▓▒░ ░  ░  $SECONDARY ▒▒ ░ ░▓ ░
+  $PRIMARY    ░      ░▒ ░ ▒░  ░ ▒ ▒░ ░▒ ░      $SECONDARY  ░░   ░▒ ░
+  $PRIMARY  ░        ░░   ░ ░ ░ ░ ▒  ░░        $SECONDARY   ░    ░  
+  $PRIMARY            ░         ░ ░            $SECONDARY   ░    ░  
+                                                                    "
 
 
 
 clear
-
 echo -e "$tropx"
 
-
-echo -e "$PRIMARY                                     By$SECONDARY Troopek  "
+echo -e -n "$PRIMARY                                       "
+echo -e "By$SECONDARY Troopek  "
 echo " "
 }
 
@@ -210,57 +215,63 @@ echo " "
 
 function niceTitle() {
 
-t="$PRIMARY▄▄▄█████▓
-▓  ██▒ ▓▒
-▒ ▓██░ ▒░
-░ ▓██▓ ░ 
-  ▒██▒ ░ 
-  ▒ ░░   
-    ░    
-  ░      
+
+t="
+  $PRIMARY▄▄▄█████▓
+  ▓  ██▒ ▓▒
+  ▒ ▓██░ ▒░
+  ░ ▓██▓ ░ 
+    ▒██▒ ░ 
+    ▒ ░░   
+      ░    
+    ░      
          
          "
-tr="▄▄▄█████▓ ██▀███  
-▓  ██▒ ▓▒▓██ ▒ ██▒
-▒ ▓██░ ▒░▓██ ░▄█ ▒
-░ ▓██▓ ░ ▒██▀▀█▄  
-  ▒██▒ ░ ░██▓ ▒██▒
-  ▒ ░░   ░ ▒▓ ░▒▓░
-    ░      ░▒ ░ ▒░
-  ░        ░░   ░ 
+tr="
+  ▄▄▄█████▓ ██▀███  
+  ▓  ██▒ ▓▒▓██ ▒ ██▒
+  ▒ ▓██░ ▒░▓██ ░▄█ ▒
+  ░ ▓██▓ ░ ▒██▀▀█▄  
+    ▒██▒ ░ ░██▓ ▒██▒
+    ▒ ░░   ░ ▒▓ ░▒▓░
+      ░      ░▒ ░ ▒░
+    ░        ░░   ░ 
             ░     
                   "
-tro="▄▄▄█████▓ ██▀███   ▒█████  
-▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
-▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
-░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
-  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
-  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
-    ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
-  ░        ░░   ░ ░ ░ ░ ▒  
-            ░         ░ ░  
+tro="
+  ▄▄▄█████▓ ██▀███   ▒█████  
+  ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒
+  ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒
+  ░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░
+    ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░
+    ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ 
+      ░      ░▒ ░ ▒░  ░ ▒ ▒░ 
+    ░        ░░   ░ ░ ░ ░ ▒  
+              ░         ░ ░  
                            "
-trop="▄▄▄█████▓ ██▀███   ▒█████   ██▓███  
-▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒▓██░  ██▒
-▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒▓██░ ██▓▒
-░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░▒██▄█▓▒ ▒
-  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░▒██▒ ░  ░
-  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ ▒▓▒░ ░  ░
-    ░      ░▒ ░ ▒░  ░ ▒ ▒░ ░▒ ░     
-  ░        ░░   ░ ░ ░ ░ ▒  ░░       
-            ░         ░ ░           
+trop="
+  ▄▄▄█████▓ ██▀███   ▒█████   ██▓███  
+  ▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒▓██░  ██▒
+  ▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒▓██░ ██▓▒
+  ░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░▒██▄█▓▒ ▒
+    ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░▒██▒ ░  ░
+    ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ ▒▓▒░ ░  ░
+      ░      ░▒ ░ ▒░  ░ ▒ ▒░ ░▒ ░     
+    ░        ░░   ░ ░ ░ ░ ▒  ░░       
+              ░         ░ ░           
                                     "
 
-tropx="$PRIMARY▄▄▄█████▓ ██▀███   ▒█████   ██▓███   $SECONDARY  ▒██   ██▒
-$PRIMARY▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒▓██░  ██▒  $SECONDARY ▒▒ █ █ ▒░
-$PRIMARY▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒▓██░ ██▓▒  $SECONDARY ░░  █   ░
-$PRIMARY░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░▒██▄█▓▒ ▒  $SECONDARY  ░ █ █ ▒ 
-$PRIMARY  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░▒██▒ ░  ░  $SECONDARY ▒██▒ ▒██▒
-$PRIMARY  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ ▒▓▒░ ░  ░  $SECONDARY ▒▒ ░ ░▓ ░
-$PRIMARY    ░      ░▒ ░ ▒░  ░ ▒ ▒░ ░▒ ░      $SECONDARY  ░░   ░▒ ░
-$PRIMARY  ░        ░░   ░ ░ ░ ░ ▒  ░░        $SECONDARY   ░    ░  
-$PRIMARY            ░         ░ ░            $SECONDARY   ░    ░  "
-
+tropx="
+  $PRIMARY▄▄▄█████▓ ██▀███   ▒█████   ██▓███   $SECONDARY  ▒██   ██▒
+  $PRIMARY▓  ██▒ ▓▒▓██ ▒ ██▒▒██▒  ██▒▓██░  ██▒  $SECONDARY ▒▒ █ █ ▒░
+  $PRIMARY▒ ▓██░ ▒░▓██ ░▄█ ▒▒██░  ██▒▓██░ ██▓▒  $SECONDARY ░░  █   ░
+  $PRIMARY░ ▓██▓ ░ ▒██▀▀█▄  ▒██   ██░▒██▄█▓▒ ▒  $SECONDARY  ░ █ █ ▒ 
+  $PRIMARY  ▒██▒ ░ ░██▓ ▒██▒░ ████▓▒░▒██▒ ░  ░  $SECONDARY ▒██▒ ▒██▒
+  $PRIMARY  ▒ ░░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ ▒▓▒░ ░  ░  $SECONDARY ▒▒ ░ ░▓ ░
+  $PRIMARY    ░      ░▒ ░ ▒░  ░ ▒ ▒░ ░▒ ░      $SECONDARY  ░░   ░▒ ░
+  $PRIMARY  ░        ░░   ░ ░ ░ ░ ▒  ░░        $SECONDARY   ░    ░  
+  $PRIMARY            ░         ░ ░            $SECONDARY   ░    ░  
+                                                                    "
 
 clear
 sleep 1
@@ -281,8 +292,8 @@ clear
 echo -e "$tropx"
 
 
-echo -e -n "$PRIMARY                                   "
-echo -e "  By$SECONDARY Troopek  "| pv -qL 15
+echo -e -n "$PRIMARY                                     "
+echo -e "By$SECONDARY Troopek  "| pv -qL 15
 echo " "
 sleep 0.1
 }
@@ -306,26 +317,26 @@ niceTitle
 breadcrumbs "$current" "Available Scripts" main
 fi
 
-tabs 4
+tabs 6
 fold_width="$(($(tput cols)-4))"
 
 
 
 if [[ "$1" == "error" ]] || [[ "$1" == "back" ]] || [[ $animations == "OFF" ]]; then
-  echo -e "$PRIMARY(${SECONDARY}S$PRIMARY) Settings" | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
-  echo -e "$PRIMARY(${SECONDARY}M$PRIMARY) Manage Scripts"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
-  echo -e "$PRIMARY(${SECONDARY}H$PRIMARY) Help"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
-  echo "    ------------------"
+  echo -e "$PRIMARY(${SECONDARY}S$PRIMARY) Settings" | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
+  echo -e "$PRIMARY(${SECONDARY}M$PRIMARY) Manage Scripts"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
+  echo -e "$PRIMARY(${SECONDARY}H$PRIMARY) Help"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
+  echo "      ------------------"
 else
   sleep 0.1
-  echo -e "$PRIMARY(${SECONDARY}M$PRIMARY) Manage Scripts"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
+  echo -e "$PRIMARY(${SECONDARY}M$PRIMARY) Manage Scripts"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
   echo -e "$PRIMARY(${SECONDARY}S$PRIMARY) Settings" 
   sleep 0.1
-  echo -e "$PRIMARY(${SECONDARY}M$PRIMARY) Manage Scripts"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
+  echo -e "$PRIMARY(${SECONDARY}M$PRIMARY) Manage Scripts"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
   sleep 0.1
-  echo -e "$PRIMARY(${SECONDARY}H$PRIMARY) Help"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
+  echo -e "$PRIMARY(${SECONDARY}H$PRIMARY) Help"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
   sleep 0.1
-  echo "    ------------------"
+  echo "      ------------------"
 fi
 
 
@@ -348,13 +359,13 @@ if [[ "$1" == "error" ]] || [[ "$1" == "back" ]] || [[ $animations == "OFF" ]]; 
       {
           print "("SECONDARY NR PRIMARY") " $0
       }
-  ' defaultScripts.txt  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
+  ' defaultScripts.txt  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
   
   awk -v SECONDARY="$SECONDARY" -v PRIMARY="$PRIMARY" '
       {
           print "("SECONDARY NR+ENVIRON["default_scripts"] PRIMARY") " $0
       }
-  ' customScripts.txt  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
+  ' customScripts.txt  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
   
 
 else
@@ -365,14 +376,14 @@ else
           system("sleep 0.1")
           print "("SECONDARY NR PRIMARY") " $0
       }
-  ' defaultScripts.txt  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
+  ' defaultScripts.txt  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
   
   awk -v SECONDARY="$SECONDARY" -v PRIMARY="$PRIMARY" '
       {
           system("sleep 0.1")
           print "("SECONDARY NR+ENVIRON["default_scripts"] PRIMARY") " $0
       }
-  ' customScripts.txt  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
+  ' customScripts.txt  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
   sleep 0.1
 
 fi
@@ -382,19 +393,19 @@ fi
 
 echo -e " "
 
-tabs 2
-fold_width="$(($(tput cols)-2))"
+tabs 4
+fold_width="$(($(tput cols)-4))"
 
 
 if [[ "$1" == "error" ]] || [[ "$1" == "back" ]] || [[ $animations == "OFF" ]]; then
   if [[ "$1" == "error" ]]; then
-  echo -n -e "${SECONDARY}Select a Valid Option > " | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/  /'; fi
+  echo -n -e "${SECONDARY}Select a Valid Option > " | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
   else
-  echo -n -e "${SECONDARY}Select Desired Option > " | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/  /'; fi
+  echo -n -e "${SECONDARY}Select Desired Option > " | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
   fi
 else
   sleep 0.1
-  echo -n -e "${SECONDARY}Select Desired Option > " | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/  /'; fi
+  echo -n -e "${SECONDARY}Select Desired Option > " | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
 fi
 
 
@@ -461,7 +472,7 @@ cd "'"$si1"'/"
       
       echo -e "$PRIMARY    (\e[1;31mDETAILS$PRIMARY) press ctrl + d or type \"$SECONDARY~$PRIMARY\" when done"
       echo " "
-      echo -e "$SECONDARY  Paste Here > $PRIMARY"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/  /'; fi
+      echo -e "$SECONDARY  Paste Here > $PRIMARY"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
       read -r -d '~' script
 
       cd custom_scripts
@@ -584,7 +595,7 @@ function selectOptions() {
 checkSettings "Text Folding"; textfolding=$value;
 stty -echo
 
-tabs 4
+tabs 6
 fold_width="$(($(tput cols)-4))"
 
 checkSettings "Animations"
@@ -598,7 +609,7 @@ breadcrumbs "Setup" "Available Wireless Interfaces"
 fi
 
 if [[ "$1" != "setup" ]]; then
-echo -e "$PRIMARY(${SECONDARY}B$PRIMARY) Back To Main Menu" | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
+echo -e "$PRIMARY(${SECONDARY}B$PRIMARY) Back To Main Menu" | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
 fi
 
 if [[ $animations == "OFF" ]] || [[ $animations == "MINIMAL" ]]; then
@@ -608,7 +619,7 @@ sleep 0.1
 fi
 
 if [[ "$1" != "setup" ]]; then
-  echo "    ------------------"
+  echo "      ------------------"
 fi
 
 if [[ $6 == "settings.tropx" ]]; then
@@ -617,7 +628,7 @@ if [[ $6 == "settings.tropx" ]]; then
       {
           print "("SECONDARY NR PRIMARY") " $0
       }
-  ' settings.tropx | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
+  ' settings.tropx | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
   # awk -v SECONDARY="$SECONDARY" -v PRIMARY="$PRIMARY" '
   #     {
   #         print "    ("SECONDARY NR PRIMARY") " $0 | fold -s -w "$fold_width" | sed -e "s|^|\t|g"
@@ -629,11 +640,11 @@ if [[ $6 == "settings.tropx" ]]; then
           system("sleep 0.1")
           print "("SECONDARY NR PRIMARY") " $0
       }
-  ' settings.tropx | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
+  ' settings.tropx | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
   fi
 else
   if [[ $6 != "" ]]; then
-    echo -e "$PRIMARY(${SECONDARY}1$PRIMARY) $6"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
+    echo -e "$PRIMARY(${SECONDARY}1$PRIMARY) $6"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
     i=2
   fi
 fi
@@ -641,14 +652,14 @@ fi
 if [[ $animations == "OFF" ]] || [[ $animations == "MINIMAL" ]]; then
   for arg in "${@:7}"
   do
-      echo -e "${PRIMARY}(${SECONDARY}${i}$PRIMARY) ${arg}" | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
+      echo -e "${PRIMARY}(${SECONDARY}${i}$PRIMARY) ${arg}" | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
       i=$((i+1))
 
   done
 else
   for arg in "${@:7}"
   do
-      echo -e "${PRIMARY}(${SECONDARY}${i}$PRIMARY) ${arg}"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
+      echo -e "${PRIMARY}(${SECONDARY}${i}$PRIMARY) ${arg}"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
       i=$((i+1))
       sleep 0.1
   done
@@ -659,14 +670,14 @@ stringed=$(echo "${@:7}" | sed -E 's/[^[:space:]]+/"&"/g' )
 
 echo -e " "
 
-tabs 2
-fold_width="$(($(tput cols)-2))"
+tabs 4
+fold_width="$(($(tput cols)-4))"
 
 if [ "$1" == "error" ]
 then
-echo -n -e "$SECONDARY$5 > "  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/  /'; fi
+echo -n -e "$SECONDARY$5 > "  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
 else
-echo -n -e "$SECONDARY$4 > "  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/  /'; fi
+echo -n -e "$SECONDARY$4 > "  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
 fi
 
 echo -n -e "$PRIMARY"
@@ -697,28 +708,28 @@ title
 breadcrumbs "$2" "$3"
 
 
-tabs 4
+tabs 6
 fold_width="$(($(tput cols)-4))"
 
 
 if [[ $animations == "OFF" ]] || [[ $animations == "MINIMAL" ]]; then
   # if [[ $4 != "" ]]; then
-    echo -e "$PRIMARY(\e[1;31mDETAILS$PRIMARY) $4"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
+    echo -e "$PRIMARY(\e[1;31mDETAILS$PRIMARY) $4"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
     echo " "
   # fi
   # if [[ $5 != "" ]]; then
-    echo -e "$PRIMARY(\e[1;31mEXAMPLE$PRIMARY) $5"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
+    echo -e "$PRIMARY(\e[1;31mEXAMPLE$PRIMARY) $5"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
   # fi
 
 
 else
   # if [[ $4 != "" ]]; then
-    echo -e "$PRIMARY(\e[1;31mDETAILS$PRIMARY) $4"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
+    echo -e "$PRIMARY(\e[1;31mDETAILS$PRIMARY) $4"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
     echo " "
     sleep 0.1
   # fi
   # if [[ $5 != "" ]]; then
-    echo -e "$PRIMARY(\e[1;31mEXAMPLE$PRIMARY) $5"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
+    echo -e "$PRIMARY(\e[1;31mEXAMPLE$PRIMARY) $5"  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
     sleep 0.1
     # fi
 fi
@@ -727,9 +738,9 @@ echo -e " "
 
 if [ "$1" == "error" ]
 then
-  echo -n -e "$SECONDARY  Try Again > "  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/  /'; fi
+  echo -n -e "$SECONDARY  Try Again > "  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
 else
-  echo -n -e "$SECONDARY  Type Here > "  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/  /'; fi
+  echo -n -e "$SECONDARY  Type Here > "  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
 fi
 
 echo -n -e "$PRIMARY"
