@@ -1,3 +1,5 @@
 Change WI mode
 Change Mac Address
 WiFi Spammer
+Create Trojan (insert file to convert)
+Create Backdoor

@@ -362,6 +362,8 @@ fi
 ################################################################################################################
 
 function mainMenu() {
+checkSettings "Wireless Interface"
+WI=$value
 checkSettings "Text Folding"; textfolding=$value;
 stty -echo
 current="Main Menu"
@@ -648,6 +650,12 @@ fi
 
 
 
+if [[ $SS == "H" ]]; then
+  : #help page
+fi
+
+
+
 
 customIFs
 mainMenu back
@@ -884,7 +892,7 @@ stty echo
 mainMenu back
 }
 
-
+#########################################
 
 function changeWImode() {
   checkSettings "Wireless Interface"
@@ -894,4 +902,17 @@ function changeWImode() {
 	ifconfig $WI down > /dev/null 2>&1
 	iwconfig $WI mode $1 > /dev/null 2>&1
 	ifconfig $WI up > /dev/null 2>&1
+}
+
+
+function changeMac() {
+if [[ $1 == "" ]]; then
+  ifconfig $WI down
+  macchanger -r $WI
+  ifconfig $WI up
+else
+  ifconfig $WI down
+  macchanger -m $1 $WI
+  ifconfig $WI up
+fi
 }

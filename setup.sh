@@ -4,10 +4,10 @@ source functions.sh
 ##########################
 #install necessary packages
 
-# apt install pv
-# apt install macchanger
-# apt install mdk3
-# apt install nmcli
+# sudo apt install pv
+# sudo apt install macchanger
+# sudo apt install mdk3
+# sudo apt install nmcli
 
 
 ##########################
@@ -20,7 +20,7 @@ if [ ! -f customScripts.txt ]; then
   touch customScripts.txt;
 fi
 
-if [ ! -e customIfs.sh ]; then
+if [ ! -f customIfs.sh ]; then
   touch customIfs.sh;
   echo "#!/bin/bash" > customIfs.sh
   echo "
@@ -29,8 +29,22 @@ function customIFs() {
 }" >> customIfs.sh
 fi
 
+if [ ! -f settings.tropx ]; then
+  touch settings.tropx;
+  echo "Wireless Interface : wlan0 | mon0
+Animations : (ON) | MINIMAL | OFF
+Default Scripts : (SHOW) | HIDE
+Breadcrumbs : (ON) | OFF
+Primary Color : (WHITE) | RED | BLUE | GREEN | CYAN | PINK | YELLOW | GRAY
+Secondary Color : (RED) | WHITE | BLUE | GREEN | CYAN | PINK | YELLOW | GRAY
+Text Folding : (ON) | OFF" >> settings.tropx
+fi
+
 ##########################
 #explain usage
+title
+echo -e "$PRIMARY  Check https://github.com/troopek/TropX for usage and startup instructions! $SECONDARY"
+read -rsp $'  Press any key to continue...\n' -n1 key
 
 
 ##########################
