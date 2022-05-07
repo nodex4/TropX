@@ -637,7 +637,7 @@ fi
 
 
 if [[ $SS == "1" ]]; then
-  echo "1"
+  bash "scripts/changeWImode/main.sh"
 fi
 if [[ $SS == "2" ]]; then
   echo "2"
@@ -882,4 +882,16 @@ selectSetting "$line" "$opt"
 sed -i "${optionToChange}s/.*/$selected/" settings.tropx
 stty echo
 mainMenu back
+}
+
+
+
+function changeWImode() {
+  checkSettings "Wireless Interface"
+  WI=$value
+
+  nmcli device disconnect $WI > /dev/null 2>&1
+	ifconfig $WI down > /dev/null 2>&1
+	iwconfig $WI mode $1 > /dev/null 2>&1
+	ifconfig $WI up > /dev/null 2>&1
 }

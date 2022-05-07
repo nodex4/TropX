@@ -1,9 +1,1 @@
-  ▒██   ██▒
-  ▒▒ █ █ ▒░
-  ░░  █   ░
-   ░ █ █ ▒ 
-  ▒██▒ ▒██▒
-  ▒▒ ░ ░▓ ░
-  ░░   ░▒ ░
-   ░    ░  
-   ░    ░  
+echo "HELOOO THIS IS FROM THE TEST.TXT FILE"
