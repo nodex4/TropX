@@ -188,6 +188,19 @@ TropX has some default functions and variables to simplify the programming facti
     
 ---
 
+* #### message
+* With the `message` function you can display a message to the user that remains until they press a key
+
+  ```sh
+  Message="Disclaimer: TropX is cool!"
+  message "$current" "Message" "$Message"
+  ```
+  *  `"$current"` Leave the first argument as shown
+  *  `"Message"` The next argument is the title for the message
+  *  `"$Message"` The last argument is the variable in which the message is stored
+    
+---
+
 * #### changeWImode
 * With the `changeWImode` function, you can easily change the mode of your Wireless Interface
   ```sh
@@ -214,6 +227,17 @@ TropX has some default functions and variables to simplify the programming facti
 
 * #### $WI
 * The `WI` variable holds the name of the Wireless Interface (e.g. `wlan0`)
+
+---
+
+* #### $PRIMARY & $SECONDARY
+* The `PRIMARY` variable holds the color code for the primary (*no shit*) color
+* The `SECONDARY` variable holds the color code for the secondary (*no shit again*) color
+* Make sure to escape it like such
+  ```sh
+  echo -e "${PRIMARY}Hello ${SECONDARY}World!"
+  ```
+* Even though it is not neccesary to use these variables it is highly recommended so your script stays in sync with the user's settings
 
 ---
 

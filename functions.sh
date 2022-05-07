@@ -110,7 +110,7 @@ function breadcrumbs() {
   COLUMNS="$(tput cols)"
   checkSettings "Text Folding"; textfolding=$value;
   tabs 4
-  fold_width="$(($(tput cols)-4))"
+  fold_width="$(($(tput cols)-6))"
 
   checkSettings "Animations"
   animations=$value
@@ -149,7 +149,7 @@ function breadcrumbs() {
   fi
 
   tabs 6
-  fold_width="$(($(tput cols)-4))"
+  fold_width="$(($(tput cols)-6))"
 }
 
 ################################################################################################################
@@ -374,14 +374,14 @@ animations=$value
 
 if [[ "$1" == "error" ]] || [[ "$1" == "back" ]] || [[ $animations == "OFF" ]]; then
 title
-breadcrumbs "$current" "Available Scripts" back
+breadcrumbs "$current" "Available Scripts and Tools" back
 else
 niceTitle
-breadcrumbs "$current" "Available Scripts" main
+breadcrumbs "$current" "Available Scripts and Tools" main
 fi
 
 tabs 6
-fold_width="$(($(tput cols)-4))"
+fold_width="$(($(tput cols)-6))"
 
 
 
@@ -461,7 +461,7 @@ fi
 echo -e " "
 
 tabs 4
-fold_width="$(($(tput cols)-4))"
+fold_width="$(($(tput cols)-6))"
 
 
 if [[ "$1" == "error" ]] || [[ "$1" == "back" ]] || [[ $animations == "OFF" ]]; then
@@ -509,12 +509,12 @@ if [[ $SS == "m" ]]; then
   so1=$SO
 
   if [[ $so1 == "1" ]]; then #NEW
-    getInput "" "$current" "Please choose a name for your new script: " "Do not incldue a file extension" "Script Name"
+    getInput "" "$current" "Please choose a name for your new script" "Do not incldue a file extension" "Script Name"
     si1=$(echo "$SI" | awk '{print tolower($0)}' | sed -e "s/\b\(.\)/\u\1/g ")
 
     until [ ! -f "custom_scripts/${si1}/main.sh" ]
     do
-      getInput error "$current" "Options" "Please choose a name for your new script: " "Do not incldue a file extension" "Other Script Name"
+      getInput error "$current" "Options" "Please choose a name for your new script" "Do not incldue a file extension" "Other Script Name"
       si1=$(echo "$SI" | awk '{print tolower($0)}' | sed -e "s/\b\(.\)/\u\1/g ")
     done
 
@@ -650,8 +650,11 @@ fi
 
 
 
-if [[ $SS == "H" ]]; then
-  : #help page
+if [[ $SS == "h" ]]; then
+  current="Help"
+  helpMessage="To learn how to efficiently use ${SECONDARY}TropX${PRIMARY}, please refer to it's github:
+${SECONDARY}https://github.com/troopek/TropX${PRIMARY}"
+  message "$current" "Message" "$helpMessage"
 fi
 
 
@@ -669,7 +672,7 @@ checkSettings "Text Folding"; textfolding=$value;
 stty -echo
 
 tabs 6
-fold_width="$(($(tput cols)-4))"
+fold_width="$(($(tput cols)-6))"
 
 checkSettings "Animations"
 animations=$value
@@ -744,7 +747,7 @@ stringed=$(echo "${@:7}" | sed -E 's/[^[:space:]]+/"&"/g' )
 echo -e " "
 
 tabs 4
-fold_width="$(($(tput cols)-4))"
+fold_width="$(($(tput cols)-6))"
 
 if [ "$1" == "error" ]
 then
@@ -782,7 +785,7 @@ breadcrumbs "$2" "$3"
 
 
 tabs 6
-fold_width="$(($(tput cols)-4))"
+fold_width="$(($(tput cols)-6))"
 
 
 if [[ $animations == "OFF" ]] || [[ $animations == "MINIMAL" ]]; then
@@ -811,9 +814,9 @@ echo -e " "
 
 if [ "$1" == "error" ]
 then
-  echo -n -e "$SECONDARY  Try Again > "  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
+  echo -n -e "${SECONDARY}Try Again > "  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
 else
-  echo -n -e "$SECONDARY  Type Here > "  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
+  echo -n -e "${SECONDARY}Type Here > "  | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
 fi
 
 echo -n -e "$PRIMARY"
@@ -826,6 +829,25 @@ if [[ $SI == "b" ]]; then
 fi
 }
 
+
+
+################################################################################################################
+
+function message() {
+stty -echo
+
+title
+breadcrumbs "$1" "$2"
+
+tabs 6
+fold_width="$(($(tput cols)-6))"
+
+echo -e "$3" | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
+echo " "
+echo -e -n "Press ${SECONDARY}anything${PRIMARY} to return to the Main Menu..." | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
+stty echo
+read -rsp "" -n1 key
+}
 
 
 ################################################################################################################
