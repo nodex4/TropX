@@ -7,36 +7,36 @@ source functions.sh
 # clean apt
 
 echo -e "\e[1;32m Step 1: Updating packages \e[0m"
-sudo apt-get update
+sudo apt update
 
 echo
 
 echo -e "\e[1;32m Step 2: Upgrading packages \e[0m" 
-sudo apt-get upgrade -y
-sudo apt-get dist upgrade -y 
-sudo apt-get update
+sudo apt upgrade -y
+sudo apt dist upgrade -y 
+sudo apt update -y
 
 echo 
 
 echo -e "\e[1;32m Step 3: Cleaning up \e[0m"
-sudo apt-get clean
-sudo apt-get autoclean
-sudo apt-get autoremove
+sudo apt clean -y
+sudo apt autoclean -y
+sudo apt autoremove -y
 
 
 
 # bash:
 
-sudo apt install pv
-sudo apt install macchanger
-sudo apt install mdk3
-sudo apt install nmcli
+sudo apt install pv -y
+sudo apt install macchanger -y
+sudo apt install mdk3 -y
+sudo apt install nmcli -y
 
 
 # python
 
-sudo apt install os
-sudo apt install python3
+sudo apt install os -y
+sudo apt install python3 -y
 
 
 ##########################
