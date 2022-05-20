@@ -57,7 +57,7 @@
 
 
 <!-- ABOUT THE PROJECT -->
-## About The Project
+# About The Project
 
 <img src="images/image.png" alt="image">
 
@@ -69,11 +69,11 @@ The best penetration testing and tech tools unified into one beatiful command li
 
 
 <!-- GETTING STARTED -->
-## Getting Started
+# Getting Started
 
 Guide on how to obtain a local copy of TropX
 **
-### Installation
+## Installation
 A local copy of TropX can be obtained using the `git clone` command
 
 * Navigate to your terminal (I use Terminator)
@@ -88,7 +88,7 @@ A local copy of TropX can be obtained using the `git clone` command
   ```
 
 
-### Setup
+## Setup
 The setup can be automatically done by running the `setup.sh` file
 
 * Run the `setup.sh` file with bash and follow along with the setup tutorial
@@ -96,7 +96,7 @@ The setup can be automatically done by running the `setup.sh` file
   bash setup.sh
   ```
 
-### Updates
+## Updates
 
 You can update TropX to the newest version without losing any custom scripts and while also preserving your settings and other modified things. You can do this automatically by running the update.sh file.
 
@@ -112,7 +112,7 @@ You can update TropX to the newest version without losing any custom scripts and
 
 
 <!-- USAGE -->
-## Usage
+# Usage
 
 Guide on how to use TropX efficiently and to it's fullest
 * Firstly, run the `main.sh` file from the `TropX` directory.
@@ -129,10 +129,10 @@ Guide on how to use TropX efficiently and to it's fullest
 <!-- Custom Scripts -->
 ## Custom Scripts
 
-You can very easily add **Custom Scripts** to TropX to further personalize TropX
+You can very easily add **Custom Scripts** to TropX to further personalize TropX, it supports multiple languages including **bash**, **python**, **javascript**, and even **C#**
 
 
-### Scripting
+### **Bash**
 
 TropX has some default functions and variables to simplify the programming faction of custom scripts
 
@@ -217,10 +217,12 @@ TropX has some default functions and variables to simplify the programming facti
 * With the `changeMac` function, you can easily change your Mac Address to either a random or specific one
   ```sh
   changeMac 
-  ...
+  # ...
   changeMac "00:d0:70:00:20:69"
+  # ...
+  changeMac reset
   ```
-  * You can optionally pass an argument which will be the Mac Address the Wireless Interface spoofs
+  * You can optionally pass an argument which will, if set to `reset`, set your Wireless Interface back to it's permanent default Mac Address, otherwise the argument will be the the Mac Address the Wireless Interface spoofs
   * If no argument is passed, a random Mac Address will be selected
   * The Wireless Interface used will be the one the user has saved in the settings
 ---
@@ -240,17 +242,22 @@ TropX has some default functions and variables to simplify the programming facti
 * Even though it is not neccesary to use these variables it is highly recommended so your script stays in sync with the user's settings
 
 ---
+### **python, javascript, and C#**
+Sadly these languages do not have any premade functions **yet**!
 
-### Setup
+---
+
+
+## Setup
 The custom script creation process
 
-* To create a new Custom Script, firstly start TropX (*No Shit*)
+* To create a new Custom Script, firstly start TropX **(*No Shit*)**
 * Afterwards, select `M` short for Manage Scripts
 * Choose the first option `1` to create a new script
 * Type in the script name and continue
 * Select the way in which you want to provide TropX with the script and confirm
 
-### Share your script
+## Share your script
 TropX is still looking for more tools and scripts!
 * If you believe that you made a decent tool or script that you would like featured as a default, make sure to share it with us
 * Firstly, head on over to the TropX directory in your file manager
@@ -263,7 +270,7 @@ TropX is still looking for more tools and scripts!
 
 
 <!-- ROADMAP -->
-## Roadmap
+# Roadmap
 
 View our Trello Roadmap: [Trello TropX](https://trello.com/b/GItUPVEs/tropx "Trello Roadmap for TropX")
 
@@ -275,7 +282,7 @@ See the [open issues](https://github.com/troopek/TropX/issues) for a full list o
 
 
 <!-- CONTRIBUTING -->
-## Contributing
+# Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
@@ -293,7 +300,7 @@ Don't forget to give the project a star! Thanks again!
 
 
 <!-- LICENSE -->
-## License
+# License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
@@ -302,7 +309,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 
 <!-- CONTACT -->
-## Contact
+# Contact
 
 eugene.chicevic@gmail.com
 
@@ -313,14 +320,14 @@ Project Link: [https://github.com/troopek/TropX](https://github.com/troopek/Trop
 
 
 <!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
+# Acknowledgments
 
 * None yet!
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- DISCLAIMER -->
-## DISCLAIMER
+# DISCLAIMER
 
 I am not held responsible for any misdeeds done with the help of this tool, i provide it to you for educational purposes only. By using this tool you accept that i am not held responsible for any consequences your usage of my tool might yield.
 

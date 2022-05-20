@@ -20,7 +20,7 @@ source functions.sh
 # printf '\e[8;50;10t'
 
 
-
+trap end EXIT
 
 
 mainMenu

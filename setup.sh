@@ -4,10 +4,18 @@ source functions.sh
 ##########################
 #install necessary packages
 
+
+# bash:
+
 # sudo apt install pv
 # sudo apt install macchanger
 # sudo apt install mdk3
 # sudo apt install nmcli
+
+
+#python
+
+# sudo apt-get install os
 
 
 ##########################
