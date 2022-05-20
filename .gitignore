@@ -172,3 +172,13 @@ dmypy.json
  
 # Cython debug symbols
 cython_debug/
+
+
+#replit files
+.replit
+*.nix
+test.*
+
+
+#images
+images/
