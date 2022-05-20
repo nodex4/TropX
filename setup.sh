@@ -4,19 +4,39 @@ source functions.sh
 ##########################
 #install necessary packages
 
+# clean apt
+
+echo -e "\e[1;32m Step 1: Updating packages \e[0m"
+sudo apt-get update
+
+echo
+
+echo -e "\e[1;32m Step 2: Upgrading packages \e[0m" 
+sudo apt-get upgrade -y
+sudo apt-get dist upgrade -y 
+sudo apt-get update
+
+echo 
+
+echo -e "\e[1;32m Step 3: Cleaning up \e[0m"
+sudo apt-get clean
+sudo apt-get autoclean
+sudo apt-get autoremove
+
+
 
 # bash:
 
-# sudo apt install pv
-# sudo apt install macchanger
-# sudo apt install mdk3
-# sudo apt install nmcli
+sudo apt install pv
+sudo apt install macchanger
+sudo apt install mdk3
+sudo apt install nmcli
 
 
-#python
+# python
 
-# sudo apt install os
-# sudo apt install python3
+sudo apt install os
+sudo apt install python3
 
 
 ##########################

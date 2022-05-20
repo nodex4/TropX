@@ -10,7 +10,6 @@
 #        |___/                       |_|               
 # Github: https://github.com/troopek/
 
-source test.sh
 source functions.sh
 
 # testing terminal resizing
@@ -22,7 +21,4 @@ source functions.sh
 
 trap end EXIT
 
-
 mainMenu
-
-

@@ -545,7 +545,7 @@ trap end EXIT
   "2") #python
       boiler='#!/usr/bin/env python3
 import os
-os.chdir(cd "custom_scripts/'"$si1"'/")
+os.chdir("custom_scripts/'"$si1"'/")
 # END OF BOILER (DO NOT REMOVE OR MODIFY ABOVE CODE)
 '
     ;;
