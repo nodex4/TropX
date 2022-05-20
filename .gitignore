@@ -176,9 +176,14 @@ cython_debug/
 
 #replit files
 .replit
+*.replit
+.nix
 *.nix
 test.*
+test
 
 
 #images
+images
 images/
+/images/

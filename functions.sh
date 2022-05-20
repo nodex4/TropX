@@ -14,22 +14,9 @@ source customIfs.sh
 
 
 function checkSettings() {
-  # dir=`pwd`
-  # if [[ ${dir##*/} == "TropX" ]]; then
-  #   :
-  # else
-  #   cd ../
-  # fi
-
-  # if [[ "$2" == "custom" ]]; then
-  #   setting=$(grep "^$1 :" ../../settings.tropx | \
-  #     cut "-d:" -f2- | \
-  #       cut "-d " -f2-)
-  # else
   setting=$(grep "^$1 :" settings.tropx | \
     cut "-d:" -f2- | \
       cut "-d " -f2-)
-  # fi
 
   text=$1
   value=$(echo "$setting" | awk -F"[()]" '{print $2}' )
@@ -556,7 +543,10 @@ trap end EXIT
 
     ;;
   "2") #python
-      boiler='os.chdir(cd "custom_scripts/'"$si1"'/")
+      boiler='#!/usr/bin/env python3
+import os
+os.chdir(cd "custom_scripts/'"$si1"'/")
+# END OF BOILER (DO NOT REMOVE OR MODIFY ABOVE CODE)
 '
     ;;
   "3") #javascript
@@ -596,100 +586,79 @@ esac
       script=$(<$path)  
 
 
-      # cd custom_scripts
-      # mkdir "$si1"
-      # cd "$si1"
-      # touch main.sh
-      # cd ../../
-
-      # echo "$boiler" >> "custom_scripts/${si1}/main.sh"
-      # echo "$script" >> "custom_scripts/${si1}/main.sh"
-      # sed '$s/}$//' < customIfs.sh > customIfs.sh.tmp
-      # mv customIfs.sh.tmp customIfs.sh
-
-
-
-
-#       ifBoiler='
-#   if [[ $(sed $((SS - default_scripts))!d customScripts.txt) == "'"${si1}"'" ]]; then
-#     bash "custom_scripts/'${si1}'/main.sh"
-#   fi
-# }'    
-#       echo "$ifBoiler" >> customIfs.sh
-
 
 
     fi
 
 
-      cd custom_scripts
-      mkdir "$si1"
-      cd "$si1"
+    cd custom_scripts
+    mkdir "$si1"
+    cd "$si1"
 
-      case "$language" in
-        "1") #bash
-          touch main.sh
-          ;;
-        "2") #python
-          touch main.py
-          ;;
-        "3") #javascript
-          touch main.js
-          ;;
-        "4") #csharp
-          touch main.cs
-          ;;
-      esac
+    case "$language" in
+      "1") #bash
+        touch main.sh
+        ;;
+      "2") #python
+        touch main.py
+        ;;
+      "3") #javascript
+        touch main.js
+        ;;
+      "4") #csharp
+        touch main.cs
+        ;;
+    esac
 
-      cd ../../
+    cd ../../
 
-      case "$language" in
-        "1") #bash
-          echo "$boiler" >> "custom_scripts/${si1}/main.sh"
-          echo "$script" >> "custom_scripts/${si1}/main.sh"
-          sed '$s/}$//' < customIfs.sh > customIfs.sh.tmp
-          mv customIfs.sh.tmp customIfs.sh
-          ;;
-        "2") #python
-          echo "$boiler" >> "custom_scripts/${si1}/main.py"
-          echo "$script" >> "custom_scripts/${si1}/main.py"
-          sed '$s/}$//' < customIfs.sh > customIfs.sh.tmp
-          mv customIfs.sh.tmp customIfs.sh
-          ;;
-        "3") #javascript
-          :
-          ;;
-        "4") #csharp
-          :
-          ;;
-      esac
+    case "$language" in
+      "1") #bash
+        echo "$boiler" >> "custom_scripts/${si1}/main.sh"
+        echo "$script" >> "custom_scripts/${si1}/main.sh"
+        sed '$s/}$//' < customIfs.sh > customIfs.sh.tmp
+        mv customIfs.sh.tmp customIfs.sh
+        ;;
+      "2") #python
+        echo "$boiler" >> "custom_scripts/${si1}/main.py"
+        echo "$script" >> "custom_scripts/${si1}/main.py"
+        sed '$s/}$//' < customIfs.sh > customIfs.sh.tmp
+        mv customIfs.sh.tmp customIfs.sh
+        ;;
+      "3") #javascript
+        :
+        ;;
+      "4") #csharp
+        :
+        ;;
+    esac
 
-      
-      case "$language" in
-        "1") $bash
-          ifBoiler='
-  if [[ $(sed $((SS - default_scripts))!d customScripts.txt) == "'"${si1}"'" ]]; then
-    bash "custom_scripts/'${si1}'/main.sh"
-  fi
+    
+    case "$language" in
+      "1") $bash
+        ifBoiler='
+if [[ $(sed $((SS - default_scripts))!d customScripts.txt) == "'"${si1}"'" ]]; then
+  bash "custom_scripts/'${si1}'/main.sh"
+fi
 }'
-          ;;
-        "2") #python
-                  ifBoiler='
-  if [[ $(sed $((SS - default_scripts))!d customScripts.txt) == "'"${si1}"'" ]]; then
-    bash "custom_scripts/'${si1}'/main.py"
-  fi
+        ;;
+      "2") #python
+                ifBoiler='
+if [[ $(sed $((SS - default_scripts))!d customScripts.txt) == "'"${si1}"'" ]]; then
+  python3 "custom_scripts/'${si1}'/main.py"
+fi
 }'
-          ;;
-        "3") #javascript
-          touch main.js
-          ;;
-        "4") #csharp
-          touch main.cs
-          ;;
-      esac
-  
-      
-      echo "$ifBoiler" >> customIfs.sh
+        ;;
+      "3") #javascript
+        touch main.js
+        ;;
+      "4") #csharp
+        touch main.cs
+        ;;
+    esac
+
+    
+    echo "$ifBoiler" >> customIfs.sh
 
     echo "$si1" | sed -e "s/\b\(.\)/\u\1/g " >> "customScripts.txt"
   

@@ -15,7 +15,8 @@ source functions.sh
 
 #python
 
-# sudo apt-get install os
+# sudo apt install os
+# sudo apt install python3
 
 
 ##########################
