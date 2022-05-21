@@ -1,4 +1,4 @@
-Change WI mode
+Manage Wireless Interface
 Change Mac Address
 WiFi Spammer
 Create Trojan (insert file to convert)

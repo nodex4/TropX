@@ -748,8 +748,38 @@ if [[ $SS == "s" ]]; then
     changeOption "$setting"
   fi
 
+  if [[ $optionToChange == "3" ]]; then
+    setting=$(sed ${optionToChange}!d settings.tropx)
+    setting=$(echo $setting | sed 's/ :.*//')
+    changeOption "$setting"
+  fi
+
+  if [[ $optionToChange == "4" ]]; then
+    setting=$(sed ${optionToChange}!d settings.tropx)
+    setting=$(echo $setting | sed 's/ :.*//')
+    changeOption "$setting"
+  fi
+
   
+  if [[ $optionToChange == "5" ]]; then
+    setting=$(sed ${optionToChange}!d settings.tropx)
+    setting=$(echo $setting | sed 's/ :.*//')
+    changeOption "$setting"
+  fi
+
+  if [[ $optionToChange == "6" ]]; then
+    setting=$(sed ${optionToChange}!d settings.tropx)
+    setting=$(echo $setting | sed 's/ :.*//')
+    changeOption "$setting"
+  fi
+
+  if [[ $optionToChange == "7" ]]; then
+    setting=$(sed ${optionToChange}!d settings.tropx)
+    setting=$(echo $setting | sed 's/ :.*//')
+    changeOption "$setting"
+  fi
 fi
+
 
 
 if [[ $SS == "h" ]]; then
@@ -762,7 +792,7 @@ fi
 
 
 if [[ $SS == "1" ]]; then
-  bash "scripts/changeWImode/main.sh"
+  bash "scripts/Manage Wireless Interface/main.sh"
 fi
 if [[ $SS == "2" ]]; then
   echo "2"

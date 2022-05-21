@@ -1,7 +1,7 @@
 #!/bin/bash
-source functions.sh
+source main.sh
 
-current="Change WI Mode"
+current="Manage Wireless Interface"
 ready
 # to reference files use a similar path "scripts/changeWImode/foo.txt"
 #######################################################
