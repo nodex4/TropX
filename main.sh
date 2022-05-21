@@ -1057,7 +1057,7 @@ fi
 
 
 function run() {
-  gnome-terminal --geometry 1250x750
+  # gnome-terminal --geometry 1250x750
 
   mainMenu
 }
