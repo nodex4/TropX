@@ -45,8 +45,8 @@ if [ ! -d custom_scripts ]; then
   mkdir -p custom_scripts;
 fi
 
-if [ ! -f customScripts.txt ]; then
-  touch customScripts.txt;
+if [ ! -f script_names/customScripts.txt ]; then
+  touch script_names/customScripts.txt;
 fi
 
 if [ ! -f customIfs.sh ]; then
@@ -80,7 +80,7 @@ read -rsp $'  Press any key to continue...\n' -n1 key
 #make them select their wireless interface using changeOption 
 optionToChange=$(grep -n "Wireless Interface" settings.tropx | cut -d: -f1)
 setting=$(sed ${optionToChange}!d settings.tropx)
-    setting=$(echo $setting | sed 's/ :.*//')
-    changeOption "$setting" setup
+setting=$(echo $setting | sed 's/ :.*//')
+changeOption "$setting" setup
 
 # bash main.sh

@@ -530,7 +530,7 @@ if [[ $SS == "m" ]]; then
 case "$language" in
   "1")  #bash
     boiler='#!/usr/bin/env bash
-source functions.sh
+source main.sh
 
 current="'"$si1"'"
 ready
@@ -713,10 +713,19 @@ fi
 
     scriptToDelete=$(sed "${SO}!d" script_names/customScripts.txt)
 
-    grep -v "$scriptToDelete" script_names/customScripts.txt > script_names/customScripts.txt.tmp && mv script_names/customScripts.txt.tmp script_names/customScripts.txt
+    grep -v "$scriptToDelete" script_names/customScripts.txt > script_names/customScripts.tmp
+    mv script_names/customScripts.tmp script_names/customScripts.txt
+    
+    sed '/"'"${scriptToDelete}"'"/,/^fi$/d' customIfs.sh > customIfs.tmp
+    mv customIfs.tmp customIfs.sh
 
+
+    cd custom_scripts
+    rm -r "${scriptToDelete}"
+    cd ../
 
     exit
+
   fi
 fi
 
