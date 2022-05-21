@@ -538,7 +538,6 @@ title
 breadcrumbs "$current" "'"$si1"'"
 cd "custom_scripts/"
 cd "'"$si1"'/"
-trap end EXIT
 # END OF BOILER (DO NOT REMOVE OR MODIFY ABOVE CODE)
 '
 
@@ -909,12 +908,18 @@ if [[ $SO == "b" ]]; then
   mainMenu error
 fi
 
-arguments="$(($#-5))"
-selection="$(seq 1 $arguments)"
 
+if [[ $6 == "settings.tropx" ]]; then
+  settingCount=$(expr $(wc -l < settings.tropx) + 1)
+  selection="$(seq 1 $settingCount)"
+else
+  arguments="$(($#-5))"
+  selection="$(seq 1 $arguments)"
+fi
 if [[ "$(containsElement "$SO" ${selection[@]})" != "0" ]]; then 
   until [[ "$(containsElement "$SO" "${selection[@]}")" == "0" ]] #unti the result is not an error
   do
+    SO=''
     selectOptions "error"  "$2" "$3" "$4" "$5" "$6" "${@:7}" #$stringed
   done
 fi
