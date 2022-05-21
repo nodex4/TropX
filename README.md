@@ -322,7 +322,18 @@ Project Link: [https://github.com/troopek/TropX](https://github.com/troopek/Trop
 <!-- ACKNOWLEDGMENTS -->
 # Acknowledgments
 
-* None yet!
+* Netattack2 by Chrizater
+* WifiSpammer by 125k
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+<!-- Compatibility -->
+# Compatibility
+
+* Linux Machines (Prefferably Kali)
+* Windows (using [Cygwin](https://www.cygwin.com/setup-x86_64.exe))
+* MacOS (shebangs only partially supported)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

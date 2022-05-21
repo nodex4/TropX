@@ -234,16 +234,16 @@ minitropx="
 clear
 
 COLUMNS="$(tput cols)"
-if [[ $COLUMNS > 53 ]]; then
+if [[ $COLUMNS -lt 53 ]]; then
+  echo -e "$minitropx"
+  echo -e -n "$PRIMARY"
+else
   echo -e "$tropx"
-  
   echo -e -n "$PRIMARY                                       "
   echo -e "By$SECONDARY Troopek  "
   echo " "
-else
-  echo -e "$minitropx"
-  echo -e -n "$PRIMARY"
 fi
+
 
 }
 
@@ -330,7 +330,13 @@ clear
 
 
 COLUMNS="$(tput cols)"
-if [[ $COLUMNS > 53 ]]; then
+if [[ $COLUMNS -lt 53 ]]; then
+  sleep 1
+  echo -e "$minitropx"
+  sleep 0.3
+  echo -e -n "$PRIMARY"
+  sleep 0.1
+else
   sleep 1
   
   echo -e "$t"
@@ -348,19 +354,13 @@ if [[ $COLUMNS > 53 ]]; then
   clear
   echo -e "$tropx"
   
-  
   echo -e -n "$PRIMARY                                     "
   echo -e "By$SECONDARY Troopek  " | pv -qL 15
   echo " "
   sleep 0.1
-
-else
-  sleep 1
-  echo -e "$minitropx"
-  sleep 0.3
-  echo -e -n "$PRIMARY"
-  sleep 0.1
 fi
+
+
 
 }
 
@@ -415,9 +415,9 @@ fi
 
 
 
-default_scripts=$(wc -l < defaultScripts.txt)
+default_scripts=$(wc -l < script_names/defaultScripts.txt)
 
-custom_scripts=$(wc -l < customScripts.txt)
+custom_scripts=$(wc -l < script_names/customScripts.txt)
 scripts=$(expr $default_scripts + $custom_scripts)
 
 
@@ -431,13 +431,13 @@ if [[ "$1" == "error" ]] || [[ "$1" == "back" ]] || [[ $animations == "OFF" ]]; 
       {
           print "("SECONDARY NR PRIMARY") " $0
       }
-  ' defaultScripts.txt | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
+  ' script_names/defaultScripts.txt | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
   
   awk -v SECONDARY="$SECONDARY" -v PRIMARY="$PRIMARY" '
       {
           print "("SECONDARY NR+ENVIRON["default_scripts"] PRIMARY") " $0
       }
-  ' customScripts.txt | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
+  ' script_names/customScripts.txt | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
   
 
 else
@@ -448,14 +448,14 @@ else
           system("sleep 0.1")
           print "("SECONDARY NR PRIMARY") " $0
       }
-  ' defaultScripts.txt | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
+  ' script_names/defaultScripts.txt | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
   
   awk -v SECONDARY="$SECONDARY" -v PRIMARY="$PRIMARY" '
       {
           system("sleep 0.1")
           print "("SECONDARY NR+ENVIRON["default_scripts"] PRIMARY") " $0
       }
-  ' customScripts.txt | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
+  ' script_names/customScripts.txt | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
   sleep 0.1
 
 fi
@@ -637,14 +637,14 @@ esac
     case "$language" in
       "1") $bash
         ifBoiler='
-if [[ $(sed $((SS - default_scripts))!d customScripts.txt) == "'"${si1}"'" ]]; then
+if [[ $(sed $((SS - default_scripts))!d script_names/customScripts.txt) == "'"${si1}"'" ]]; then
   bash "custom_scripts/'${si1}'/main.sh"
 fi
 }'
         ;;
       "2") #python
                 ifBoiler='
-if [[ $(sed $((SS - default_scripts))!d customScripts.txt) == "'"${si1}"'" ]]; then
+if [[ $(sed $((SS - default_scripts))!d script_names/customScripts.txt) == "'"${si1}"'" ]]; then
   python3 "custom_scripts/'${si1}'/main.py"
 fi
 }'
@@ -660,7 +660,7 @@ fi
     
     echo "$ifBoiler" >> customIfs.sh
 
-    echo "$si1" | sed -e "s/\b\(.\)/\u\1/g " >> "customScripts.txt"
+    echo "$si1" | sed -e "s/\b\(.\)/\u\1/g " >> "script_names/customScripts.txt"
   
 
 
