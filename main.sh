@@ -1067,11 +1067,19 @@ fi
 ###############################################
 
 
-# testing terminal resizing
-# resize -s 25 100
-# stty rows 25
-# stty cols 100
-# printf '\e[8;50;10t'
+function run() {
+  # testing terminal resizing
+  # resize -s 25 100
+  # stty rows 25
+  # stty cols 100
+  # printf '\e[8;50;10t'
+  
 
+  mainMenu
+}
 
-mainMenu
+# Put executable commands here
+if [ "$0" = "$BASH_SOURCE" ] ; then
+    run
+fi
+

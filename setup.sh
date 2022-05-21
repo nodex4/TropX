@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source functions.sh
+source main.sh
 ##########################
 #install necessary packages
 
