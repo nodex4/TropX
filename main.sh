@@ -78,36 +78,36 @@ ready
 
 
 function end() {
-clear
-stty -echo
-
-checkSettings "Animations"
-animations=$value
-
-# Set WI to managed
-ifconfig $WI down > /dev/null 2>&1
-macchanger -p $WI > /dev/null 2>&1
-iwconfig $WI mode managed > /dev/null 2>&1
-ifconfig $WI up > /dev/null 2>&1
-nmcli device connect $WI > /dev/null 2>&1
-
-if [[ "$animations" == "ON" ]]; then
-  echo " "
-  sleep 01
-  echo -e -n "$PRIMARY  Thanks For Using"
-  echo -e "$SECONDARY TropX" | pv -qL 15
-  sleep 01
-  echo -e "$PRIMARY  My GitHub:$SECONDARY https://github.com/troopek"
-  sleep 01
-  echo " "
-else
-  echo " "
-  echo -e "$PRIMARY  Thanks For Using$SECONDARY TropX"
-  echo -e "$PRIMARY  My GitHub:$SECONDARY https://github.com/troopek"
-  echo " "
-fi
-
-exit
+  clear
+  stty -echo
+  
+  checkSettings "Animations"
+  animations=$value
+  
+  # Set WI to managed
+  ifconfig $WI down > /dev/null 2>&1
+  macchanger -p $WI > /dev/null 2>&1
+  iwconfig $WI mode managed > /dev/null 2>&1
+  ifconfig $WI up > /dev/null 2>&1
+  nmcli device connect $WI > /dev/null 2>&1
+  
+  if [[ "$animations" == "ON" ]]; then
+    echo " "
+    sleep 01
+    echo -e -n "$PRIMARY  Thanks For Using"
+    echo -e "$SECONDARY TropX" | pv -qL 15
+    sleep 01
+    echo -e "$PRIMARY  My GitHub:$SECONDARY https://github.com/troopek"
+    sleep 01
+    echo " "
+  else
+    echo " "
+    echo -e "$PRIMARY  Thanks For Using$SECONDARY TropX"
+    echo -e "$PRIMARY  My GitHub:$SECONDARY https://github.com/troopek"
+    echo " "
+  fi
+  
+  exit
 }
 
 ################################################################################################################
@@ -524,8 +524,8 @@ if [[ $SS == "m" ]]; then
       si1=$(echo "$SI" | awk '{print tolower($0)}' | sed -e "s/\b\(.\)/\u\1/g ")
     done
 
-  selectOptions "" "$current" "Script Language" "Select Script Language" "Select Valid Script Language" "Bash" "Python" "JavaScript" "C#" "GitHub"
-      language=$(echo "$SO" | awk '{print tolower($0)}')
+  selectOptions "" "$current" "Script/ Tool Language" "Select Script Language" "Select Valid Script Language" "Bash" "Python" "Import Repo from GitHub"
+      language="$SO"
 
 case "$language" in
   "1")  #bash
@@ -550,46 +550,53 @@ os.chdir("custom_scripts/'"$si1"'/")
 # END OF BOILER (DO NOT REMOVE OR MODIFY ABOVE CODE)
 '
     ;;
-  "3") #javascript
-    :
-    ;;
-  "4") #csharp
-    :
-    ;;
-  "5") #github
+  "3") #github
     getInput "" "$current" "Github Link" "Copy the link of the repo from the browser" "https://github.com/troopek/TropX"
-    link=$SI
+    link="$SI"
+
+    selectOptions "" "$current" "Main Language of this Script/ Tool" "Main Language" "Select Valid Script Language" "Bash" "Python" 
+    case "$SO" in
+      "1") #bash
+        githubLanguage="bash"
+        ;;
+      "2") #python
+        githubLanguage="python3"
+        ;;
+    esac
+    getInput "" "$current" "Main File Name" "What is the main file name that has to be run for the tool/ script to start (Yes, include a file extension)" "run_TropX.py"
+    mainfile=$SI
     ;;
 
 esac
-    
-    selectOptions "" "$current" "Options" "Select Desired Option" "Select a Valid Option" "Paste script into terminal" "Paste path to script into terminal"
-    insertType=$SO
 
-    if [[ $insertType == "1" ]]; then #paste
-      clear
-      title
-      breadcrumbs "$current" "Options"
+    if [[ "$language" != "3" ]]; then
+      selectOptions "" "$current" "Options" "Select Desired Option" "Select a Valid Option" "Paste script into terminal" "Paste path to script into terminal"
+      insertType=$SO
       
-      echo -e "$PRIMARY    (\e[1;31mDETAILS$PRIMARY) press ctrl + d or type \"$SECONDARY~$PRIMARY\" when done"
-      echo " "
-      echo -e "$SECONDARY  Paste Here > $PRIMARY" | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
-      read -r -d '~' script
+  
+      if [[ $insertType == "1" ]]; then #paste
+        clear
+        title
+        breadcrumbs "$current" "Options"
+        
+        echo -e "$PRIMARY    (\e[1;31mDETAILS$PRIMARY) press ctrl + d or type \"$SECONDARY~$PRIMARY\" when done"
+        echo " "
+        echo -e "$SECONDARY  Paste Here > $PRIMARY" | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
+        read -r -d '~' script
+      fi
+  
+      if [[ $insertType == "2" ]]; then #path
+        getInput "" "$current" "Read Below" "Please type in the relative or full path of the script: " "Do not incldue a file extension" "/root/desktop/script_text.txt"
+      path=$( echo $SI | sed 's/ //g')
+  
+        until [ -f $path ]
+        do
+          getInput error "$current" "Read Below" "Please type in the relative or full path of the script: " "Do not incldue a file extension" "/root/desktop/script_text.txt"
+          path=$SI
+        done
+        script=$(<$path)  
+      fi
     fi
-
-    if [[ $insertType == "2" ]]; then #path
-      getInput "" "$current" "Read Below" "Please type in the relative or full path of the script: " "Do not incldue a file extension" "/root/desktop/script_text.txt"
-    path=$( echo $SI | sed 's/ //g')
-
-      until [ -f $path ]
-      do
-        getInput error "$current" "Read Below" "Please type in the relative or full path of the script: " "Do not incldue a file extension" "/root/desktop/script_text.txt"
-        path=$SI
-      done
-      script=$(<$path)  
-    fi
-
-
 
 
 
@@ -605,13 +612,7 @@ esac
       "2") #python
         touch main.py
         ;;
-      "3") #javascript
-        touch main.js
-        ;;
-      "4") #csharp
-        touch main.cs
-        ;;
-      "5") #github
+      "3") #github
         git clone "$link" .
         ;;
 
@@ -632,12 +633,11 @@ esac
         sed '$s/}$//' < customIfs.sh > customIfs.sh.tmp
         mv customIfs.sh.tmp customIfs.sh
         ;;
-      "3") #javascript
-        :
+      "3") #github
+        sed '$s/}$//' < customIfs.sh > customIfs.sh.tmp
+        mv customIfs.sh.tmp customIfs.sh
         ;;
-      "4") #csharp
-        :
-        ;;
+
     esac
 
     
@@ -645,23 +645,27 @@ esac
       "1") $bash
         ifBoiler='
 if [[ $(sed $((SS - default_scripts))!d script_names/customScripts.txt) == "'"${si1}"'" ]]; then
-  bash "custom_scripts/'${si1}'/main.sh"
+  bash "custom_scripts/'"${si1}"'/main.sh"
 fi
 }'
         ;;
       "2") #python
-                ifBoiler='
+        ifBoiler='
 if [[ $(sed $((SS - default_scripts))!d script_names/customScripts.txt) == "'"${si1}"'" ]]; then
-  python3 "custom_scripts/'${si1}'/main.py"
+  python3 "custom_scripts/'"${si1}"'/main.py"
 fi
 }'
         ;;
-      "3") #javascript
-        touch main.js
+      "3") #github
+        ifBoiler='
+if [[ $(sed $((SS - default_scripts))!d script_names/customScripts.txt) == "'"${si1}"'" ]]; then
+  cd "custom_scripts/'"${si1}"'/"
+  '"${githubLanguage}"' "'"${mainfile}"'"
+  cd ../../
+fi
+}'
         ;;
-      "4") #csharp
-        touch main.cs
-        ;;
+
     esac
 
     
@@ -669,16 +673,51 @@ fi
 
     echo "$si1" | sed -e "s/\b\(.\)/\u\1/g " >> "script_names/customScripts.txt"
   
-    
-  
+    Message="To edit the selected script or add additional files in it's file tree, please navigate to custom_scripts/"$scriptToEdit" and commit your changes there! TropX will now restart so your changes take effect."
+    message "$current" "Message" "$Message"
+    exit 
   fi
 
   if [[ $so1 == "2" ]]; then
-        selectOptions "" "$current" "Existing Scripts" "Select Script to Edit" "Select a Valid Script" $linesofcustiomnscriptsfieltxt
+    
+
+
+    customScriptNames=$(<script_names/customScripts.txt)
+
+    SAVEIFS=$IFS   # Save current IFS (Internal Field Separator)
+    IFS=$'\n'      # Change IFS to newline char
+    customScriptNames=($customScriptNames) # split the `customScriptNames` string into an array by the same name
+    IFS=$SAVEIFS   # Restore original IFS
+
+
+    selectOptions "" "$current" "Script to Edit" "Select Script to Edit" "Select a Valid Script"  "${customScriptNames[@]}"
+
+    scriptToEdit=$(sed "${SO}!d" script_names/customScripts.txt)
+
+    Message="To edit the selected script or add additional files in it's file tree, please navigate to custom_scripts/"$scriptToEdit" and commit your changes there!"
+    message "$current" "Message" "$Message"
   fi
 
-  exit 
 
+
+  if [[ $so1 = "3" ]]; then
+    customScriptNames=$(<script_names/customScripts.txt)
+
+    SAVEIFS=$IFS   # Save current IFS (Internal Field Separator)
+    IFS=$'\n'      # Change IFS to newline char
+    customScriptNames=($customScriptNames) # split the `customScriptNames` string into an array by the same name
+    IFS=$SAVEIFS   # Restore original IFS
+
+
+    selectOptions "" "$current" "Script to Delete" "Select Script to Delete" "Select a Valid Script to Delete" "${customScriptNames[@]}"
+
+    scriptToDelete=$(sed "${SO}!d" script_names/customScripts.txt)
+
+    grep -v "$scriptToDelete" script_names/customScripts.txt > script_names/customScripts.txt.tmp && mv script_names/customScripts.txt.tmp script_names/customScripts.txt
+
+
+    exit
+  fi
 fi
 
 #########################################################
@@ -704,6 +743,14 @@ if [[ $SS == "s" ]]; then
 fi
 
 
+if [[ $SS == "h" ]]; then
+  current="Help"
+  helpMessage="To learn how to efficiently use ${SECONDARY}TropX${PRIMARY}, please refer to it's github:
+${SECONDARY}https://github.com/troopek/TropX${PRIMARY}"
+  message "$current" "Message" "$helpMessage"
+fi
+
+
 
 if [[ $SS == "1" ]]; then
   bash "scripts/changeWImode/main.sh"
@@ -715,14 +762,6 @@ if [[ $SS == "3" ]]; then
   echo "3"
 fi
 
-
-
-if [[ $SS == "h" ]]; then
-  current="Help"
-  helpMessage="To learn how to efficiently use ${SECONDARY}TropX${PRIMARY}, please refer to it's github:
-${SECONDARY}https://github.com/troopek/TropX${PRIMARY}"
-  message "$current" "Message" "$helpMessage"
-fi
 
 
 
@@ -808,7 +847,6 @@ else
   done
 fi
 
-stringed=$(echo "${@:7}" | sed -E 's/[^[:space:]]+/"&"/g' )
 
 
 echo -e " "
@@ -832,9 +870,10 @@ if [[ $SO == "b" ]]; then
   mainMenu error
 fi
 
-selection=("1" "2" "3" "4" "5" "6" "7" "8" "9" "10" "11" "12" "13" "14" "15" "16" "17" "18" "19" "20" "21" "22" "23" "24" "25" "26" "27" "28" "29" "30" "31" "32" "33" "$6" $stringed)
+arguments="$(($#-5))"
+selection="$(seq 1 $arguments)"
 
-if [[ "$(containsElement "$SO" "${selection[@]}")" != "0" ]]; then 
+if [[ "$(containsElement "$SO" ${selection[@]})" != "0" ]]; then 
   until [[ "$(containsElement "$SO" "${selection[@]}")" == "0" ]] #unti the result is not an error
   do
     selectOptions "error"  "$2" "$3" "$4" "$5" "$6" "${@:7}" #$stringed
@@ -912,7 +951,7 @@ fold_width="$(($(tput cols)-6))"
 
 echo -e "$3" | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/      /'; fi
 echo " "
-echo -e -n "Press ${SECONDARY}anything${PRIMARY} to return to the Main Menu..." | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
+echo -e -n "${SECONDARY}Press any key to continue...${PRIMARY}" | if [[ "$textfolding" == "ON" ]]; then fold -s -w "$fold_width" | sed -e "s|^|\t|g"; else sed 's/^/    /'; fi
 stty echo
 read -rsp "" -n1 key
 }
