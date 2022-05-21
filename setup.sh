@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 source functions.sh
 ##########################
@@ -51,7 +51,7 @@ fi
 
 if [ ! -f customIfs.sh ]; then
   touch customIfs.sh;
-  echo "#!/bin/bash" > customIfs.sh
+  echo "#!/usr/bin/env bash" > customIfs.sh
   echo "
 function customIFs() {
   :
