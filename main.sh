@@ -10,7 +10,6 @@
 #      |___/                     |_|   
 # Github: https://github.com/Troopek/
 
-source customIfs.sh
 
 # trap end EXIT
 
@@ -490,10 +489,6 @@ clear
 
 if [[ $SS == "m" ]]; then
   current="Manage Scripts"
-#   paste the script in rn or put the file in the scripts and then paste the     script path command to run it
-  # cd scripts
-  # bash changeIFmode.sh
-  # cd ../
 
   selectOptions "" "$current" "Options" "Select Desired Option" "Select a Valid Option" "New Script" "Modify Existing" "Delete Script"
   so1=$SO
@@ -747,52 +742,17 @@ esac
       "1") #bash
         echo "$boiler" >> "custom_scripts/${si1}/main.sh"
         echo "$script" >> "custom_scripts/${si1}/main.sh"
-        sed '$s/}$//' < customIfs.sh > customIfs.sh.tmp
-        mv customIfs.sh.tmp customIfs.sh
         ;;
       "2") #python
         echo "$boiler" >> "custom_scripts/${si1}/main.py"
         echo "$script" >> "custom_scripts/${si1}/main.py"
-        sed '$s/}$//' < customIfs.sh > customIfs.sh.tmp
-        mv customIfs.sh.tmp customIfs.sh
         ;;
       "3") #github
-        sed '$s/}$//' < customIfs.sh > customIfs.sh.tmp
-        mv customIfs.sh.tmp customIfs.sh
+        :
         ;;
 
     esac
 
-    
-    case "$language" in
-      "1") $bash
-        ifBoiler='
-if [[ $(sed $((SS - default_scripts))!d script_names/customScripts.txt) == "'"${si1}"'" ]]; then
-  bash "custom_scripts/'"${si1}"'/main.sh"
-fi
-}'
-        ;;
-      "2") #python
-        ifBoiler='
-if [[ $(sed $((SS - default_scripts))!d script_names/customScripts.txt) == "'"${si1}"'" ]]; then
-  python3 "custom_scripts/'"${si1}"'/main.py"
-fi
-}'
-        ;;
-      "3") #github
-        ifBoiler='
-if [[ $(sed $((SS - default_scripts))!d script_names/customScripts.txt) == "'"${si1}"'" ]]; then
-  cd "custom_scripts/'"${si1}"'/"
-  '"${githubLanguage}"' "'"${mainfile}"'"
-  cd ../../
-fi
-}'
-        ;;
-
-    esac
-
-    
-    echo "$ifBoiler" >> customIfs.sh
 
     echo "$si1" | sed -e "s/\b\(.\)/\u\1/g " >> "script_names/customScripts.txt"
   
@@ -839,8 +799,6 @@ fi
     grep -v "$scriptToDelete" script_names/customScripts.txt > script_names/customScripts.tmp
     mv script_names/customScripts.tmp script_names/customScripts.txt
     
-    sed '/"'"${scriptToDelete}"'"/,/^fi$/d' customIfs.sh > customIfs.tmp
-    mv customIfs.tmp customIfs.sh
 
 
     cd custom_scripts
@@ -893,8 +851,26 @@ done
 
 
 
-customIFs
-# mainMenu back
+
+customScriptCount=$(wc -l < script_names/customScripts.txt)
+customSelection="$(seq 1 $customScriptCount)"
+for i in $customSelection; do
+  scriptName=$(sed ${i}!d script_names/customScripts.txt)
+
+  if [[ $((SS - default_scripts)) != 0 ]]; then
+    scriptLine=$((SS - default_scripts))
+  else
+    scriptLine=9999
+  fi
+
+  if [[ $(sed ${scriptLine}!d script_names/customScripts.txt) == "$scriptName" ]]; then
+    bash "custom_scripts/$scriptName/main.sh"
+  fi
+done
+
+
+
+mainMenu back
 }
 
 
@@ -1209,29 +1185,10 @@ function installPackages {
 }
 
 
-###############################################
-###############################################
-###############################################
-# testing are
-
-
-
-set -E
-set -o functrace
-function handle_error {
-    local retval=$?
-    local line=${last_lineno:-$1}
-    echo "Failed at $line: $BASH_COMMAND"
-    echo "Trace: " "$@"
-    exit $retval
-}
-if (( ${BASH_VERSION%%.*} <= 3 )) || [[ ${BASH_VERSION%.*} = 4.0 ]]; then
-        trap '[[ $FUNCNAME = handle_error ]] || { last_lineno=$real_lineno; real_lineno=$LINENO; }' DEBUG
-fi
-trap 'handle_error $LINENO ${BASH_LINENO[@]}' ERR
-
-###############################################
-###############################################
+#########################################
+#########################################
+#########################################
+#########################################
 
 
 function run() {

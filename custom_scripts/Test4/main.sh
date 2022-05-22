@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 source main.sh
 
-current="Test12"
+current="Test4"
 ready
 title
-breadcrumbs "$current" "Test12"
+breadcrumbs "$current" "Test4"
 cd "custom_scripts/"
-cd "Test12/"
+cd "Test4/"
 # END OF BOILER (DO NOT REMOVE OR MODIFY ABOVE CODE)
 
-echo 2 
-sleep 2
+echo three
+sleep 0.21
