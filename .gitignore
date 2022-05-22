@@ -191,6 +191,4 @@ images/
 
 .gitignore
 
-.github
-
-LICENSE.txt
+.github/
