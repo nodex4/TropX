@@ -320,10 +320,12 @@ Project Link: [https://github.com/troopek/TropX](https://github.com/troopek/Trop
 
 
 <!-- ACKNOWLEDGMENTS -->
-# Acknowledgments
+# Credits
+Big shoutout to all these people as their scripts helped make TropX possible, make sure to check them out!
 
 * Netattack2 by Chrizater
 * WifiSpammer by 125k
+* Ducky Flasher by Hak5
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
