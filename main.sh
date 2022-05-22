@@ -1087,6 +1087,22 @@ else
 fi
 }
 
+###################################################################
+
+function installPackages {
+  for package in "${@}"; do
+    REQUIRED_PKG="$package"
+    PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG|grep "install ok installed")
+    echo Checking for $REQUIRED_PKG: $PKG_OK
+    clear
+    if [ "" = "$PKG_OK" ]; then
+      echo "${SECONDARY}$REQUIRED_PKG${PRIMARY} is not yet installed. Setting up ${SECONDARY}$REQUIRED_PKG${PRIMARY}."
+      sudo apt --yes install $REQUIRED_PKG
+    fi
+  done
+  clear
+}
+
 
 ###############################################
 ###############################################

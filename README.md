@@ -139,16 +139,11 @@ TropX has some default functions and variables to simplify the programming facti
 ---
 
 * #### installPackages
-* With the `changeWImode` function, you can easily change the mode of your Wireless Interface
+* Install Packages more simply and reliably without causing errors and messing up the script
   ```sh
-  changeWImode monitor
-  # ...
-  changeWImode managed
+  installPackages "python3" "network-manager" "macchanger" 
   ```
-  * The only argument passed will be the mode you want to change the Wireless Interface to
-  * The Wireless Interface used will be the one the user has saved in the settings
-    
-
+  * All packages listed after the installPackages command will be installed automatically, if they already are installed nothing will happen. The function accepts an infinite amount of packages
 
 ---
 * #### selectOptions 
