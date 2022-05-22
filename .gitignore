@@ -179,5 +179,5 @@ cython_debug/
 *.replit
 .nix
 *.nix
-test.*
-test
+#test.*
+#test
