@@ -409,8 +409,8 @@ default_scripts=$(wc -l < script_names/defaultScripts.txt)
 custom_scripts=$(wc -l < script_names/customScripts.txt)
 scripts=$(expr $default_scripts + $custom_scripts)
 
-
-default_scripts=$((default_scripts+1))
+# This is commented as both scriptName files have a blank line at the bottom now
+# default_scripts=$((default_scripts+1))
 export default_scripts
 
 if [[ "$1" == "error" ]] || [[ "$1" == "back" ]] || [[ $animations == "OFF" ]]; then
@@ -473,7 +473,7 @@ read SS
 SS=${SS,,}
 
 
-scriptCount=$((scripts + 1))
+scriptCount=$scripts
 numberOptions=$(echo $(seq $scriptCount))
 
 options=("s" "m" "h" $numberOptions)
@@ -499,10 +499,150 @@ if [[ $SS == "m" ]]; then
   so1=$SO
 
   if [[ $so1 == "1" ]]; then #NEW
+    checkSettings "Developer Mode"; devmode=$value
+    if [[ $devmode == "ON" ]]; then
+      selectOptions "" "$current" "Add as Custom or Default [DEV OPTION]" "Select Script Type" "Select Valid Script Type" "Custom" "Default"
+      scriptType="$SO"
+      if [[ $scriptType == "2" ]]; then
+
+        
+    
+    
+        getInput "" "$current" "Please choose a name for your new default script" "Do not incldue a file extension" "Script Name"
+        si1=$(echo "$SI" | awk '{print tolower($0)}' | sed -e "s/\b\(.\)/\u\1/g ")
+    
+        until [ ! -f "scripts/${si1}/main.sh" ]
+        do
+          getInput error "$current" "Options" "Please choose a name for your new script" "This will be the one which will be displayed in the Main Menu and in other places" "Custom Script Name"
+          si1=$(echo "$SI" | awk '{print tolower($0)}' | sed -e "s/\b\(.\)/\u\1/g ")
+        done
+    
+      selectOptions "" "$current" "Script/ Tool Language" "Select Script Language" "Select Valid Script Language" "Bash" "Python" "Import Repo from GitHub"
+          language="$SO"
+    
+    case "$language" in
+      "1")  #bash
+        boiler='#!/usr/bin/env bash
+source main.sh
+
+current="'"$si1"'"
+ready
+title
+breadcrumbs "$current" "'"$si1"'"
+cd "scripts/"
+cd "'"$si1"'/"
+# END OF BOILER (DO NOT REMOVE OR MODIFY ABOVE CODE)
+    '
+    
+        ;;
+      "2") #python
+          boiler='#!/usr/bin/env python3
+import os
+os.chdir("scripts/'"$si1"'/")
+# END OF BOILER (DO NOT REMOVE OR MODIFY ABOVE CODE)
+    '
+        ;;
+      "3") #github
+        getInput "" "$current" "Github Link" "Copy the link of the repo from the browser" "https://github.com/troopek/TropX"
+        link="$SI"
+    
+        selectOptions "" "$current" "Main Language of this Script/ Tool" "Main Language" "Select Valid Script Language" "Bash" "Python" 
+        case "$SO" in
+          "1") #bash
+            githubLanguage="bash"
+            ;;
+          "2") #python
+            githubLanguage="python3"
+            ;;
+        esac
+        getInput "" "$current" "Main File Name" "What is the main file name that has to be run for the tool/ script to start (Yes, include a file extension)" "run_TropX.py"
+        mainfile=$SI
+        ;;
+    
+    esac
+    
+        if [[ "$language" != "3" ]]; then
+          selectOptions "" "$current" "Options" "Select Desired Option" "Select a Valid Option" "Paste script into terminal" "Paste path to script into terminal"
+          insertType=$SO
+          
+      
+          if [[ $insertType == "1" ]]; then #paste
+            clear
+            title
+            breadcrumbs "$current" "Options"
+            
+            echo -e "$PRIMARY(\e[1;31mDETAILS$PRIMARY) Type the \"$SECONDARY~$PRIMARY\" (tilda) character when done" | foldText 4
+            echo " "
+            echo -e "$SECONDARY  Paste Here > $PRIMARY" | foldText 4
+            read -r -d '~' script
+          fi
+      
+          if [[ $insertType == "2" ]]; then #path
+            getInput "" "$current" "Read Below" "Please type in the relative or full path of the script: " "Do not incldue a file extension" "/root/desktop/script_text.txt"
+          path=$( echo $SI | sed 's/ //g')
+      
+            until [ -f $path ]
+            do
+              getInput error "$current" "Read Below" "Please type in the relative or full path of the script: " "Do not incldue a file extension" "/root/desktop/script_text.txt"
+              path=$SI
+            done
+            script=$(<$path)  
+          fi
+        fi
+    
+    
+    
+    
+        cd scripts
+        mkdir "$si1"
+        cd "$si1"
+    
+        case "$language" in
+          "1") #bash
+            touch main.sh
+            ;;
+          "2") #python
+            touch main.py
+            ;;
+          "3") #github
+            git clone "$link" .
+            ;;
+    
+        esac
+    
+        cd ../../
+    
+        case "$language" in
+          "1") #bash
+            echo "$boiler" >> "scripts/${si1}/main.sh"
+            echo "$script" >> "scripts/${si1}/main.sh"
+            ;;
+          "2") #python
+            echo "$boiler" >> "scripts/${si1}/main.py"
+            echo "$script" >> "scripts/${si1}/main.py"
+            ;;
+          "3") #github
+            :
+            ;;
+    
+        esac
+  
+    
+        echo "$si1" | sed -e "s/\b\(.\)/\u\1/g " >> "script_names/defaultScripts.txt"
+      
+        Message="To add files or edit this script, go to scripts/"$scriptToEdit" and commit your changes there! TropX will now restart so your changes take effect."
+        message "$current" "Message" "$Message"
+        exit
+
+
+      fi
+    fi
+      
+  
     getInput "" "$current" "Please choose a name for your new script" "Do not incldue a file extension" "Script Name"
     si1=$(echo "$SI" | awk '{print tolower($0)}' | sed -e "s/\b\(.\)/\u\1/g ")
 
-    until [ ! -f "custom_scripts/${si1}/main.sh" ]
+    until [ ! -f "custom_scripts/${si1}/main.sh" ] && [ ! -f "scripts/${si1}/main.sh" ]
     do
       getInput error "$current" "Options" "Please choose a name for your new script" "This will be the one which will be displayed in the Main Menu and in other places" "Custom Script Name"
       si1=$(echo "$SI" | awk '{print tolower($0)}' | sed -e "s/\b\(.\)/\u\1/g ")
@@ -562,7 +702,7 @@ esac
         title
         breadcrumbs "$current" "Options"
         
-        echo -e "$PRIMARY    (\e[1;31mDETAILS$PRIMARY) press ctrl + d or type \"$SECONDARY~$PRIMARY\" when done"
+        echo -e "$PRIMARY(\e[1;31mDETAILS$PRIMARY) Type the \"$SECONDARY~$PRIMARY\" (tilda) character when done" | foldText 4
         echo " "
         echo -e "$SECONDARY  Paste Here > $PRIMARY" | foldText 4
         read -r -d '~' script
@@ -719,48 +859,16 @@ if [[ $SS == "s" ]]; then
   selectOptions "" "$current" "Settings"  "Select Setting to Modify" "Select Existing Setting to modify" "settings.tropx"
   optionToChange=$SO
 
-  if [[ $optionToChange == "1" ]]; then
-    setting=$(sed ${optionToChange}!d settings.tropx)
-    setting=$(echo $setting | sed 's/ :.*//')
-    changeOption "$setting"
-  fi
+  settingCount=$(expr $(wc -l < settings.tropx) + 1)
+  selection="$(seq 1 $settingCount)"
+  for i in $selection; do
+    if [[ $optionToChange == "$i" ]]; then
+      setting=$(sed ${optionToChange}!d settings.tropx)
+      setting=$(echo $setting | sed 's/ :.*//')
+      changeOption "$setting"
+    fi
+  done
 
-  if [[ $optionToChange == "2" ]]; then
-    setting=$(sed ${optionToChange}!d settings.tropx)
-    setting=$(echo $setting | sed 's/ :.*//')
-    changeOption "$setting"
-  fi
-
-  if [[ $optionToChange == "3" ]]; then
-    setting=$(sed ${optionToChange}!d settings.tropx)
-    setting=$(echo $setting | sed 's/ :.*//')
-    changeOption "$setting"
-  fi
-
-  if [[ $optionToChange == "4" ]]; then
-    setting=$(sed ${optionToChange}!d settings.tropx)
-    setting=$(echo $setting | sed 's/ :.*//')
-    changeOption "$setting"
-  fi
-
-  
-  if [[ $optionToChange == "5" ]]; then
-    setting=$(sed ${optionToChange}!d settings.tropx)
-    setting=$(echo $setting | sed 's/ :.*//')
-    changeOption "$setting"
-  fi
-
-  if [[ $optionToChange == "6" ]]; then
-    setting=$(sed ${optionToChange}!d settings.tropx)
-    setting=$(echo $setting | sed 's/ :.*//')
-    changeOption "$setting"
-  fi
-
-  if [[ $optionToChange == "7" ]]; then
-    setting=$(sed ${optionToChange}!d settings.tropx)
-    setting=$(echo $setting | sed 's/ :.*//')
-    changeOption "$setting"
-  fi
 fi
 
 
@@ -774,15 +882,16 @@ fi
 
 
 
-if [[ $SS == "1" ]]; then
-  bash "scripts/Manage Wireless Interface/main.sh"
-fi
-if [[ $SS == "2" ]]; then
-  echo "2"
-fi
-if [[ $SS == "3" ]]; then
-  echo "3"
-fi
+defaultScriptCount=$(wc -l < script_names/defaultScripts.txt)
+selection="$(seq 1 $defaultScriptCount)"
+for i in $selection; do
+  if [[ $SS == "$i" ]]; then
+    scriptName=$(sed ${SS}!d script_names/defaultScripts.txt)
+    bash "scripts/$scriptName/main.sh"
+  fi
+done
+
+
 
 
 
