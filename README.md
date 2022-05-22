@@ -137,6 +137,20 @@ You can very easily add **Custom Scripts** to TropX to further personalize TropX
 TropX has some default functions and variables to simplify the programming faction of custom scripts
 
 ---
+
+* #### installPackages
+* With the `changeWImode` function, you can easily change the mode of your Wireless Interface
+  ```sh
+  changeWImode monitor
+  # ...
+  changeWImode managed
+  ```
+  * The only argument passed will be the mode you want to change the Wireless Interface to
+  * The Wireless Interface used will be the one the user has saved in the settings
+    
+
+
+---
 * #### selectOptions 
 
 * With `selectOptions` you can ask the user to select an option, the CLI equvalent of radio buttons 
