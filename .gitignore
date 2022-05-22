@@ -181,14 +181,3 @@ cython_debug/
 *.nix
 test.*
 test
-
-
-#images
-images
-images/
-/images/
-
-
-.gitignore
-
-.github/

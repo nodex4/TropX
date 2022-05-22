@@ -59,7 +59,7 @@
 <!-- ABOUT THE PROJECT -->
 # About The Project
 
-<img src="images/image.png" alt="image">
+<img src="images/image.png" alt="logo">
 
 The best penetration testing and tech tools unified into one beatiful command line interface! Support for custom scripts, allows simple scripting with premade functions and variables. Customizable theme and settings page, along with decent support.
 
