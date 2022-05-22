@@ -187,3 +187,8 @@ test
 images
 images/
 /images/
+
+
+.gitignore
+
+.github
