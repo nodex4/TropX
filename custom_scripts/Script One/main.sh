@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 source main.sh
 
-current="Test"
+current="Script One"
 ready
 title
-breadcrumbs "$current" "Test"
+breadcrumbs "Script One"
 cd "custom_scripts/"
-cd "Test/"
+cd "Script One/"
 # END OF BOILER (DO NOT REMOVE OR MODIFY ABOVE CODE)
 
-echo hello
-sleep 0.5
+echo hye
+sleep 1

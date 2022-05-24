@@ -357,6 +357,7 @@ fi
 ################################################################################################################
 
 function mainMenu() {
+sleep 2
 checkSettings "Wireless Interface"
 WI=$value
 checkSettings "Text Folding"; textfolding=$value;
@@ -622,7 +623,7 @@ os.chdir("scripts/'"$si1"'/")
     
         echo "$si1" | sed -e "s/\b\(.\)/\u\1/g " >> "script_names/defaultScripts.txt"
       
-        Message="To add files or edit this script, go to scripts/"$scriptToEdit" and commit your changes there! TropX will now restart so your changes take effect."
+        Message="To add files or edit this script, go to scripts/"$scriptToEdit" and commit your changes there! TropX will now exit so your changes take effect."
         message "Message" "$Message"
         exit
 
@@ -685,7 +686,7 @@ os.chdir("custom_scripts/'"$si1"'/")
 esac
 
     if [[ "$language" != "3" ]]; then
-      selectOptions "" "$current" "Options" "Select Desired Option" "Select a Valid Option" "Paste script into terminal" "Paste path to script into terminal"
+      selectOptions "Options" "Select Desired Option" "Select a Valid Option" "Paste script into terminal" "Paste path to script into terminal"
       insertType=$SO
       
   
@@ -753,7 +754,7 @@ esac
 
     echo "$si1" | sed -e "s/\b\(.\)/\u\1/g " >> "script_names/customScripts.txt"
   
-    Message="To edit the selected script or add additional files in it's file tree, please navigate to custom_scripts/"$scriptToEdit" and commit your changes there! TropX will now restart so your changes take effect."
+    Message="To edit the selected script or add additional files in it's file tree, please navigate to custom_scripts/"$scriptToEdit" and commit your changes there! TropX will now exit so your changes take effect."
     message "Message" "$Message"
     exit 
   fi
@@ -1036,7 +1037,7 @@ breadcrumbs "$1"
 
 echo -e "$2" | foldText 6
 echo " "
-echo -e -n "${SECONDARY}Press any key to continue...${PRIMARY}" | foldText 4
+echo -e -n "${SECONDARY}Press any key to continue...${PRIMARY}"  | foldText 4
 stty echo
 read -rsp "" -n1 key
 }
@@ -1174,14 +1175,8 @@ function installPackages {
 #########################################
 
 
-function run() {
-  # gnome-terminal --geometry 1250x750
-
-  mainMenu
-}
-
 # Put executable commands here
 if [ "$0" = "$BASH_SOURCE" ] ; then
-    run
+  mainMenu
 fi
 
