@@ -152,11 +152,9 @@ TropX has some default functions and variables to simplify the programming facti
 
 
   ```sh
-  selectOptions "" "$current" "Select an Option" "Enter selection Here" "Try another selection" "Option1" "Option2" "Option3"
+  selectOptions "Options" "Enter selection Here" "Try another selection" "Option1" "Option2" "Option3"
   ```
-  
-  *  `"" "$current"` Leave the first two arguments as shown
-  *  `"Select an Option"` The next argument is the title for the option choices
+  *  `"Options"` The next argument is the title for the option choices
   *  `"Enter selection Here" "Try another selection"` The next two are the `type here` text before the `>`, the second will be shown in case of an error
   *  `"Option1" "Option2" "Option3"` The rest are options which will be shown to the user, they can be passed singularly or in an Array
   * The ouput can be saved into a variable like so, where choice is the number corresponding to the option, so if you choose `Option2`, then `$SO` and also `choice` will be set to `2`. This extra step is recommended as sometimes the variable gets overwritten by this function getting run somewhere else and then its value will change to something completely diffrent and irrelevant.

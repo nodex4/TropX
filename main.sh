@@ -117,37 +117,34 @@ function breadcrumbs() {
 
   checkSettings "Breadcrumbs"
   breadcrumbs=$value
+  if [[ "$1" != '' ]]; then
+    if [[ "$2" == "error" ]] || [[ "$2" == "back" ]] || [[ $animations == "OFF" ]] || ([[ $animations == "MINIMAL" ]] && [[ "$2" == "back" ]]) || ([[ $animations == "MINIMAL" ]] && [[ "$2" != "main" ]]); then
+      if [[ "$breadcrumbs" == "ON" ]]; then
+        echo -e "${PRIMARY}Current: $SECONDARY$current$PRIMARY" | foldText 4
   
-  if [[ "$3" == "error" ]] || [[ "$3" == "back" ]] || [[ $animations == "OFF" ]] || ([[ $animations == "MINIMAL" ]] && [[ "$3" == "back" ]]) || ([[ $animations == "MINIMAL" ]] && [[ "$3" != "main" ]]); then
-    if [[ "$breadcrumbs" == "ON" ]]; then
-      echo -e "${PRIMARY}Current: $SECONDARY$1$PRIMARY" | foldText 4
-
-      COLUMNS="$(tput cols)"
-      if [[ $COLUMNS -lt 53 ]]; then
-        echo -e "$PRIMARY    ----------------------"
+        COLUMNS="$(tput cols)"
+        if [[ $COLUMNS -lt 53 ]]; then
+          echo -e "$PRIMARY    ----------------------"
+        else
+          echo -e "$PRIMARY    ---------------------------------------------"
+        fi
+        
       else
-        echo -e "$PRIMARY    ---------------------------------------------"
+        :
       fi
-
-      
-
-
+  
+      echo -e "$PRIMARY$1: " | foldText 4
+      echo " "
     else
-      :
+      echo -e "${PRIMARY}Current: $SECONDARY$current$PRIMARY" | foldText 4
+      sleep 0.1
+      echo -e "$PRIMARY    ---------------------------------------------"
+      sleep 0.1
+      echo -e "$PRIMARY$1: " | foldText 4
+      sleep 0.1
+      echo " "
     fi
-
-    echo -e "$PRIMARY$2: " | foldText 4
-    echo " "
-  else
-    echo -e "${PRIMARY}Current: $SECONDARY$1$PRIMARY" | foldText 4
-    sleep 0.1
-    echo -e "$PRIMARY    ---------------------------------------------"
-    sleep 0.1
-    echo -e "$PRIMARY$2: " | foldText 4
-    sleep 0.1
-    echo " "
   fi
-
 }
 
 ################################################################################################################
@@ -371,10 +368,10 @@ checkSettings "Animations"; animations=$value
 
 if [[ "$1" == "error" ]] || [[ "$1" == "back" ]] || [[ $animations == "OFF" ]]; then
   title
-  breadcrumbs "$current" "Available Scripts and Tools" back
+  breadcrumbs "Available Scripts and Tools" back
 else
   niceTitle
-  breadcrumbs "$current" "Available Scripts and Tools" main
+  breadcrumbs "Available Scripts and Tools" main
 fi
 
 
@@ -490,29 +487,29 @@ clear
 if [[ $SS == "m" ]]; then
   current="Manage Scripts"
 
-  selectOptions "" "$current" "Options" "Select Desired Option" "Select a Valid Option" "New Script" "Modify Existing" "Delete Script"
+  selectOptions "Options" "Select Desired Option" "Select a Valid Option" "New Script" "Modify Existing" "Delete Script"
   so1=$SO
 
   if [[ $so1 == "1" ]]; then #NEW
     checkSettings "Developer Mode"; devmode=$value
     if [[ $devmode == "ON" ]]; then
-      selectOptions "" "$current" "Add as Custom or Default [DEV OPTION]" "Select Script Type" "Select Valid Script Type" "Custom" "Default"
+      selectOptions "Add as Custom or Default [DEV OPTION]" "Select Script Type" "Select Valid Script Type" "Custom" "Default"
       scriptType="$SO"
       if [[ $scriptType == "2" ]]; then
 
         
     
     
-        getInput "" "$current" "Please choose a name for your new default script" "Do not incldue a file extension" "Script Name"
+        getInput "Please choose a name for your new default script" "Do not incldue a file extension" "Script Name"
         si1=$(echo "$SI" | awk '{print tolower($0)}' | sed -e "s/\b\(.\)/\u\1/g ")
     
         until [ ! -f "scripts/${si1}/main.sh" ]
         do
-          getInput error "$current" "Options" "Please choose a name for your new script" "This will be the one which will be displayed in the Main Menu and in other places" "Custom Script Name"
+          getInput error "Options" "Please choose a name a diffrent name for your new default script" "This will be the one which will be displayed in the Main Menu and in other places" "Custom Script Name"
           si1=$(echo "$SI" | awk '{print tolower($0)}' | sed -e "s/\b\(.\)/\u\1/g ")
         done
     
-      selectOptions "" "$current" "Script/ Tool Language" "Select Script Language" "Select Valid Script Language" "Bash" "Python" "Import Repo from GitHub"
+      selectOptions "Script/ Tool Language" "Select Script Language" "Select Valid Script Language" "Bash" "Python" "Import Repo from GitHub"
           language="$SO"
     
     case "$language" in
@@ -523,7 +520,7 @@ source main.sh
 current="'"$si1"'"
 ready
 title
-breadcrumbs "$current" "'"$si1"'"
+breadcrumbs "'"$si1"'"
 cd "scripts/"
 cd "'"$si1"'/"
 # END OF BOILER (DO NOT REMOVE OR MODIFY ABOVE CODE)
@@ -538,10 +535,10 @@ os.chdir("scripts/'"$si1"'/")
     '
         ;;
       "3") #github
-        getInput "" "$current" "Github Link" "Copy the link of the repo from the browser" "https://github.com/troopek/TropX"
+        getInput "Github Link" "Copy the link of the repo from the browser" "https://github.com/troopek/TropX"
         link="$SI"
     
-        selectOptions "" "$current" "Main Language of this Script/ Tool" "Main Language" "Select Valid Script Language" "Bash" "Python" 
+        selectOptions "Main Language of this Script/ Tool" "Main Language" "Select Valid Script Language" "Bash" "Python" 
         case "$SO" in
           "1") #bash
             githubLanguage="bash"
@@ -550,21 +547,21 @@ os.chdir("scripts/'"$si1"'/")
             githubLanguage="python3"
             ;;
         esac
-        getInput "" "$current" "Main File Name" "What is the main file name that has to be run for the tool/ script to start (Yes, include a file extension)" "run_TropX.py"
+        getInput "Main File Name" "What is the main file name that has to be run for the tool/ script to start (Yes, include a file extension)" "run_TropX.py"
         mainfile=$SI
         ;;
     
     esac
     
         if [[ "$language" != "3" ]]; then
-          selectOptions "" "$current" "Options" "Select Desired Option" "Select a Valid Option" "Paste script into terminal" "Paste path to script into terminal"
+          selectOptions "Options" "Select Desired Option" "Select a Valid Option" "Paste script into terminal" "Paste path to script into terminal"
           insertType=$SO
           
       
           if [[ $insertType == "1" ]]; then #paste
             clear
             title
-            breadcrumbs "$current" "Options"
+            breadcrumbs "Options"
             
             echo -e "$PRIMARY(\e[1;31mDETAILS$PRIMARY) Type the \"$SECONDARY~$PRIMARY\" (tilda) character when done" | foldText 4
             echo " "
@@ -573,12 +570,12 @@ os.chdir("scripts/'"$si1"'/")
           fi
       
           if [[ $insertType == "2" ]]; then #path
-            getInput "" "$current" "Read Below" "Please type in the relative or full path of the script: " "Do not incldue a file extension" "/root/desktop/script_text.txt"
+            getInput "Read Below" "Please type in the relative or full path of the script: " "Do not incldue a file extension" "/root/desktop/script_text.txt"
           path=$( echo $SI | sed 's/ //g')
       
             until [ -f $path ]
             do
-              getInput error "$current" "Read Below" "Please type in the relative or full path of the script: " "Do not incldue a file extension" "/root/desktop/script_text.txt"
+              getInput error "Read Below" "Please type in the relative or full path of the script: " "Do not incldue a file extension" "/root/desktop/script_text.txt"
               path=$SI
             done
             script=$(<$path)  
@@ -626,7 +623,7 @@ os.chdir("scripts/'"$si1"'/")
         echo "$si1" | sed -e "s/\b\(.\)/\u\1/g " >> "script_names/defaultScripts.txt"
       
         Message="To add files or edit this script, go to scripts/"$scriptToEdit" and commit your changes there! TropX will now restart so your changes take effect."
-        message "$current" "Message" "$Message"
+        message "Message" "$Message"
         exit
 
 
@@ -634,16 +631,16 @@ os.chdir("scripts/'"$si1"'/")
     fi
       
   
-    getInput "" "$current" "Please choose a name for your new script" "Do not incldue a file extension" "Script Name"
+    getInput "Please choose a name for your new script" "Do not incldue a file extension" "Script Name"
     si1=$(echo "$SI" | awk '{print tolower($0)}' | sed -e "s/\b\(.\)/\u\1/g ")
 
     until [ ! -f "custom_scripts/${si1}/main.sh" ] && [ ! -f "scripts/${si1}/main.sh" ]
     do
-      getInput error "$current" "Options" "Please choose a name for your new script" "This will be the one which will be displayed in the Main Menu and in other places" "Custom Script Name"
+      getInput error "Options" "Please choose a name for your new script" "This will be the one which will be displayed in the Main Menu and in other places" "Custom Script Name"
       si1=$(echo "$SI" | awk '{print tolower($0)}' | sed -e "s/\b\(.\)/\u\1/g ")
     done
 
-  selectOptions "" "$current" "Script/ Tool Language" "Select Script Language" "Select Valid Script Language" "Bash" "Python" "Import Repo from GitHub"
+  selectOptions "Script/ Tool Language" "Select Script Language" "Select Valid Script Language" "Bash" "Python" "Import Repo from GitHub"
       language="$SO"
 
 case "$language" in
@@ -654,7 +651,7 @@ source main.sh
 current="'"$si1"'"
 ready
 title
-breadcrumbs "$current" "'"$si1"'"
+breadcrumbs "'"$si1"'"
 cd "custom_scripts/"
 cd "'"$si1"'/"
 # END OF BOILER (DO NOT REMOVE OR MODIFY ABOVE CODE)
@@ -669,10 +666,10 @@ os.chdir("custom_scripts/'"$si1"'/")
 '
     ;;
   "3") #github
-    getInput "" "$current" "Github Link" "Copy the link of the repo from the browser" "https://github.com/troopek/TropX"
+    getInput "Github Link" "Copy the link of the repo from the browser" "https://github.com/troopek/TropX"
     link="$SI"
 
-    selectOptions "" "$current" "Main Language of this Script/ Tool" "Main Language" "Select Valid Script Language" "Bash" "Python" 
+    selectOptions "Main Language of this Script/ Tool" "Main Language" "Select Valid Script Language" "Bash" "Python" 
     case "$SO" in
       "1") #bash
         githubLanguage="bash"
@@ -681,7 +678,7 @@ os.chdir("custom_scripts/'"$si1"'/")
         githubLanguage="python3"
         ;;
     esac
-    getInput "" "$current" "Main File Name" "What is the main file name that has to be run for the tool/ script to start (Yes, include a file extension)" "run_TropX.py"
+    getInput "Main File Name" "What is the main file name that has to be run for the tool/ script to start (Yes, include a file extension)" "run_TropX.py"
     mainfile=$SI
     ;;
 
@@ -695,7 +692,7 @@ esac
       if [[ $insertType == "1" ]]; then #paste
         clear
         title
-        breadcrumbs "$current" "Options"
+        breadcrumbs "Options"
         
         echo -e "$PRIMARY(\e[1;31mDETAILS$PRIMARY) Type the \"$SECONDARY~$PRIMARY\" (tilda) character when done" | foldText 4
         echo " "
@@ -704,12 +701,12 @@ esac
       fi
   
       if [[ $insertType == "2" ]]; then #path
-        getInput "" "$current" "Read Below" "Please type in the relative or full path of the script: " "Do not incldue a file extension" "/root/desktop/script_text.txt"
+        getInput "Read Below" "Please type in the relative or full path of the script: " "Do not incldue a file extension" "/root/desktop/script_text.txt"
       path=$( echo $SI | sed 's/ //g')
   
         until [ -f $path ]
         do
-          getInput error "$current" "Read Below" "Please type in the relative or full path of the script: " "Do not incldue a file extension" "/root/desktop/script_text.txt"
+          getInput error "Read Below" "Please type in the relative or full path of the script: " "Do not incldue a file extension" "/root/desktop/script_text.txt"
           path=$SI
         done
         script=$(<$path)  
@@ -757,7 +754,7 @@ esac
     echo "$si1" | sed -e "s/\b\(.\)/\u\1/g " >> "script_names/customScripts.txt"
   
     Message="To edit the selected script or add additional files in it's file tree, please navigate to custom_scripts/"$scriptToEdit" and commit your changes there! TropX will now restart so your changes take effect."
-    message "$current" "Message" "$Message"
+    message "Message" "$Message"
     exit 
   fi
 
@@ -773,12 +770,12 @@ esac
     IFS=$SAVEIFS   # Restore original IFS
 
 
-    selectOptions "" "$current" "Script to Edit" "Select Script to Edit" "Select a Valid Script"  "${customScriptNames[@]}"
+    selectOptions "Script to Edit" "Select Script to Edit" "Select a Valid Script"  "${customScriptNames[@]}"
 
     scriptToEdit=$(sed "${SO}!d" script_names/customScripts.txt)
 
     Message="To edit the selected script or add additional files in it's file tree, please navigate to custom_scripts/"$scriptToEdit" and commit your changes there!"
-    message "$current" "Message" "$Message"
+    message "Message" "$Message"
   fi
 
 
@@ -792,7 +789,7 @@ esac
     IFS=$SAVEIFS   # Restore original IFS
 
 
-    selectOptions "" "$current" "Script to Delete" "Select Script to Delete" "Select a Valid Script to Delete" "${customScriptNames[@]}"
+    selectOptions "Script to Delete" "Select Script to Delete" "Select a Valid Script to Delete" "${customScriptNames[@]}"
 
     scriptToDelete=$(sed "${SO}!d" script_names/customScripts.txt)
 
@@ -814,7 +811,7 @@ fi
 
 if [[ $SS == "s" ]]; then
   current="Settings"
-  selectOptions "" "$current" "Settings"  "Select Setting to Modify" "Select Existing Setting to modify" "settings.tropx"
+  selectOptions "Settings"  "Select Setting to Modify" "Select Existing Setting to modify" "settings.tropx"
   optionToChange=$SO
 
   settingCount=$(expr $(wc -l < settings.tropx) + 1)
@@ -835,7 +832,7 @@ if [[ $SS == "h" ]]; then
   current="Help"
   helpMessage="To learn how to efficiently use ${SECONDARY}TropX${PRIMARY}, please refer to it's github:
 ${SECONDARY}https://github.com/troopek/TropX${PRIMARY}"
-  message "$current" "Message" "$helpMessage"
+  message "Message" "$helpMessage"
 fi
 
 
@@ -883,66 +880,62 @@ checkSettings "Animations"
 animations=$value
 
 title
-if [[ "$1" != "setup" ]]; then
-  breadcrumbs "$2" "$3"
-else
-breadcrumbs "Setup" "Available Wireless Interfaces"
+
+
+# here
+
+if [[ "$1" == "error" ]]; then
+  shift
+  error=true
 fi
 
-if [[ "$1" != "setup" ]]; then
+
+breadcrumbs "$1"
+
+
 echo -e "$PRIMARY(${SECONDARY}B$PRIMARY) Back To Main Menu" | foldText 6
-fi
+
 
 if [[ $animations == "OFF" ]] || [[ $animations == "MINIMAL" ]]; then
   :
 else
-sleep 0.1
+  sleep 0.1
 fi
 
-if [[ "$1" != "setup" ]]; then
-  echo "      ------------------"
-fi
+echo "------------------" | foldText 6
 
-if [[ $6 == "settings.tropx" ]]; then
-  if [[ $animations == "OFF" ]] || [[ $animations == "MINIMAL" ]]; then
-  awk -v SECONDARY="$SECONDARY" -v PRIMARY="$PRIMARY" '
-      {
-          print "("SECONDARY NR PRIMARY") " $0
-      }
-  ' settings.tropx | foldText 6
-  # awk -v SECONDARY="$SECONDARY" -v PRIMARY="$PRIMARY" '
-  #     {
-  #         print "    ("SECONDARY NR PRIMARY") " $0 | fold -s -w "$fold_width" | sed -e "s|^|\t|g"
-  #     }
-  # ' settings.tropx
+
+if [[ $4 == "settings.tropx" ]]; then
+  if [[ $animations == "ON" ]]; then
+    awk -v SECONDARY="$SECONDARY" -v PRIMARY="$PRIMARY" '
+        {
+            system("sleep 0.1")
+            print "("SECONDARY NR PRIMARY") " $0
+        }
+    ' settings.tropx | foldText 6
   else
-  awk -v SECONDARY="$SECONDARY" -v PRIMARY="$PRIMARY" '
-      {
-          system("sleep 0.1")
-          print "("SECONDARY NR PRIMARY") " $0
-      }
-  ' settings.tropx | foldText 6
-  fi
-else
-  if [[ $6 != "" ]]; then
-    echo -e "$PRIMARY(${SECONDARY}1$PRIMARY) $6" | foldText 6
-    i=2
+    awk -v SECONDARY="$SECONDARY" -v PRIMARY="$PRIMARY" '
+        {
+            print "("SECONDARY NR PRIMARY") " $0
+        }
+    ' settings.tropx | foldText 6
   fi
 fi
 
-if [[ $animations == "OFF" ]] || [[ $animations == "MINIMAL" ]]; then
-  for arg in "${@:7}"
-  do
-      echo -e "${PRIMARY}(${SECONDARY}${i}$PRIMARY) ${arg}" | foldText 6
-      i=$((i+1))
 
-  done
-else
-  for arg in "${@:7}"
+i=1
+if [[ $animations == "ON" ]]; then
+  for arg in "${@:4}"
   do
       echo -e "${PRIMARY}(${SECONDARY}${i}$PRIMARY) ${arg}" | foldText 6
       i=$((i+1))
       sleep 0.1
+  done
+else
+  for arg in "${@:4}"
+  do
+      echo -e "${PRIMARY}(${SECONDARY}${i}$PRIMARY) ${arg}" | foldText 6
+      i=$((i+1))
   done
 fi
 
@@ -950,11 +943,10 @@ fi
 
 echo -e " "
 
-if [ "$1" == "error" ]
-then
-echo -n -e "$SECONDARY$5 > " | foldText 4
+if [[ $error == true ]]; then
+  echo -n -e "$SECONDARY$2 > " | foldText 4
 else
-echo -n -e "$SECONDARY$4 > " | foldText 4
+  echo -n -e "$SECONDARY$3 > " | foldText 4
 fi
 
 echo -n -e "$PRIMARY"
@@ -967,11 +959,11 @@ if [[ $SO == "b" ]]; then
 fi
 
 
-if [[ $6 == "settings.tropx" ]]; then
+if [[ $4 == "settings.tropx" ]]; then
   settingCount=$(expr $(wc -l < settings.tropx) + 1)
   selection="$(seq 1 $settingCount)"
 else
-  arguments="$(($#-5))"
+  arguments="$(($#-3))"
   selection="$(seq 1 $arguments)"
 fi
 
@@ -980,48 +972,42 @@ if [[ "$(containsElement "$SO" ${selection[@]})" != "0" ]]; then
 
   until [[ "$(containsElement "$SO" ${selection[@]})" == "0" ]] #unti the result is not an error
   do
-    selectOptions "error"  "$2" "$3" "$4" "$5" "$6" "${@:7}" #$stringed
+    selectOptions "error" "$1" "$2" "$3" "$4" "${@:5}"
   done
 
 fi
+error=""
 }
 
 ################################################################################################################
 
 function getInput() {
 stty -echo
-
+SI=""
 title
-breadcrumbs "$2" "$3"
 
 
+if [[ "$1" == "error" ]]; then
+  shift
+fi
+
+breadcrumbs "$1"
 
 if [[ $animations == "OFF" ]] || [[ $animations == "MINIMAL" ]]; then
-  # if [[ $4 != "" ]]; then
-    echo -e "$PRIMARY(\e[1;31mDETAILS$PRIMARY) $4" | foldText 6
+    echo -e "$PRIMARY(\e[1;31mDETAILS$PRIMARY) $2" | foldText 6
     echo " "
-  # fi
-  # if [[ $5 != "" ]]; then
-    echo -e "$PRIMARY(\e[1;31mEXAMPLE$PRIMARY) $5" | foldText 6
-  # fi
-
-
+    echo -e "$PRIMARY(\e[1;31mEXAMPLE$PRIMARY) $3" | foldText 6
 else
-  # if [[ $4 != "" ]]; then
-    echo -e "$PRIMARY(\e[1;31mDETAILS$PRIMARY) $4" | foldText 6
+    echo -e "$PRIMARY(\e[1;31mDETAILS$PRIMARY) $2" | foldText 6
     echo " "
     sleep 0.1
-  # fi
-  # if [[ $5 != "" ]]; then
-    echo -e "$PRIMARY(\e[1;31mEXAMPLE$PRIMARY) $5" | foldText 6
+    echo -e "$PRIMARY(\e[1;31mEXAMPLE$PRIMARY) $3" | foldText 6
     sleep 0.1
-    # fi
 fi
 
 echo -e " "
 
-if [ "$1" == "error" ]
-then
+if [[ $error == true ]]; then
   echo -n -e "${SECONDARY}Try Again > " | foldText 4
 else
   echo -n -e "${SECONDARY}Type Here > " | foldText 4
@@ -1035,6 +1021,7 @@ SI=${SI,,}
 if [[ $SI == "b" ]]; then
   mainMenu error
 fi
+error=""
 }
 
 
@@ -1045,9 +1032,9 @@ function message() {
 stty -echo
 
 title
-breadcrumbs "$1" "$2"
+breadcrumbs "$1"
 
-echo -e "$3" | foldText 6
+echo -e "$2" | foldText 6
 echo " "
 echo -e -n "${SECONDARY}Press any key to continue...${PRIMARY}" | foldText 4
 stty echo
@@ -1078,9 +1065,9 @@ function foldText {
   checkSettings "Text Folding"; textfolding=$value;
   if [[ "$textfolding" == "ON" ]]; then
     tabs $1
-    fold_width="$(($(tput cols)-$1))"
+    fold_width=50 # maybe $((50-$1))
     
-    fold -s -w "$fold_width" | sed -e "s|^|\t|g"
+    fold -s -w "$fold_width" | sed -e "s|^|\t|g" 
 
   else
     case $1 in
@@ -1112,11 +1099,7 @@ function changeOption() {
 stty -echo
 current="Settings / $1"
 checkSettings "$1"
-if [[ "$2" == "setup" ]]; then
-  selectOptions "setup" "$current" "New Value" "Select New Value" "Select a Valid New Value" $listOptions
-else
-  selectOptions "" "$current" "New Value"  "Select New Value" "Select a Valid New Value" $listOptions
-fi
+selectOptions "New Value"  "Select New Value" "Select a Valid New Value" $listOptions
 newValue=$SO
 
 

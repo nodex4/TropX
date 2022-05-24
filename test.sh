@@ -3,26 +3,33 @@
 :
 
 
+textfolding="ON" 
 
+function foldText {
+  if [[ "$textfolding" == "ON" ]]; then
+    tabs $1
+    # fold_width="$(($(tput cols)-$1))"
+    fold_width=$((50-$1))
+    
+    fold -s -w "$fold_width" | sed -e "s|^|\t|g" 
 
-
-set -E
-set -o functrace
-function handle_error {
-    local retval=$?
-    local line=${last_lineno:-$1}
-    echo "Failed at $line: $BASH_COMMAND"
-    echo "Trace: " "$@"
-    exit $retval
+  else
+    case $1 in
+      2)
+        sed 's/^/  /'
+        ;;
+      4)
+        sed 's/^/    /'
+        ;;
+      6)
+        sed 's/^/      /'
+        ;;
+    esac
+  fi
 }
-if (( ${BASH_VERSION%%.*} <= 3 )) || [[ ${BASH_VERSION%.*} = 4.0 ]]; then
-        trap '[[ $FUNCNAME = handle_error ]] || { last_lineno=$real_lineno; real_lineno=$LINENO; }' DEBUG
-fi
-trap 'handle_error $LINENO ${BASH_LINENO[@]}' ERR
 
-fail() {
-    echo "I expect the next line to be the failing line: $((LINENO + 1))"
-    command_that_fails
-}
+text="If you find this paragraph tool useful, please do us a favor and let us know how you're using it. It's greatly beneficial for us to know the different ways this tool is being used so we can improve it with updates. This is especially true since there are times when the generators we create get used in completely unanticipated ways from when we initially created them. If you have the time, please send us a quick note on what you'd like to say..."
 
-fail
+echo $text | foldText 2
+echo $text | foldText 4
+echo $text | foldText 6

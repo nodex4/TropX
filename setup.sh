@@ -81,6 +81,35 @@ read -rsp $'  Press any key to continue...\n' -n1 key
 optionToChange=$(grep -n "Wireless Interface" settings.tropx | cut -d: -f1)
 setting=$(sed ${optionToChange}!d settings.tropx)
 setting=$(echo $setting | sed 's/ :.*//')
-changeOption "$setting" setup
+
+
+
+
+
+
+
+
+stty -echo
+current="Setup Wireless Interface"
+checkSettings "Wireless Interface"
+selectOptions "" "$current" "New Value"  "Select New Value" "Select a Valid New Value" $listOptions
+newValue=$SO
+
+
+line=`sed -n "${optionToChange}p" < settings.tropx`
+line=${line//(}
+line=${line//)}
+
+opt=$(echo "$line" | cut -d: -f2-)
+opt=$(echo "$opt" | sed 's/| //g' )
+opt=$(echo "$opt" | awk -v nV="${newValue}" '{print $nV}')
+
+selectSetting "$line" "$opt"
+sed -i "${optionToChange}s/.*/$selected/" settings.tropx
+stty echo
+
+
+
+
 
 # bash main.sh
