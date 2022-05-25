@@ -43,7 +43,8 @@
         <li><a href="#updates">Updates</a></li>
       </ul>
     </li>
-    <li><a href="#custom-scripts">Usage</a></li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#custom-scripts">Custom Scripts</a></li>
       <ul>
       <li><a href="#bash">Bash</a></li>
         <li><a href="#python">Python</a></li>
@@ -146,7 +147,9 @@ Learn how to use **TropX** efficiently and to it's fullest.
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## First Steps
-* Firstly
+Find out what to do first after <a href="#initiation">Starting up TropX</a>
+
+* Configure your wireless Interface in the settings tab
 
 
 <!-- Custom Scripts -->
