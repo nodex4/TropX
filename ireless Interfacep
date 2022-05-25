@@ -1,4 +1,4 @@
-Wieless Interface : (wlan0) | wlan1 | mon0 | mon1
+Wieless Interface : (mon0) | wlan0 | wlan1
 Animations : ON | MINIMAL | (OFF)
 Default Scripts : (SHOW) | HIDE
 Breadcrumbs : (ON) | OFF

@@ -916,23 +916,23 @@ if [[ $4 == "settings.tropx" ]]; then
   fi
 fi
 
-
-i=1
-if [[ $animations == "ON" ]]; then
-  for arg in "${@:4}"
-  do
-      echo -e "${PRIMARY}(${SECONDARY}${i}$PRIMARY) ${arg}" | foldText 6
-      i=$((i+1))
-      sleep 0.1
-  done
-else
-  for arg in "${@:4}"
-  do
-      echo -e "${PRIMARY}(${SECONDARY}${i}$PRIMARY) ${arg}" | foldText 6
-      i=$((i+1))
-  done
+if [[ $4 != "settings.tropx" ]]; then
+  i=1
+  if [[ $animations == "ON" ]]; then
+    for arg in "${@:4}"
+    do
+        echo -e "${PRIMARY}(${SECONDARY}${i}$PRIMARY) ${arg}" | foldText 6
+        i=$((i+1))
+        sleep 0.1
+    done
+  else
+    for arg in "${@:4}"
+    do
+        echo -e "${PRIMARY}(${SECONDARY}${i}$PRIMARY) ${arg}" | foldText 6
+        i=$((i+1))
+    done
+  fi
 fi
-
 
 
 echo -e " "
@@ -1093,7 +1093,7 @@ function changeOption() {
 stty -echo
 current="Settings / $1"
 checkSettings "$1"
-selectOptions "New Value"  "Select New Value" "Select a Valid New Value" $listOptions
+selectOptions "New Value" "Select New Value" "Select a Valid New Value" $listOptions
 newValue=$SO
 
 

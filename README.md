@@ -26,20 +26,20 @@
   </p>
 </div>
 
-
+---
 
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
   <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-    </li>
+    <li><a href="#about-the-project">About The Project</a></li>
+    <li><a href="#next-feature">Next Feature</a></li>
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#installation">Installation</a></li>
         <li><a href="#setup">Setup</a></li>
+        <li><a href="#initiation">Initiation</a></li>
         <li><a href="#updates">Updates</a></li>
       </ul>
     </li>
@@ -48,7 +48,7 @@
       <li><a href="#bash">Bash</a></li>
         <li><a href="#python">Python</a></li>
         <li><a href="#setup">Setup</a></li>
-        <li><a href="#share-your-script">Share your script></li>
+        <li><a href="#share-your-script">Share your script</li>
       </ul>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
@@ -57,6 +57,7 @@
     <li><a href="#credits">Credits</a></li>
     <li><a href="#donate">Donate</a></li>
     <li><a href="#compatibility">Compatibility</a></li>
+    <li><a href="#troubleshooting">Troubleshooting</a></li>
     <li><a href="#disclaimer">Disclaimer</a></li>
   </ol>
 </details>
@@ -66,26 +67,30 @@
 <!-- ABOUT THE PROJECT -->
 # About The Project
 
-<img src="images/image.png" alt="logo">
+<img src="images/image.png" alt="image">
 
-The best penetration testing and tech tools unified into one beatiful command line interface! Support for custom scripts, allows simple scripting with premade functions and variables. Customizable theme and settings page, along with decent support.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TropX is a command line application to run penetration testing scripts. It aims to more efficiently run long processes and tedious tasks by allowing the creation of custom scripts in the CLI that can be run whenever. To make scripting even easier, there are premade functions and variables for bash and python to be used to simplify the process. TropX also allows for maximum customization and optimization by providing a settings menu controlled trough the CLI. This project is free and opensource so all funding originates from <a href="#donate">donations</a>.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
+# Next Feature
+Vote on the next feature to be implemented into TropX.
+
+* This feature is not setup yet
 
 
 <!-- GETTING STARTED -->
 # Getting Started
+Learn how to install, setup, and update Tropx.
 
-Guide on how to obtain a local copy of TropX
-**
+
 ## Installation
-A local copy of TropX can be obtained using the `git clone` command
+A local copy of TropX can be obtained using the `git clone` command.
 
-* Navigate to your terminal (I use Terminator)
+* Navigate to your terminal (e.g. Terminator)
 * Navigate to the directory you want TropX saved
-* Clone the repository using the git command
+* Clone the repository using the `git clone` command
   ```sh
   git clone https://github.com/troopek/TropX 
   ```
@@ -96,23 +101,33 @@ A local copy of TropX can be obtained using the `git clone` command
 
 
 ## Setup
-The setup can be automatically done by running the `setup.sh` file
+The setup is automatically done after running the `setup.sh` file. The installation time may vary according to some variables.
 
 * Run the `setup.sh` file with bash and follow along with the setup tutorial
   ```sh
   bash setup.sh
   ```
 
+
+## Initiation
+To run TropX, you will have to run the `main.sh` file.
+
+* Navigate to the TropX folder
+  ```sh
+  cd TropX
+  ```
+* Run the `main.sh` file with bash
+  ```sh
+  bash main.sh
+  ```
+  
 ## Updates
 
-You can update TropX to the newest version without losing any custom scripts and while also preserving your settings and other modified things. You can do this automatically by running the update.sh file.
+You can update TropX to the newest version without losing any custom scripts and while also preserving your settings and other modified things. You can do this automatically trough TropX.
 
-* Firstly, navigate to your terminal (I use Terminator)
-* Navigate to the directory where you cloned TropX
-* Run the `update.sh` file with bash and wait until the proccess has finished
-  ```sh
-  bash update.sh
-  ```
+* Start TropX
+* Select `Check for Updates` in the main menu
+* If a newer version is available, choose `yes` to update
   
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -120,30 +135,31 @@ You can update TropX to the newest version without losing any custom scripts and
 
 <!-- USAGE -->
 # Usage
+Learn how to use **TropX** efficiently and to it's fullest.
 
-Guide on how to use TropX efficiently and to it's fullest
-* Firstly, run the `main.sh` file from the `TropX` directory.
-  ```sh
-  bash main.sh
-  ```
-* Afterwards you will be prompted to select out of a number of scripts and tools
-* To select any script or option, you will have to input its corresponding number like `4` and then press `Enter`
+* <a href="#initiation">Start up TropX</a>
+* You will be prompted to select out of an ample of scripts
+* To select any script, you will have to input its corresponding number like `4` and then press `Enter`
 * All tools and scripts will send you back to the main menu after executing
+* This same navigation also applies to navigation within scripts.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
+
+## First Steps
+* Firstly
 
 
 <!-- Custom Scripts -->
 # Custom Scripts
 
-You can very easily add **Custom Scripts** to TropX to further personalize TropX, it supports multiple languages including **bash**, **python**, **javascript**, and even **C#**
+You can very easily add **Custom Scripts** to TropX to further personalize TropX, it supports both **bash** and **python**. Additionally you can **clone** a tool from **github** also.
 
 
 ## **Bash**
 
-TropX has some default functions and variables to simplify the programming faction of custom scripts
+TropX has some default **functions** and **variables** to simplify the programming pillar of custom scripts.
 
----
+
 
 * #### installPackages
 * Install Packages more simply and reliably without causing errors and messing up the script
@@ -355,12 +371,28 @@ TropX is a free tool, and the only source of income generated by it is trough yo
 <!-- Compatibility -->
 # Compatibility
 
-* Linux Machines (Prefferably Kali)
+* Kali Linux
+* BlackArch Linux
+* Ubuntu
+* Kali Nethunter
+* Parrot OS
 * Windows (using [Cygwin](https://www.cygwin.com/setup-x86_64.exe))
 * MacOS
-* Android (very situational)
+* Android (using termux on rooted devices)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
+
+
+
+<!-- TROUBLESHOOTING -->
+# Troubleshooting
+
+* Is troopek cool?
+  * Yes
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
 
 <!-- DISCLAIMER -->
 # Disclaimer
