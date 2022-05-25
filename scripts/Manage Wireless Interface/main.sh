@@ -6,7 +6,7 @@ ready
 # to reference files use a similar path "scripts/changeWImode/foo.txt"
 #######################################################
 
-selectOptions "" "$current" "Select Wireless Interface Mode" "Select a Mode" "Select a Valid Mode" "Monitor" "Managed" "Change Default Wireless Interface"
+selectOptions "Select Wireless Interface Mode" "Select a Mode" "Select a Valid Mode" "Monitor" "Managed" "Change Default Wireless Interface"
 choice=$SO
 if [[ "$choice" == "1" ]]; then
   changeWImode monitor

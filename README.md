@@ -11,7 +11,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/troopek/TropX">
-    <img src="images/logo.png" alt="logo" width="80" height="80">
+    <img src="images/logo.png" alt="logo" width="100">
   </a>
 
 <h3 align="center">TropX</h3>
@@ -34,23 +34,30 @@
   <ol>
     <li>
       <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
+        <li><a href="#setup">Setup</a></li>
+        <li><a href="#updates">Updates</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
+    <li><a href="#custom-scripts">Usage</a></li>
+      <ul>
+      <li><a href="#bash">Bash</a></li>
+        <li><a href="#python">Python</a></li>
+        <li><a href="#setup">Setup</a></li>
+        <li><a href="#share-your-script">Share your script></li>
+      </ul>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
+    <li><a href="#credits">Credits</a></li>
+    <li><a href="#donate">Donate</a></li>
+    <li><a href="#compatibility">Compatibility</a></li>
+    <li><a href="#disclaimer">Disclaimer</a></li>
   </ol>
 </details>
 
@@ -127,12 +134,12 @@ Guide on how to use TropX efficiently and to it's fullest
 
 
 <!-- Custom Scripts -->
-## Custom Scripts
+# Custom Scripts
 
 You can very easily add **Custom Scripts** to TropX to further personalize TropX, it supports multiple languages including **bash**, **python**, **javascript**, and even **C#**
 
 
-### **Bash**
+## **Bash**
 
 TropX has some default functions and variables to simplify the programming faction of custom scripts
 
@@ -169,29 +176,30 @@ TropX has some default functions and variables to simplify the programming facti
 * With `getInput` you can get user input to save into a variable and use within your custom script
 
   ```sh
-  getInput "" "$current" "Select an Option" "Type something useful" "file.txt"
+  getInput "Select an Option" "Type something useful" "file.txt"
   ```
-  *  `"" "$current"` Leave the first two arguments as shown
-  *  `"Select an Option"` The next argument is the title for the option choices
-  *  `"Type something useful"` The following argument is going to be the details for what the user is supposed to type
-  *  `"file.txt"` Next is an example of what their input should look like
-  *  To ensure that your user returns a *proper* and *useful* string, you can run it trough an until loop
-  * The ouput can be saved into a variable like so, where choice is the number corresponding to the option, so if you typed in `foo`, then `$SI` and also `input` will be set to `foo`. This extra step is recommended as sometimes the variable gets overwritten by this function getting run somewhere else and then its value will change to something completely diffrent and irrelevant.
+  * `"Select an Option"` This argument is the title for the get input function
+  * `"Type something useful"` The following argument is going to be the details for what the user is supposed to type
+  * `"file.txt"` Next is an example of what their input should look like
     ```sh
     input=$SI
     ```
+  
+  *  The ouput can be saved into a variable like so, where input is the text inputted, so if you typed in `foo`, then `$SI` and also `input` will be set to `foo`. This extra step is recommended as sometimes the variable gets overwritten by this function getting run somewhere else and then its value will change to something completely diffrent and irrelevant.
   * In the below example im using getInput to obtain a valid path to a file
+  * To ensure that your user returns a **proper** and **useful** string, you can run it trough an until loop
     ```sh
-        getInput "" "$current" "File Path" "Please type in the relative or full path of the script" "Do not incldue a file extension" "file.txt"
+        getInput"File Path" "Please type in the relative or full path of the script" "Do not incldue a file extension" "file.txt"
     path=$SI
 
       until [ -f $path ] #this is a bash built-in way to check if a file exists
       do
-        getInput error "$current" "File Path" "Please type in the relative or full path of the script" "Do not incldue a file extension" "file.txt"
+        getInput error "File Path" "Please type in the relative or full path of the script" "Do not incldue a file extension" "file.txt"
         path=$SI
       done
     ```
   *  Within the loop, the first argument i passed to the function was error to indicate, do this also, as it indicates to the function, and the function to the user, that the input was not valid.
+  *  Passing error to the getInput function will use the
     
 ---
 
@@ -337,17 +345,25 @@ Big shoutout to all these people as their scripts helped make TropX possible, ma
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
+# Donate
+TropX is a free tool, and the only source of income generated by it is trough your donations
+
+<a href="https://www.paypal.me/troopekyt">
+<img src="https://raw.githubusercontent.com/aha999/DonateButtons/master/Paypal.png" data-canonical-src="https://www.paypal.me/troopekyt" width="300" />
+</a>
+
 <!-- Compatibility -->
 # Compatibility
 
 * Linux Machines (Prefferably Kali)
 * Windows (using [Cygwin](https://www.cygwin.com/setup-x86_64.exe))
-* MacOS (shebangs only partially supported)
+* MacOS
+* Android (very situational)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- DISCLAIMER -->
-# DISCLAIMER
+# Disclaimer
 
 I am not held responsible for any misdeeds done with the help of this tool, i provide it to you for educational purposes only. By using this tool you accept that i am not held responsible for any consequences your usage of my tool might yield.
 

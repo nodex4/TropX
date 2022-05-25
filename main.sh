@@ -11,7 +11,6 @@
 # Github: https://github.com/Troopek/
 
 
-# trap end EXIT
 
 function checkSettings() {
   setting=$(grep "^$1 :" settings.tropx | \
@@ -357,7 +356,6 @@ fi
 ################################################################################################################
 
 function mainMenu() {
-sleep 2
 checkSettings "Wireless Interface"
 WI=$value
 checkSettings "Text Folding"; textfolding=$value;
@@ -838,34 +836,29 @@ fi
 
 
 
+
+
 defaultScriptCount=$(wc -l < script_names/defaultScripts.txt)
 selection="$(seq 1 $defaultScriptCount)"
 for i in $selection; do
   if [[ $SS == "$i" ]]; then
-    scriptName=$(sed ${SS}!d script_names/defaultScripts.txt)
+    scriptName=$(sed -e "${SS}!d" script_names/defaultScripts.txt)
     bash "scripts/$scriptName/main.sh"
   fi
 done
 
 
 
-
-customScriptCount=$(wc -l < script_names/customScripts.txt)
-customSelection="$(seq 1 $customScriptCount)"
-for i in $customSelection; do
-  scriptName=$(sed ${i}!d script_names/customScripts.txt)
-
-  if [[ $((SS - default_scripts)) != 0 ]]; then
-    scriptLine=$((SS - default_scripts))
-  else
-    scriptLine=9999
-  fi
-
-  if [[ $(sed ${scriptLine}!d script_names/customScripts.txt) == "$scriptName" ]]; then
-    bash "custom_scripts/$scriptName/main.sh"
-  fi
-done
-
+if [[ $SS -gt $default_scripts ]]; then
+  customScriptCount=$(wc -l < script_names/customScripts.txt)
+  customSelection="$(seq 1 $customScriptCount)"
+  for i in $customSelection; do
+    scriptName=$(sed -e "${i}!d" script_names/customScripts.txt)
+    if [[ $(sed -e "$((SS - default_scripts))!d" script_names/customScripts.txt) == "$scriptName" ]]; then
+      bash "custom_scripts/$scriptName/main.sh"
+    fi
+  done
+fi
 
 
 mainMenu back
@@ -1177,6 +1170,7 @@ function installPackages {
 
 # Put executable commands here
 if [ "$0" = "$BASH_SOURCE" ] ; then
+  trap end EXIT
   mainMenu
 fi
 
