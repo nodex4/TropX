@@ -126,9 +126,9 @@ To run TropX, you will have to run the `main.sh` file.
 
 You can update TropX to the newest version without losing any custom scripts and while also preserving your settings and other modified things. You can do this automatically trough TropX.
 
-* Start TropX
+* <a href="#initiation">Start up TropX</a>
 * Select `Check for Updates` in the main menu
-* If a newer version is available, choose `yes` to update
+* If a newer version is available, you will be promted to install it
   
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -155,7 +155,7 @@ Find out what to do first after <a href="#initiation">Starting up TropX</a>
 <!-- Custom Scripts -->
 # Custom Scripts
 
-You can very easily add **Custom Scripts** to TropX to further personalize TropX, it supports both **bash** and **python**. Additionally you can **clone** a tool from **github** also.
+You can very easily add **Custom Scripts** to TropX to further personalize the CLI, it supports both **bash** and **python**. Additionally you can **clone** a tool from **github** also.
 
 
 ## **Bash**
@@ -169,25 +169,27 @@ TropX has some default **functions** and **variables** to simplify the programmi
   ```sh
   installPackages "python3" "network-manager" "macchanger" 
   ```
-  * All packages listed after the installPackages command will be installed automatically, if they already are installed nothing will happen. The function accepts an infinite amount of packages
+  * All packages listed after the `installPackages` command will be installed automatically.
+  * If they already are installed nothing will happen.
+  * The function accepts an infinite amount of packages.
 
 ---
 * #### selectOptions 
 
-* With `selectOptions` you can ask the user to select an option, the CLI equvalent of radio buttons 
+* With `selectOptions` you can ask the user to select an option, the CLI equivalent of good navigation.
 
 
   ```sh
   selectOptions "Options" "Enter selection Here" "Try another selection" "Option1" "Option2" "Option3"
   ```
-  *  `"Options"` The next argument is the title for the option choices
-  *  `"Enter selection Here" "Try another selection"` The next two are the `type here` text before the `>`, the second will be shown in case of an error
-  *  `"Option1" "Option2" "Option3"` The rest are options which will be shown to the user, they can be passed singularly or in an Array
-  * The ouput can be saved into a variable like so, where choice is the number corresponding to the option, so if you choose `Option2`, then `$SO` and also `choice` will be set to `2`. This extra step is recommended as sometimes the variable gets overwritten by this function getting run somewhere else and then its value will change to something completely diffrent and irrelevant.
+  *  `"Options"` is the title for the option choices
+  *  `"Enter selection Here" "Try another selection"` These two are the `type here` text before the `>`, the second will be shown in case of an error.
+  *  `"Option1" "Option2" "Option3"` The rest are options which will be shown to the user, they can be passed singularly or in an Array 
+  * The ouput can be saved into a variable like so, where `choice` is the number corresponding to the option, so if you choose `Option2`, then `$SO` and also `choice` will be set to `2`. This extra step is recommended as sometimes the variable gets overwritten by this function getting run somewhere else and then its value will change to something completely diffrent and irrelevant.
     ```sh
     choice=$SO
     ```
-  * The function has a built-in check for the selected option to confirm it is valid
+  * The function has a built-in check for the selected option to confirm it's validity.
 
 ---
 
@@ -195,20 +197,20 @@ TropX has some default **functions** and **variables** to simplify the programmi
 * With `getInput` you can get user input to save into a variable and use within your custom script
 
   ```sh
-  getInput "Select an Option" "Type something useful" "file.txt"
+  getInput "Select an Option" "Type a file name" "file.txt"
   ```
-  * `"Select an Option"` This argument is the title for the get input function
-  * `"Type something useful"` The following argument is going to be the details for what the user is supposed to type
-  * `"file.txt"` Next is an example of what their input should look like
+  * `"Select an Option"` is the title for the get input function
+  * `"Type a file name"` is going to be the action they are to perform or write
+  * `"file.txt"` is an example of what their input should look like
     ```sh
     input=$SI
     ```
   
   *  The ouput can be saved into a variable like so, where input is the text inputted, so if you typed in `foo`, then `$SI` and also `input` will be set to `foo`. This extra step is recommended as sometimes the variable gets overwritten by this function getting run somewhere else and then its value will change to something completely diffrent and irrelevant.
   * In the below example im using getInput to obtain a valid path to a file
-  * To ensure that your user returns a **proper** and **useful** string, you can run it trough an until loop
+  * To ensure that your user returns a proper and useful string, you can run it trough an until loop
     ```sh
-        getInput"File Path" "Please type in the relative or full path of the script" "Do not incldue a file extension" "file.txt"
+        getInput "File Path" "Please type in the relative or full path of the script" "Do not incldue a file extension" "file.txt"
     path=$SI
 
       until [ -f $path ] #this is a bash built-in way to check if a file exists
@@ -217,21 +219,21 @@ TropX has some default **functions** and **variables** to simplify the programmi
         path=$SI
       done
     ```
-  *  Within the loop, the first argument i passed to the function was error to indicate, do this also, as it indicates to the function, and the function to the user, that the input was not valid.
-  *  Passing error to the getInput function will use the
+  * First I just `getInput` normally from the user
+  * Here I run an `until` loop which checks if the path exists, if it does nothing happens, otherwise it will loop until the expression is true.
+  * Make sure to pass `error` as the first argument in the getInput function and keep the rest as is
     
 ---
 
 * #### message
-* With the `message` function you can display a message to the user that remains until they press a key
+* With the `message` function you can display a message to the user that waits until they press a key on their keyboard.
 
   ```sh
-  Message="Disclaimer: TropX is cool!"
-  message "$current" "Message" "$Message"
+  Message="TropX is cool!"
+  message "Disclaimer" "$Message"
   ```
-  *  `"$current"` Leave the first argument as shown
-  *  `"Message"` The next argument is the title for the message
-  *  `"$Message"` The last argument is the variable in which the message is stored
+  *  `"Disclaimer"` is the title for the message
+  *  `"$Message"` is the variable in which the message is stored
     
 ---
 
@@ -243,7 +245,7 @@ TropX has some default **functions** and **variables** to simplify the programmi
   changeWImode managed
   ```
   * The only argument passed will be the mode you want to change the Wireless Interface to
-  * The Wireless Interface used will be the one the user has saved in the settings
+  * The Wireless Interface used will be the one the user has saved in the settings page
     
 ---
 
@@ -256,39 +258,42 @@ TropX has some default **functions** and **variables** to simplify the programmi
   # ...
   changeMac reset
   ```
-  * You can optionally pass an argument which will, if set to `reset`, set your Wireless Interface back to it's permanent default Mac Address, otherwise the argument will be the the Mac Address the Wireless Interface spoofs
-  * If no argument is passed, a random Mac Address will be selected
+  * If no argument is passed, a random Mac Address will be choosen to replace your current
+  * Optionally, you can specify what you want your Mac Address to be
+  * `reset` will set your Wireless Interface back to it's default permanent Mac Address
   * The Wireless Interface used will be the one the user has saved in the settings
 ---
 
 * #### $WI
 * The `WI` variable holds the name of the Wireless Interface (e.g. `wlan0`)
+* This is obtained from the user's settings and changed in the settings page also
 
 ---
 
 * #### $PRIMARY & $SECONDARY
-* The `PRIMARY` variable holds the color code for the primary (*no shit*) color
-* The `SECONDARY` variable holds the color code for the secondary (*no shit again*) color
+* The `$PRIMARY` variable holds the color code for the primary (*no shit*) color
+* The `$SECONDARY` variable holds the color code for the secondary (*no shit again*) color
 * Make sure to escape it like such
   ```sh
   echo -e "${PRIMARY}Hello ${SECONDARY}World!"
   ```
-* Even though it is not neccesary to use these variables it is highly recommended so your script stays in sync with the user's settings
+* Even though it is not neccesary to use these variables, it is highly recommended so your script stays in sync with the user's settings
 
 ---
-### **python, javascript, and C#**
-Sadly these languages do not have any premade functions **yet**!
+### **python**
+Sadly this language does not have any premade functions or variables **yet**!
 
 ---
 
 
 ## Setup
-The custom script creation process
+The custom script creation process.
 
-* To create a new Custom Script, firstly start TropX **(*No Shit*)**
-* Afterwards, select `M` short for Manage Scripts
+* To create a new Custom Script, firstly <a href="#initiation">start up TropX</a> **(*No Shit*)**
+* Afterwards, select `M` to Manage Scripts
 * Choose the first option `1` to create a new script
 * Type in the script name and continue
+* Select the script language or github
 * Select the way in which you want to provide TropX with the script and confirm
 
 ## Share your script
@@ -336,7 +341,7 @@ Don't forget to give the project a star! Thanks again!
 <!-- LICENSE -->
 # License
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+Distributed under the Apache 2.0 License. See `LICENSE.txt` for more information.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -365,7 +370,7 @@ Big shoutout to all these people as their scripts helped make TropX possible, ma
 
 
 # Donate
-TropX is a free tool, and the only source of income generated by it is trough your donations
+TropX is a free tool, and the only source of income generated by it is trough your donations.
 
 <a href="https://www.paypal.me/troopekyt">
 <img src="https://raw.githubusercontent.com/aha999/DonateButtons/master/Paypal.png" data-canonical-src="https://www.paypal.me/troopekyt" width="300" />
@@ -392,6 +397,8 @@ TropX is a free tool, and the only source of income generated by it is trough yo
 
 * Is troopek cool?
   * Yes
+* Does it have bugs
+  * Absolutely not &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'nt
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -400,7 +407,7 @@ TropX is a free tool, and the only source of income generated by it is trough yo
 <!-- DISCLAIMER -->
 # Disclaimer
 
-I am not held responsible for any misdeeds done with the help of this tool, i provide it to you for educational purposes only. By using this tool you accept that i am not held responsible for any consequences your usage of my tool might yield.
+I am not held responsible for any misdeeds done with the help of this tool, I provide it to you for educational purposes only. By using this tool you accept that I am not held responsible for any consequences your usage of my tool might yield.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

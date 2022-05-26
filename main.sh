@@ -379,7 +379,8 @@ if [[ "$1" == "error" ]] || [[ "$1" == "back" ]] || [[ $animations == "OFF" ]]; 
   echo -e "$PRIMARY(${SECONDARY}S$PRIMARY) Settings" | foldText 6
   echo -e "$PRIMARY(${SECONDARY}M$PRIMARY) Manage Scripts" | foldText 6
   echo -e "$PRIMARY(${SECONDARY}H$PRIMARY) Help" | foldText 6
-  echo "      ------------------"
+  echo -e "$PRIMARY(${SECONDARY}U$PRIMARY) Check for Updates" | foldText 6
+  echo "      ------------------------"
 
 else
 
@@ -390,7 +391,9 @@ else
   sleep 0.1
   echo -e "$PRIMARY(${SECONDARY}H$PRIMARY) Help" | foldText 6
   sleep 0.1
-  echo "      ------------------"
+  echo -e "$PRIMARY(${SECONDARY}U$PRIMARY) Check for Updates" | foldText 6
+  sleep 0.1
+  echo "      ------------------------"
 
 
 fi
@@ -471,7 +474,7 @@ SS=${SS,,}
 scriptCount=$scripts
 numberOptions=$(echo $(seq $scriptCount))
 
-options=("s" "m" "h" $numberOptions)
+options=("s" "m" "h" "u" $numberOptions)
 
 if [[ $(containsElement "$SS" "${options[@]}") != "0" ]]; then 
   until [[ "$result" == "0" ]] #unti the result is not an error
@@ -829,9 +832,13 @@ fi
 
 if [[ $SS == "h" ]]; then
   current="Help"
-  helpMessage="To learn how to efficiently use ${SECONDARY}TropX${PRIMARY}, please refer to it's github:
-${SECONDARY}https://github.com/troopek/TropX${PRIMARY}"
+  helpMessage="To learn how to efficiently use ${SECONDARY}TropX${PRIMARY}, please refer to it's github:\n${SECONDARY}https://github.com/troopek/TropX${PRIMARY}"
   message "Message" "$helpMessage"
+fi
+
+if [[ $SS == "u" ]]; then
+  :
+  # check discord for help
 fi
 
 
