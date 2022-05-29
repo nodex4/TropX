@@ -47,11 +47,11 @@ if [ ! -d custom_scripts ]; then
   mkdir -p custom_scripts;
 fi
 
-if [ ! -f script_names/customScripts.txt ]; then
+if [ ! -f "script_names/customScripts.txt" ]; then
   touch script_names/customScripts.txt;
+fi
 
-
-if [ ! -f settings.tropx ]; then
+if [ ! -f "settings.tropx" ]; then
   touch settings.tropx;
   echo "Wieless Interface : (wlan0) | wlan1 | mon0 | mon1
 Animations : ON | MINIMAL | (OFF)

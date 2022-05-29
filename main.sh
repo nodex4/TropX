@@ -1105,7 +1105,7 @@ function changeOption() {
 stty -echo
 current="Settings / $1"
 checkSettings "$1"
-selectOptions "New Value" "Select New Value" "Select a Valid New Value" $listOptions
+selectOptions "$1" "Select New Value" "Select a Valid New Value" $listOptions
 newValue=$SO
 
 
