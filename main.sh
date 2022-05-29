@@ -844,7 +844,7 @@ if [[ $SS == "u" ]]; then
   git remote update
 
   output=$(git status -uno)
-  if [[ $output != *"nothing"* ]]; then
+  if [[ $output != *"pull"* ]]; then
   then
     message "Message" "TropX is up to date!"
   else
