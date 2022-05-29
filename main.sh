@@ -845,7 +845,6 @@ if [[ $SS == "u" ]]; then
 
   output=$(git status -uno)
   if [[ $output != *"pull"* ]]; then
-  then
     message "Message" "TropX is up to date!"
   else
     selectOptions "New version available" "Select Option" "Select valid Option" "Yes, Update TropX" "No, Don't Update TropX"
