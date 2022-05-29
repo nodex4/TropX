@@ -83,7 +83,8 @@ ready
 function end() {
   clear
   stty -echo
-  
+  echo "WI: $WI"
+  sleep 5
   checkSettings "Animations"
   animations=$value
   
@@ -1152,15 +1153,15 @@ function changeWImode() {
 
 function changeMac() {
 if [[ "$1" == "" ]]; then
-  ifconfig $WI down
-  macchanger -r $WI
-  ifconfig $WI up
+  ifconfig $WI down > /dev/null 2>&1
+  macchanger -r $WI > /dev/null 2>&1
+  ifconfig $WI up > /dev/null 2>&1
 elif [[ "$1" == "reset" ]]; then
-  macchanger -p $WI
+  macchanger -p $WI > /dev/null 2>&1
 else
-  ifconfig $WI down
-  macchanger -m $1 $WI
-  ifconfig $WI up
+  ifconfig $WI down > /dev/null 2>&1
+  macchanger -m $1 $WI > /dev/null 2>&1
+  ifconfig $WI up > /dev/null 2>&1
 fi
 }
 
