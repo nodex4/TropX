@@ -811,7 +811,6 @@ esac
   fi
 fi
 
-#########################################################
 
 if [[ $SS == "s" ]]; then
   current="Settings"
@@ -837,6 +836,7 @@ if [[ $SS == "h" ]]; then
   helpMessage="To learn how to efficiently use ${SECONDARY}TropX${PRIMARY}, please refer to it's github:\n${SECONDARY}https://github.com/troopek/TropX${PRIMARY}"
   message "Message" "$helpMessage"
 fi
+
 
 
 
