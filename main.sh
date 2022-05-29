@@ -838,17 +838,13 @@ fi
 
 if [[ $SS == "u" ]]; then
   :
-  changed=0
-  git remote update && git status -uno | grep -q 'Your branch is behind' && changed=1
-  if [ $changed = 1 ]; then
-      echo "Not up to date";
-      read r
-      git pull
-      echo "Updated successfully";
-  else
-      echo "Up-to-date"
-  fi
-  fi
+  if ! git diff --quiet main; then
+   # pull or whatever you want to do
+  echo "pull something"
+  sleep 2
+  fi  
+fi
+
 
 
 
