@@ -838,10 +838,13 @@ if [[ $SS == "h" ]]; then
   message "Message" "$helpMessage"
 fi
 
+
+
 if [[ $SS == "u" ]]; then
   git remote update
 
-  if [[ -z $(git status -s) ]]
+  output=$(git status -uno)
+  if [[ $output != *"nothing"* ]]; then
   then
     message "Message" "TropX is up to date!"
   else
