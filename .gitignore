@@ -174,12 +174,14 @@ dmypy.json
 cython_debug/
 
 
-#replit files
+# replit files
 .replit
 *.replit
 .nix
 *.nix
-#test.*
-#test
 
 
+# other file
+custom_scripts/
+settings.tropx
+script_names/customScripts.txt

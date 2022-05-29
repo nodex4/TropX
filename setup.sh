@@ -8,16 +8,12 @@ source main.sh
 
 echo -e "\e[1;32m Step 1: Updating packages \e[0m"
 sudo apt update
-
 echo
-
 echo -e "\e[1;32m Step 2: Upgrading packages \e[0m" 
 sudo apt upgrade -y
 sudo apt dist upgrade -y 
 sudo apt update -y
-
 echo 
-
 echo -e "\e[1;32m Step 3: Cleaning up \e[0m"
 sudo apt clean -y
 sudo apt autoclean -y
@@ -38,11 +34,11 @@ sudo apt install nmcli -y
 sudo apt install os -y
 sudo apt install python3 -y
 
-# create update repo
+# # create update repo
 
-if [ ! -d "TropX/" ]; then
-  git clone https://github.com/troopek/TropX
-fi
+# if [ ! -d "TropX/" ]; then
+#   git clone https://github.com/troopek/TropX
+# fi
 
 
 ##########################
@@ -53,26 +49,18 @@ fi
 
 if [ ! -f script_names/customScripts.txt ]; then
   touch script_names/customScripts.txt;
-fi
 
-if [ ! -f customIfs.sh ]; then
-  touch customIfs.sh;
-  echo "#!/usr/bin/env bash" > customIfs.sh
-  echo "
-function customIFs() {
-  :
-}" >> customIfs.sh
-fi
 
 if [ ! -f settings.tropx ]; then
   touch settings.tropx;
-  echo "Wireless Interface : wlan0 | mon0
-Animations : (ON) | MINIMAL | OFF
+  echo "Wieless Interface : (wlan0) | wlan1 | mon0 | mon1
+Animations : ON | MINIMAL | (OFF)
 Default Scripts : (SHOW) | HIDE
 Breadcrumbs : (ON) | OFF
 Primary Color : (WHITE) | RED | BLUE | GREEN | CYAN | PINK | YELLOW | GRAY
-Secondary Color : (RED) | WHITE | BLUE | GREEN | CYAN | PINK | YELLOW | GRAY
-Text Folding : (ON) | OFF" >> settings.tropx
+Secondary Color : RED | WHITE | (BLUE) | GREEN | CYAN | PINK | YELLOW | GRAY
+Text Folding : ON | (OFF)
+Developer Mode : (ON) | OFF" >> settings.tropx
 fi
 
 ##########################
