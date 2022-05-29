@@ -26,7 +26,7 @@ function checkSettings() {
 
 function ready() {
   checkSettings "Wireless Interface"
-  dedede=$value
+  WI=$value
 
   checkSettings "Primary Color"
   
@@ -79,7 +79,7 @@ function end() {
 
 
 
-  echo "WI: ${dedede}"
+  echo "WI: $WI"
 
 
 
@@ -1142,24 +1142,24 @@ mainMenu back
 #########################################
 
 function changeWImode() {
-  nmcli device disconnect $WI > /dev/null 2>&1
-	ifconfig $WI down > /dev/null 2>&1
-	iwconfig $WI mode $1 > /dev/null 2>&1
-	ifconfig $WI up > /dev/null 2>&1
+  nmcli device disconnect "$WI" > /dev/null 2>&1
+	ifconfig "$WI" down > /dev/null 2>&1
+	iwconfig "$WI" mode $1 > /dev/null 2>&1
+	ifconfig "$WI" up > /dev/null 2>&1
 }
 
 
 function changeMac() {
 if [[ "$1" == "" ]]; then
-  ifconfig $WI down > /dev/null 2>&1
-  macchanger -r $WI > /dev/null 2>&1
-  ifconfig $WI up > /dev/null 2>&1
+  ifconfig ""$WI"" down > /dev/null 2>&1
+  macchanger -r ""$WI"" > /dev/null 2>&1
+  ifconfig ""$WI"" up > /dev/null 2>&1
 elif [[ "$1" == "reset" ]]; then
-  macchanger -p $WI > /dev/null 2>&1
+  macchanger -p ""$WI"" > /dev/null 2>&1
 else
-  ifconfig $WI down > /dev/null 2>&1
-  macchanger -m $1 $WI > /dev/null 2>&1
-  ifconfig $WI up > /dev/null 2>&1
+  ifconfig "$WI" down > /dev/null 2>&1
+  macchanger -m $1 "$WI" > /dev/null 2>&1
+  ifconfig "$WI" up > /dev/null 2>&1
 fi
 }
 
