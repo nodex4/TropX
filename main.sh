@@ -25,6 +25,9 @@ function checkSettings() {
 ################################################################################################################
 
 function ready() {
+  checkSettings "Wireless Interface"
+  WI=$value
+
   checkSettings "Primary Color"
   
   primary=$value
