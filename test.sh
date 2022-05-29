@@ -8,7 +8,7 @@ else
 fi
 
 output=$(git status -uno)
-if [[ $output == *"commit"* ]]; then
+if [[ $output != *"nothing"* ]]; then
   echo "update pls"
 else  
   echo "uptodate"
