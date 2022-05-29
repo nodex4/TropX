@@ -838,7 +838,7 @@ fi
 
 if [[ $SS == "u" ]]; then
   :
-  # check discord for help
+  
 fi
 
 

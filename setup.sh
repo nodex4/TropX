@@ -38,6 +38,12 @@ sudo apt install nmcli -y
 sudo apt install os -y
 sudo apt install python3 -y
 
+# create update repo
+
+if [ ! -d "TropX/" ]; then
+  git clone https://github.com/troopek/TropX
+fi
+
 
 ##########################
 #create custom script files if they dont exist already
@@ -71,19 +77,39 @@ fi
 
 ##########################
 #explain usage
-title
+clear
 echo -e "$PRIMARY  Check https://github.com/troopek/TropX for usage and startup instructions! $SECONDARY"
 read -rsp $'  Press any key to continue...\n' -n1 key
 
 
 ##########################
 #make them select their wireless interface using changeOption 
+clear
+echo -e "$PRIMARY  You can change your Wireless Interface name in settings! $SECONDARY"
+read -rsp $'  Press any key to continue...\n' -n1 key
 
 
+# create desktop shortcut\
+clear
+echo -e "$PRIMARY  Would you like to create a shortcut for TropX? $SECONDARY(y/n)"
+read ans
+until [[ $ans == "y" ]] || [[ $ans == "n" ]]; do
+  clear
+  echo -e "$PRIMARY  Would you like to create a shortcut for TropX? $SECONDARY(y/n)"
+  read ans
+done
 
+if [[ $ans == "y" ]]; then
+  clear
+  echo -e "$PRIMARY  What is the directory of where you want the shortcut saved? (specify full path!)$SECONDARY"
+  read dekstop
+  if [ ! -f "$desktop"/main.sh ]; then
+    ln -s main.sh "$desktop"
+  fi
+fi
 
-
-
-# create desktop shortcut
+clear
+echo -e "$PRIMARY  Setup Complete $SECONDARY"
+read -rsp $'  Press any key to run TropX...\n' -n1 key
 
 # bash main.sh
