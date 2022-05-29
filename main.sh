@@ -75,8 +75,14 @@ ready
 function end() {
   clear
   stty -echo
+
+
+
+
   echo "WI: $WI"
-  sleep 5
+
+
+
   checkSettings "Animations"
   animations=$value
   
@@ -1181,8 +1187,6 @@ function installPackages {
 
 
 if [ "$0" = "$BASH_SOURCE" ] ; then
-  checkSettings "Wireless Interface"
-  WI=$value
   trap end EXIT
   mainMenu
 fi
