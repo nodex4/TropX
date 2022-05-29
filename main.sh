@@ -31,6 +31,11 @@ function ready() {
 # else
 # fi
 
+checkSettings "Wireless Interface"
+WI=$value
+
+
+
 checkSettings "Primary Color"
 
 primary=$value
@@ -1136,9 +1141,6 @@ mainMenu back
 #########################################
 
 function changeWImode() {
-  checkSettings "Wireless Interface"
-  WI=$value
-
   nmcli device disconnect $WI > /dev/null 2>&1
 	ifconfig $WI down > /dev/null 2>&1
 	iwconfig $WI mode $1 > /dev/null 2>&1
