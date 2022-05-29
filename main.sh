@@ -837,12 +837,17 @@ if [[ $SS == "h" ]]; then
 fi
 
 if [[ $SS == "u" ]]; then
-  :
-  if ! git diff --quiet main; then
-   # pull or whatever you want to do
-  echo "pull something"
-  sleep 2
-  fi  
+  git remote update
+
+  if [[ -z $(git status -s) ]]
+  then
+    message "Message" "TropX is up to date!"
+  else
+    selectOptions "New version available" "Select Option" "Select valid Option" "Yes, Update TropX" "No, Don't Update TropX"
+  git pull
+  Message="TropX will now exit so your changes take effect."
+  message "Message" "$Message"
+  fi
 fi
 
 
@@ -950,9 +955,9 @@ fi
 echo -e " "
 
 if [[ $error == true ]]; then
-  echo -n -e "$SECONDARY$2 > " | foldText 4
-else
   echo -n -e "$SECONDARY$3 > " | foldText 4
+else
+  echo -n -e "$SECONDARY$2 > " | foldText 4
 fi
 
 echo -n -e "$PRIMARY"
