@@ -82,12 +82,9 @@ function end() {
   checkSettings "Animations"
   animations=$value
   
-  # Set WI to managed
-  ifconfig $WI down > /dev/null 2>&1
-  macchanger -p $WI > /dev/null 2>&1
-  iwconfig $WI mode managed > /dev/null 2>&1
-  ifconfig $WI up > /dev/null 2>&1
-  nmcli device connect $WI > /dev/null 2>&1
+  # Set WI to managed and reset mac
+  changeWImode managed
+  changeMac reset
   
   if [[ "$animations" == "ON" ]]; then
     echo " "
@@ -104,7 +101,7 @@ function end() {
     echo -e "$PRIMARY  My GitHub:$SECONDARY https://github.com/troopek"
     echo " "
   fi
-  
+  stty echo
   exit
 }
 
@@ -847,6 +844,7 @@ if [[ $SS == "u" ]]; then
   git pull
   Message="TropX will now exit so your changes take effect."
   message "Message" "$Message"
+  exit
   fi
 fi
 
