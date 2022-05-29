@@ -1180,8 +1180,9 @@ function installPackages {
 #########################################
 
 
-# Put executable commands here
 if [ "$0" = "$BASH_SOURCE" ] ; then
+  checkSettings "Wireless Interface"
+  WI=$value
   trap end EXIT
   mainMenu
 fi
