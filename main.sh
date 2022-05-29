@@ -76,13 +76,6 @@ function end() {
   clear
   stty -echo
 
-
-
-
-  echo "WI: $WI"
-
-
-
   checkSettings "Animations"
   animations=$value
   
