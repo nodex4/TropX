@@ -26,7 +26,7 @@ function checkSettings() {
 
 function ready() {
   checkSettings "Wireless Interface"
-  WI=$value
+  dedede=$value
 
   checkSettings "Primary Color"
   
@@ -79,7 +79,7 @@ function end() {
 
 
 
-  echo "WI: $WI"
+  echo "WI: ${dedede}"
 
 
 
