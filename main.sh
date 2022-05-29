@@ -25,53 +25,42 @@ function checkSettings() {
 ################################################################################################################
 
 function ready() {
-#Terminal Colors
-# if [[ "$1" == "custom" ]]; then
-# checkSettings "Primary Color" custom
-# else
-# fi
-
-checkSettings "Wireless Interface"
-WI=$value
-
-
-
-checkSettings "Primary Color"
-
-primary=$value
-case $primary in
-  "RED")PRIMARY=$"\033[1;31m";;
-  "WHITE")PRIMARY=$"\033[1;37m";;
-  "BLUE")PRIMARY=$"\033[1;34m";;
-  "GREEN")PRIMARY=$"\033[1;32m";;
-  "CYAN")PRIMARY=$"\033[1;36m";;
-  "PINK")PRIMARY=$"\033[1;35m";;
-  "YELLOW")PRIMARY=$"\033[1;33m";;
-  "GRAY")PRIMARY=$"\033[1;30m";;
-  *)PRIMARY=$"\033[1;37m";;
-esac
-
-
-# if [[ "$1" == "custom" ]]; then
-# checkSettings "Secondary Color" custom
-# else
-# checkSettings "Secondary Color"
-# fi
-
-checkSettings "Secondary Color"
-
-secondary=$value
-case $secondary in
-  "RED")SECONDARY=$"\033[1;31m";;
-  "WHITE")SECONDARY=$"\033[1;37m";;
-  "BLUE")SECONDARY=$"\033[1;34m";;
-  "GREEN")SECONDARY=$"\033[1;32m";;
-  "CYAN")SECONDARY=$"\033[1;36m";;
-  "PINK")SECONDARY=$"\033[1;35m";;
-  "YELLOW")SECONDARY=$"\033[1;33m";;
-  "GRAY")SECONDARY=$"\033[1;30m";;
-  *)SECONDARY=$"\033[1;37m";;
-esac
+  checkSettings "Primary Color"
+  
+  primary=$value
+  case $primary in
+    "RED")PRIMARY=$"\033[1;31m";;
+    "WHITE")PRIMARY=$"\033[1;37m";;
+    "BLUE")PRIMARY=$"\033[1;34m";;
+    "GREEN")PRIMARY=$"\033[1;32m";;
+    "CYAN")PRIMARY=$"\033[1;36m";;
+    "PINK")PRIMARY=$"\033[1;35m";;
+    "YELLOW")PRIMARY=$"\033[1;33m";;
+    "GRAY")PRIMARY=$"\033[1;30m";;
+    *)PRIMARY=$"\033[1;37m";;
+  esac
+  
+  
+  # if [[ "$1" == "custom" ]]; then
+  # checkSettings "Secondary Color" custom
+  # else
+  # checkSettings "Secondary Color"
+  # fi
+  
+  checkSettings "Secondary Color"
+  
+  secondary=$value
+  case $secondary in
+    "RED")SECONDARY=$"\033[1;31m";;
+    "WHITE")SECONDARY=$"\033[1;37m";;
+    "BLUE")SECONDARY=$"\033[1;34m";;
+    "GREEN")SECONDARY=$"\033[1;32m";;
+    "CYAN")SECONDARY=$"\033[1;36m";;
+    "PINK")SECONDARY=$"\033[1;35m";;
+    "YELLOW")SECONDARY=$"\033[1;33m";;
+    "GRAY")SECONDARY=$"\033[1;30m";;
+    *)SECONDARY=$"\033[1;37m";;
+  esac
 }
 ready
 

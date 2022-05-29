@@ -53,7 +53,7 @@ fi
 
 if [ ! -f "settings.tropx" ]; then
   touch settings.tropx;
-  echo "Wieless Interface : (wlan0) | wlan1 | mon0 | mon1
+  echo "Wireless Interface : (wlan0) | wlan1 | mon0 | mon1
 Animations : ON | MINIMAL | (OFF)
 Default Scripts : (SHOW) | HIDE
 Breadcrumbs : (ON) | OFF
