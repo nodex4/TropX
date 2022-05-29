@@ -60,7 +60,7 @@ Breadcrumbs : (ON) | OFF
 Primary Color : (WHITE) | RED | BLUE | GREEN | CYAN | PINK | YELLOW | GRAY
 Secondary Color : RED | WHITE | (BLUE) | GREEN | CYAN | PINK | YELLOW | GRAY
 Text Folding : ON | (OFF)
-Developer Mode : (ON) | OFF" >> settings.tropx
+Developer Mode : ON | (OFF)" >> settings.tropx
 fi
 
 ##########################
