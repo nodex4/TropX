@@ -1,8 +1,17 @@
 #!/usr/bin/env bash
 
-source main.sh
+cd "scripts/Manage Mac Address"
+
+echo $(pwd | sed 's#.*/##')
+if [[ $(pwd | sed 's#.*/##') != "TropX" ]]; then 
+  out=true
+  cd ../../
+fi
+
+echo $(pwd | sed 's#.*/##')
+if [ $out = true ]; then
+  cd -
+fi
 
 
-checkSettings "Wireless Interface"
-WI=$value
-echo "WI: $WI"
+echo $(pwd | sed 's#.*/##')
