@@ -163,20 +163,21 @@ You can very easily add **Custom Scripts** to TropX to further personalize the C
 TropX has some default **functions** and **variables** to simplify the programming pillar of custom scripts.
 
 
-* #### **Custom Files**
+* ### **Custom Files**
 * Create custom files for your tool to use
   * To add custom files into your tools file tree navigate into the TropX folder and go to the `custom_scripts` folder, in here you can find your tool's folder and add any file youw ant to.
-  * To acces these files within the file tree you will have to prefix them with the following directory for it to look like such:
+  * To acces these files within the file tree you will have to prefix them with the following directory `$folder` for it to look like such:
     ```
-    "custom_scripts/$current/wordlist.txt"
+    "$folder/wordlist.txt"
     ```
     * It is neccesarry to wrap it in double qoutes
     * replace `worldist.txt` with the file you wish to access
+    * `$folder` is a built in variable that holds the folder of the current script
 
 ---
 
 
-* #### **installPackages**
+* ### **installPackages**
 * Install Packages more simply and reliably without causing errors and messing up the script
   ```sh
   installPackages "python3" "network-manager" "macchanger" 
@@ -186,7 +187,7 @@ TropX has some default **functions** and **variables** to simplify the programmi
   * The function accepts an infinite amount of packages.
 
 ---
-* #### **selectOptions**
+* ### **selectOptions**
 
 * With `selectOptions` you can ask the user to select an option, the CLI equivalent of good navigation.
 
@@ -205,7 +206,7 @@ TropX has some default **functions** and **variables** to simplify the programmi
 
 ---
 
-* #### **getInput**
+* ### **getInput**
 * With `getInput` you can get user input to save into a variable and use within your custom script
 
   ```sh

@@ -27,6 +27,7 @@ function checkSettings() {
 function ready() {
   checkSettings "Wireless Interface"
   WI=$value
+  folder="custom_scripts/$current"
 
   checkSettings "Primary Color"
   
