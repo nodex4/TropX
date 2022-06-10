@@ -83,7 +83,7 @@ function end() {
   # Set WI to managed and reset mac
   changeWImode managed
   changeMac reset
-  
+  clear
   if [[ "$animations" == "ON" ]]; then
     echo " "
     sleep 01
