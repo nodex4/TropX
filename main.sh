@@ -8,7 +8,7 @@
 # |____/ \__, |  |_|_|  \___/ \___/| .__/ \___|_|\_\ 
 #         __/ |                    | |               
 #      |___/                     |_|   
-# Github: https://github.com/Troopek/
+# Github: https://github.com/troopek/
 
 
 
@@ -87,17 +87,19 @@ function end() {
   if [[ "$animations" == "ON" ]]; then
     echo " "
     sleep 01
-    echo -e -n "$PRIMARY  Thanks For Using"
-    echo -e "$SECONDARY TropX" | pv -qL 15
-    sleep 01
-    echo -e "$PRIMARY  My GitHub:$SECONDARY https://github.com/troopek"
-    sleep 01
+    echo -e "Thanks for using"
+    echo -e "${SECONDARY}TropX${PRIMARY}" | pv -qL 15
+    echo -e "┌────────────────────────────────────────────
+└─ ${SECONDARY}github.com/troopek/TropX"
+  sleep 01
     echo " "
   else
     echo " "
-    echo -e "$PRIMARY  Thanks For Using$SECONDARY TropX"
-    echo -e "$PRIMARY  My GitHub:$SECONDARY https://github.com/troopek"
-    echo " "
+
+echo -e "Thanks for using ${SECONDARY}TropX${PRIMARY}
+┌────────────────────────────────────────────
+└─ ${SECONDARY}github.com/troopek/TropX"
+echo " "
   fi
   stty echo
   exit

@@ -1,17 +1,7 @@
 #!/usr/bin/env bash
 
-cd "scripts/Manage Mac Address"
+source main.sh
 
-echo $(pwd | sed 's#.*/##')
-if [[ $(pwd | sed 's#.*/##') != "TropX" ]]; then 
-  out=true
-  cd ../../
-fi
-
-echo $(pwd | sed 's#.*/##')
-if [ $out = true ]; then
-  cd -
-fi
-
-
-echo $(pwd | sed 's#.*/##')
+echo -e "Thanks for using ${SECONDARY}TropX${PRIMARY}
+┌────────────────────────────────────────────
+└─ ${SECONDARY}github.com/troopek/TropX"

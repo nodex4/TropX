@@ -210,9 +210,9 @@ TropX has some default **functions** and **variables** to simplify the programmi
 * With `getInput` you can get user input to save into a variable and use within your custom script
 
   ```sh
-  getInput "Select an Option" "Type a file name" "file.txt"
+  getInput "File Name" "Type a file name" "file.txt"
   ```
-  * `"Select an Option"` is the title for the get input function
+  * `"File Name"` is the title for the get input function
   * `"Type a file name"` is going to be the action they are to perform or write
   * `"file.txt"` is an example of what their input should look like
     ```sh

@@ -8,16 +8,13 @@ breadcrumbs "$current" "Manage Mac Address"
 # END OF BOILER (DO NOT REMOVE OR MODIFY ABOVE CODE)
     
 
-selectOptions "Select New Mac Address" "Select a Option" "Select a Valid Option" "Specific Mac" "Random Mac" "Reset to Permanent Mac"
+selectOptions "Select New Mac Address" "Select a Option" "Select a Valid Option" "Random Mac" "Specific Mac" "Reset to Permanent Mac"
 choice=$SO
 if [[ "$choice" == "1" ]]; then
-  getInput "New Mac Address" "Provide a new valid Mac Address" "21:15:19:1D:13:BE"
-  manageMac "$SI"
+  changeMac 
 elif [[ "$choice" == "2" ]]; then
-  changeWImode managed
+  getInput "Mac Address" "Type the new mac address" "52:53:B7:37:8A:42"
+  changeMac "$SI"
 elif [[ "$choice" == "3" ]]; then
-  optionToChange=$(grep -n "Wireless Interface" settings.tropx | cut -d: -f1)
-  setting=$(sed ${optionToChange}!d settings.tropx)
-  setting=$(echo $setting | sed 's/ :.*//')
-  changeOption "$setting" setup
+  changeMac reset
 fi

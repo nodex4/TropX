@@ -1,1 +1,2 @@
-v1.2
+┌────────────────────────────────────────────
+└─ {Fore.YELLOW}spicesouls.github.io/ducker
