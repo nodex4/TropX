@@ -95,12 +95,13 @@ function end() {
     echo " "
   else
     echo " "
-
-echo -e "Thanks for using ${SECONDARY}TropX${PRIMARY}
-┌────────────────────────────────────────────
-└─ ${SECONDARY}github.com/troopek/TropX"
-echo " "
+    
+    echo -e "Thanks for using ${SECONDARY}TropX${PRIMARY}
+    ┌────────────────────────────────────────────
+    └─ ${SECONDARY}github.com/troopek/TropX"
+    echo " "
   fi
+
   stty echo
   exit
 }

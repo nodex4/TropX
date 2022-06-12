@@ -67,8 +67,9 @@
 
 <!-- ABOUT THE PROJECT -->
 # About The Project
-
-<img src="images/image.png" alt="image">
+<div align="center">
+  <img src="images/image.png" alt="image">
+</div>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TropX is a command line application to run penetration testing scripts. It aims to more efficiently run long processes and tedious tasks by allowing the creation of custom scripts in the CLI that can be run whenever. To make scripting even easier, there are premade functions and variables for bash and python to be used to simplify the process. TropX also allows for maximum customization and optimization by providing a settings menu controlled trough the CLI. This project is free and opensource so all funding originates from <a href="#donate">donations</a>.
 
