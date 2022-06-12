@@ -41,7 +41,7 @@ sudo apt install python3 -y
 #   git clone https://github.com/troopek/TropX
 # fi
 
-
+directory=$(pwd)
 ##########################
 #create custom script files if they dont exist already
 if [ ! -d custom_scripts ]; then
@@ -92,8 +92,13 @@ if [[ $ans == "y" ]]; then
   clear
   echo -e "$PRIMARY  What is the directory of where you want the shortcut saved? (specify full path!)$SECONDARY"
   read dekstop
-  if [ ! -f "$desktop"/main.sh ]; then
-    ln -s main.sh "$desktop"
+  if [ -d "$desktop" ]; then
+    echo "[Desktop Entry]
+Type=Application
+Terminal=true
+Name=TropX
+Icon="directory"/images/logo.png
+Exec=bash "directory"/main.sh" > TropX.desktop
   fi
 fi
 
