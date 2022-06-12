@@ -100,6 +100,7 @@ if [[ $ans == "y" ]]; then
   clear
   echo -e "$PRIMARY  What is the directory of where you want the shortcut saved? (${SECONDARY}specify full path!${PRIMARY})$SECONDARY"
   read desktop
+
   echo "[Desktop Entry]
 Type=Application
 Terminal=true
@@ -107,18 +108,21 @@ Name=TropX
 Comment=Run TropX
 Icon="$directory"/images/logo.png
 Exec=bash -c 'cd "$directory"; bash "$directory"/main.sh'" > "$desktop/TropX.desktop"
+  chmod +x "$desktop/TropX.desktop"
+  gio set "$desktop/TropX.desktop" metadata::trusted true
 
-  echo -e "$PRIMARY  What is the directory of where you want the shortcut saved? (${SECONDARY}specify full path!${PRIMARY})$SECONDARY"
-  read desktop
+
   echo "[Desktop Entry]
 Type=Application
 Terminal=true
 Name=TropX
 Comment=Run TropX
 Icon="$directory"/images/logo.png
-Exec=bash -c 'cd "$directory"; bash "$directory"/main.sh'" > /usr/share/applications/
-  chmod +x "/usr/share/applications//TropX.desktop"
-  gio set "/usr/share/applications//TropX.desktop" metadata::trusted true
+Exec=bash -c 'cd "$directory"; bash "$directory"/main.sh'" > "/usr/share/applications/TropX.desktop"
+  chmod +x "/usr/share/applications/TropX.desktop"
+  gio set "/usr/share/applications/TropX.desktop" metadata::trusted true
+
+
 fi
 
 clear
