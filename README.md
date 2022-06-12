@@ -144,12 +144,46 @@ Learn how to use **TropX** efficiently and to it's fullest.
 * All tools and scripts will send you back to the main menu after executing
 * This same navigation also applies to navigation within scripts.
 
-<p align="right">(<a href="#top">back to top</a>)</p>
 
 ## First Steps
 Find out what to do first after <a href="#initiation">Starting up TropX</a>
 
 * Configure your wireless Interface in the settings tab
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+<!-- Settings -->
+# Settings
+TropX has a settings page that allows you do customize TropX to the **rim**
+
+* List of available Settings
+  * **Wireless Interface** : (wlan0) | wlan1 | mon0 | mon1
+  * **Animations** : ON | MINIMAL | (OFF)
+  * **Default Scripts** : (SHOW) | HIDE
+  * **Breadcrumbs** : (ON) | OFF
+  * **Primary Color** : (WHITE) | RED | BLUE | GREEN | CYAN | PINK | YELLOW | GRAY
+  * **Secondary Color** : (RED) | WHITE | BLUE | GREEN | CYAN | PINK | YELLOW | GRAY
+  * **Text Folding** : ON | (OFF)
+  * **Developer Mode** : (ON) | OFF
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+<!-- Screenshots -->
+# Screenshots
+Here are some screenshots of how **TropX** looks like
+
+<img src="images/screenshots/settings.png" width="45%"></img> <img src="images/screenshots/help.png" width="45%"></img> <img src="images/screenshots/ma.png" width="45%"></img> <img src="images/screenshots/update.png" width="45%"></img> <img src="images/screenshots/wi.png" width="45%"></img>
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+<!-- Scripts / Tools -->
+# Scripts / Tools
+Here are all the tools **TropX** offers by default
+
+* Manage Wireless Interface
+* Manage Mac Address
+  
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 
 <!-- Custom Scripts -->
