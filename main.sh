@@ -33,8 +33,8 @@ function ready() {
   
   primary=$value
   case $primary in
-    "RED")PRIMARY=$"\033[1;31m";;
     "WHITE")PRIMARY=$"\033[1;37m";;
+    "RED")PRIMARY=$"\033[1;31m";;
     "BLUE")PRIMARY=$"\033[1;34m";;
     "GREEN")PRIMARY=$"\033[1;32m";;
     "CYAN")PRIMARY=$"\033[1;36m";;

@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
 
 source main.sh
+
+
+PRIMARY=$"\033[1;37m"
+SECONDARY=$"\033[1;31m"
+
+
+
+
 ##########################
 #install necessary packages
 
@@ -92,14 +100,14 @@ if [[ $ans == "y" ]]; then
   clear
   echo -e "$PRIMARY  What is the directory of where you want the shortcut saved? (specify full path!)$SECONDARY"
   read dekstop
-  if [ -d "$desktop" ]; then
-    echo "[Desktop Entry]
+  echo "[Desktop Entry]
 Type=Application
 Terminal=true
 Name=TropX
-Icon="directory"/images/logo.png
-Exec=bash "directory"/main.sh" > TropX.desktop
-  fi
+Icon="$directory"/images/logo.png
+Exec=bash -c 'cd "$directory"; bash "$directory"/main.sh'" > TropX.desktop
+  chmod +x TropX.desktop
+  gio set TropX.desktop metadata::trusted true
 fi
 
 clear
