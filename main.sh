@@ -1149,20 +1149,21 @@ function changeWImode() {
 
 
 function changeMac() {
-airmon-ng check kill
-if [[ "$1" == "" ]]; then
-  ifconfig ""$WI"" down > /dev/null 2>&1
-  macchanger -r ""$WI"" > /dev/null 2>&1
-  ifconfig ""$WI"" up > /dev/null 2>&1
-elif [[ "$1" == "reset" ]]; then
-  ifconfig ""$WI"" down > /dev/null 2>&1
-  macchanger -p ""$WI"" > /dev/null 2>&1
-  ifconfig ""$WI"" up > /dev/null 2>&1
-else
-  ifconfig "$WI" down > /dev/null 2>&1
-  macchanger -m $1 "$WI" > /dev/null 2>&1
-  ifconfig "$WI" up > /dev/null 2>&1
-fi
+  airmon-ng check kill
+  if [[ "$1" == "" ]]; then
+    ifconfig ""$WI"" down > /dev/null 2>&1
+    macchanger -r ""$WI"" > /dev/null 2>&1
+    ifconfig ""$WI"" up > /dev/null 2>&1
+  elif [[ "$1" == "reset" ]]; then
+    ifconfig ""$WI"" down > /dev/null 2>&1
+    macchanger -p ""$WI"" > /dev/null 2>&1
+    ifconfig ""$WI"" up > /dev/null 2>&1
+  else
+    ifconfig "$WI" down > /dev/null 2>&1
+    macchanger -m $1 "$WI" > /dev/null 2>&1
+    ifconfig "$WI" up > /dev/null 2>&1
+  fi
+  service NetworkManager start
 }
 
 ###################################################################
