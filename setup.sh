@@ -14,15 +14,15 @@ SECONDARY=$"\033[1;31m"
 
 # clean apt
 
-echo -e "\e[1;32m Step 1: Updating packages \e[0m"
+echo -e "$PRIMARY Step 1: Updating packages \e[0m"
 sudo apt update
 echo
-echo -e "\e[1;32m Step 2: Upgrading packages \e[0m" 
+echo -e "$PRIMARY Step 2: Upgrading packages \e[0m" 
 sudo apt upgrade -y
 sudo apt dist upgrade -y 
 sudo apt update -y
 echo 
-echo -e "\e[1;32m Step 3: Cleaning up \e[0m"
+echo -e "$PRIMARY Step 3: Cleaning up \e[0m"
 sudo apt clean -y
 sudo apt autoclean -y
 sudo apt autoremove -y
@@ -98,8 +98,9 @@ done
 
 if [[ $ans == "y" ]]; then
   clear
-  echo -e "$PRIMARY  What is the directory of where you want the shortcut saved? (specify full path!)$SECONDARY"
+  echo -e "$PRIMARY  What is the directory of where you want the shortcut saved? (${SECONDARY}specify full path!${PRIMARY})$SECONDARY"
   read dekstop
+  cd desktop
   echo "[Desktop Entry]
 Type=Application
 Terminal=true

@@ -1144,6 +1144,7 @@ function changeWImode() {
 	ifconfig "$WI" down > /dev/null 2>&1
 	iwconfig "$WI" mode $1 > /dev/null 2>&1
 	ifconfig "$WI" up > /dev/null 2>&1
+  service NetworkManager start
 }
 
 
