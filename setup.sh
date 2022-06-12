@@ -99,16 +99,15 @@ done
 if [[ $ans == "y" ]]; then
   clear
   echo -e "$PRIMARY  What is the directory of where you want the shortcut saved? (${SECONDARY}specify full path!${PRIMARY})$SECONDARY"
-  read dekstop
-  cd desktop
+  read desktop
   echo "[Desktop Entry]
 Type=Application
 Terminal=true
 Name=TropX
 Icon="$directory"/images/logo.png
-Exec=bash -c 'cd "$directory"; bash "$directory"/main.sh'" > TropX.desktop
-  chmod +x TropX.desktop
-  gio set TropX.desktop metadata::trusted true
+Exec=bash -c 'cd "$directory"; bash "$directory"/main.sh'" > "$desktop/TropX.desktop"
+  chmod +x "$desktop/TropX.desktop"
+  gio set "$desktop/TropX.desktop" metadata::trusted true
 fi
 
 clear
