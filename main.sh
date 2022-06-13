@@ -520,9 +520,7 @@ source main.sh
 current="'"$si1"'"
 ready
 title
-breadcrumbs "'"$si1"'"
-cd "scripts/"
-cd "'"$si1"'/"
+breadcrumbs $current "'"$si1"'"
 # END OF BOILER (DO NOT REMOVE OR MODIFY ABOVE CODE)
     '
     
@@ -651,9 +649,7 @@ source main.sh
 current="'"$si1"'"
 ready
 title
-breadcrumbs "'"$si1"'"
-cd "custom_scripts/"
-cd "'"$si1"'/"
+breadcrumbs $current "'"$si1"'"
 # END OF BOILER (DO NOT REMOVE OR MODIFY ABOVE CODE)
 '
 
