@@ -773,7 +773,16 @@ esac
 
 
   if [[ $so1 = "3" ]]; then
-    customScriptNames=$(<script_names/customScripts.txt)
+    checkSettings "Developer Mode"; devmode=$value
+    if [[ $devmode == "ON" ]]; then
+      customScriptNames1=$(<script_names/defaultScripts.txt)
+      customScriptNames2=$(<script_names/customScripts.txt)
+      customScriptNames="${customScriptNames1}
+-----------------
+      ${customScriptNames2}"
+    else
+      customScriptNames=$(<script_names/customScripts.txt)
+    fi
 
     SAVEIFS=$IFS   # Save current IFS (Internal Field Separator)
     IFS=$'\n'      # Change IFS to newline char
