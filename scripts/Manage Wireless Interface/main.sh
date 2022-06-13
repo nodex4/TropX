@@ -3,8 +3,6 @@ source main.sh
 
 current="Manage Wireless Interface"
 ready
-title
-breadcrumbs "$current" "Manage Wireless Interface"
 # END OF BOILER (DO NOT REMOVE OR MODIFY ABOVE CODE)
 
 

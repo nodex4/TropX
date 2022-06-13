@@ -519,8 +519,6 @@ source main.sh
 
 current="'"$si1"'"
 ready
-title
-breadcrumbs $current "'"$si1"'"
 # END OF BOILER (DO NOT REMOVE OR MODIFY ABOVE CODE)
     '
     
@@ -648,8 +646,6 @@ source main.sh
 
 current="'"$si1"'"
 ready
-title
-breadcrumbs $current "'"$si1"'"
 # END OF BOILER (DO NOT REMOVE OR MODIFY ABOVE CODE)
 '
 

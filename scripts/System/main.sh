@@ -3,10 +3,6 @@ source main.sh
 
 current="System"
 ready
-title
-breadcrumbs "System"
-cd "scripts/"
-cd "System/"
 # END OF BOILER (DO NOT REMOVE OR MODIFY ABOVE CODE)
     
 
