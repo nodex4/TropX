@@ -314,6 +314,21 @@ TropX has some default **functions** and **variables** to simplify the programmi
   * The Wireless Interface used will be the one the user has saved in the settings
 ---
 
+* #### **changeIP**
+* With the `changeIP` function, you can easily manage your IP Address
+  ```sh
+  changeIP
+  # ...
+  changeIP "132.52.98.1629"
+  # ...
+  changeIP reset
+  ```
+  * If no argument is passed, a random IP Address will be choosen to replace your current
+  * Optionally, you can specify what you want your IP Address to be
+  * `reset` will set the IP back to its default
+  * The Wireless Interface used will be the one the user has saved in the settings
+---
+
 * #### **$WI**
 * The `WI` variable holds the name of the Wireless Interface (e.g. `wlan0`)
 * This is obtained from the user's settings and changed in the settings page also

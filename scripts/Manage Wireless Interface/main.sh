@@ -17,4 +17,3 @@ elif [[ "$choice" == "3" ]]; then
   setting=$(sed ${optionToChange}!d settings.tropx)
   setting=$(echo $setting | sed 's/ :.*//')
   changeOption "$setting" setup
-fi

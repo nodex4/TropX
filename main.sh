@@ -1139,6 +1139,20 @@ mainMenu back
 
 #########################################
 
+function changeIP() {
+  ip_address=$(dd if=/dev/urandom bs=4 count=1 2>/dev/null |
+    od -An -tu1 |
+    sed -e 's/^ *//' -e 's/  */./g')
+  if [[ "$1" == "" ]]; then
+    ifconfig $WI $ip_address > /dev/null 2>&1
+  elif [[ "$1" == "reset" ]]; then
+    systemctl restart NetworkManager.service
+  else
+    ifconfig $WI $1 > /dev/null 2>&1
+  fi
+}
+
+##############
 function changeWImode() {
   airmon-ng check kill
   nmcli device disconnect "$WI" > /dev/null 2>&1
@@ -1148,7 +1162,7 @@ function changeWImode() {
   service NetworkManager start
 }
 
-
+############
 function changeMac() {
   airmon-ng check kill
   if [[ "$1" == "" ]]; then
