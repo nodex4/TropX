@@ -111,6 +111,9 @@ Exec=bash -c 'cd "$directory"; bash "$directory"/main.sh'" > "$desktop/TropX.des
   chmod +x "$desktop/TropX.desktop"
   gio set "$desktop/TropX.desktop" metadata::trusted true
 
+fi
+
+
 
   echo "[Desktop Entry]
 Type=Application
@@ -123,7 +126,7 @@ Exec=bash -c 'cd "$directory"; bash "$directory"/main.sh'" > "/usr/share/applica
   gio set "/usr/share/applications/TropX.desktop" metadata::trusted true
 
 
-fi
+
 
 clear
 echo -e "$PRIMARY  Setup Complete $SECONDARY"

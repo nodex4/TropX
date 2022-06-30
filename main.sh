@@ -7,7 +7,8 @@
 # | |_) | |_| |  | | | | (_) | (_) | |_) |  __/   <  
 # |____/ \__, |  |_|_|  \___/ \___/| .__/ \___|_|\_\ 
 #         __/ |                    | |               
-#      |___/                     |_|   
+#        |___/                     |_|
+# 
 # Github: https://github.com/troopek/
 
 
@@ -74,36 +75,41 @@ ready
 
 
 function end() {
-  clear
-  stty -echo
-
-  checkSettings "Animations"
-  animations=$value
-  
-  # Set WI to managed and reset mac
-  changeWImode managed
-  changeMac reset
-  clear
-  if [[ "$animations" == "ON" ]]; then
-    echo " "
-    sleep 01
-    echo -e "Thanks for using"
-    echo -e "${SECONDARY}TropX${PRIMARY}" | pv -qL 15
-    echo -e "┌────────────────────────────────────────────
-└─ ${SECONDARY}github.com/troopek/TropX"
-  sleep 01
-    echo " "
+  if [[ $inScript == true ]]; then
+    mainMenu
   else
-    echo " "
+  
+    clear
+    stty -echo
+  
+    checkSettings "Animations"
+    animations=$value
     
-    echo -e "Thanks for using ${SECONDARY}TropX${PRIMARY}
-    ┌────────────────────────────────────────────
-    └─ ${SECONDARY}github.com/troopek/TropX"
-    echo " "
+    # Set WI to managed and reset mac
+    changeWImode managed
+    changeMac reset
+    clear
+    if [[ "$animations" == "ON" ]]; then
+      echo " "
+      sleep 01
+      echo -e "  Thanks for using"
+      echo -e "  ${SECONDARY}TropX${PRIMARY}" | pv -qL 15
+      echo -e "  ┌────────────────────────────────────────────
+  └─ ${SECONDARY}github.com/troopek/TropX"
+    sleep 01
+      echo " "
+    else
+      echo " "
+      
+      echo -e "  Thanks for using ${SECONDARY}TropX${PRIMARY}
+  ┌────────────────────────────────────────────
+  └─ ${SECONDARY}github.com/troopek/TropX"
+      echo " "
+    fi
+  
+    stty echo
+    exit
   fi
-
-  stty echo
-  exit
 }
 
 ################################################################################################################
@@ -354,14 +360,12 @@ fi
 ################################################################################################################
 
 function mainMenu() {
-checkSettings "Wireless Interface"
-WI=$value
-checkSettings "Text Folding"; textfolding=$value;
+inScript=false
 stty -echo
-current="Main Menu"
-
+checkSettings "Wireless Interface"; WI=$value
+checkSettings "Text Folding"; textfolding=$value;
 checkSettings "Animations"; animations=$value
-
+current="Main Menu"
 
 if [[ "$1" == "error" ]] || [[ "$1" == "back" ]] || [[ $animations == "OFF" ]]; then
   title
@@ -378,6 +382,7 @@ if [[ "$1" == "error" ]] || [[ "$1" == "back" ]] || [[ $animations == "OFF" ]]; 
   echo -e "$PRIMARY(${SECONDARY}M$PRIMARY) Manage Scripts" | foldText 6
   echo -e "$PRIMARY(${SECONDARY}H$PRIMARY) Help" | foldText 6
   echo -e "$PRIMARY(${SECONDARY}U$PRIMARY) Check for Updates" | foldText 6
+  echo -e "$PRIMARY(${SECONDARY}N$PRIMARY) New Instance" | foldText 6
   echo "      ------------------------"
 
 else
@@ -390,6 +395,8 @@ else
   echo -e "$PRIMARY(${SECONDARY}H$PRIMARY) Help" | foldText 6
   sleep 0.1
   echo -e "$PRIMARY(${SECONDARY}U$PRIMARY) Check for Updates" | foldText 6
+  sleep 0.1
+  echo -e "$PRIMARY(${SECONDARY}N$PRIMARY) New Instance" | foldText 6
   sleep 0.1
   echo "      ------------------------"
 
@@ -524,25 +531,21 @@ ready
     
         ;;
       "2") #python
-          boiler='#!/usr/bin/env python3
-import os
-os.chdir("scripts/'"$si1"'/")
-# END OF BOILER (DO NOT REMOVE OR MODIFY ABOVE CODE)
-    '
+          boiler=''
         ;;
       "3") #github
         getInput "Github Link" "Copy the link of the repo from the browser" "https://github.com/troopek/TropX"
         link="$SI"
     
-        selectOptions "Main Language of this Script/ Tool" "Main Language" "Select Valid Script Language" "Bash" "Python" 
-        case "$SO" in
-          "1") #bash
-            githubLanguage="bash"
-            ;;
-          "2") #python
-            githubLanguage="python3"
-            ;;
-        esac
+        # selectOptions "Main Language of this Script/ Tool" "Main Language" "Select Valid Script Language" "Bash" "Python" 
+        # case "$SO" in
+        #   "1") #bash
+        #     githubLanguage="bash"
+        #     ;;
+        #   "2") #python
+        #     githubLanguage="python3"
+        #     ;;
+        # esac
         getInput "Main File Name" "What is the main file name that has to be run for the tool/ script to start (Yes, include a file extension)" "run_TropX.py"
         mainfile=$SI
         ;;
@@ -651,25 +654,21 @@ ready
 
     ;;
   "2") #python
-      boiler='#!/usr/bin/env python3
-import os
-os.chdir("custom_scripts/'"$si1"'/")
-# END OF BOILER (DO NOT REMOVE OR MODIFY ABOVE CODE)
-'
+      boiler=''
     ;;
   "3") #github
     getInput "Github Link" "Copy the link of the repo from the browser" "https://github.com/troopek/TropX"
     link="$SI"
 
-    selectOptions "Main Language of this Script/ Tool" "Main Language" "Select Valid Script Language" "Bash" "Python" 
-    case "$SO" in
-      "1") #bash
-        githubLanguage="bash"
-        ;;
-      "2") #python
-        githubLanguage="python3"
-        ;;
-    esac
+    # selectOptions "Main Language of this Script/ Tool" "Main Language" "Select Valid Script Language" "Bash" "Python" 
+    # case "$SO" in
+    #   "1") #bash
+    #     githubLanguage="bash"
+    #     ;;
+    #   "2") #python
+    #     githubLanguage="python3"
+    #     ;;
+    # esac
     getInput "Main File Name" "What is the main file name that has to be run for the tool/ script to start (Yes, include a file extension)" "run_TropX.py"
     mainfile=$SI
     ;;
@@ -773,16 +772,8 @@ esac
 
 
   if [[ $so1 = "3" ]]; then
-    checkSettings "Developer Mode"; devmode=$value
-    if [[ $devmode == "ON" ]]; then
-      customScriptNames1=$(<script_names/defaultScripts.txt)
-      customScriptNames2=$(<script_names/customScripts.txt)
-      customScriptNames="${customScriptNames1}
------------------
-      ${customScriptNames2}"
-    else
-      customScriptNames=$(<script_names/customScripts.txt)
-    fi
+
+    customScriptNames=$(<script_names/customScripts.txt)
 
     SAVEIFS=$IFS   # Save current IFS (Internal Field Separator)
     IFS=$'\n'      # Change IFS to newline char
@@ -800,7 +791,7 @@ esac
 
 
     cd custom_scripts
-    rm -r "${scriptToDelete}"
+    rm -rf "${scriptToDelete}"
     cd ../
 
     exit
@@ -835,6 +826,11 @@ if [[ $SS == "h" ]]; then
 fi
 
 
+if [[ $SS == "n" ]]; then
+  x-terminal-emulator -e "bash main.sh"
+fi
+
+
 
 
 if [[ $SS == "u" ]]; then
@@ -856,16 +852,17 @@ fi
 
 
 
-
-defaultScriptCount=$(wc -l < script_names/defaultScripts.txt)
-selection="$(seq 1 $defaultScriptCount)"
-for i in $selection; do
-  if [[ $SS == "$i" ]]; then
-    scriptName=$(sed -e "${SS}!d" script_names/defaultScripts.txt)
-    bash "scripts/$scriptName/main.sh"
-  fi
-done
-
+if [[ $SS -le $default_scripts ]]; then
+  defaultScriptCount=$(wc -l < script_names/defaultScripts.txt)
+  selection="$(seq 1 $defaultScriptCount)"
+  for i in $selection; do
+    if [[ $SS == "$i" ]]; then
+      inScript=true
+      scriptName=$(sed -e "${SS}!d" script_names/defaultScripts.txt)
+      bash "scripts/$scriptName/main.sh"
+    fi
+  done
+fi
 
 
 if [[ $SS -gt $default_scripts ]]; then
@@ -874,7 +871,17 @@ if [[ $SS -gt $default_scripts ]]; then
   for i in $customSelection; do
     scriptName=$(sed -e "${i}!d" script_names/customScripts.txt)
     if [[ $(sed -e "$((SS - default_scripts))!d" script_names/customScripts.txt) == "$scriptName" ]]; then
-      bash "custom_scripts/$scriptName/main.sh"
+      inScript=true
+      
+      bashScript=$(find "custom_scripts/$scriptName/" -maxdepth 1 -type f -name "*.sh")
+      if [ ! -z "$bashScript" ]; then
+        bash "$bashScript"
+      fi
+      pythonScript=$(find "custom_scripts/$scriptName/" -maxdepth 1 -type f -name "*.py")
+      if [ ! -z "$pythonScript" ]; then
+        python3 "$pythonScript"
+      fi
+  
     fi
   done
 fi
@@ -1146,7 +1153,8 @@ function changeIP() {
   if [[ "$1" == "" ]]; then
     ifconfig $WI $ip_address > /dev/null 2>&1
   elif [[ "$1" == "reset" ]]; then
-    systemctl restart NetworkManager.service
+    airmon-ng check kill > /dev/null 2>&1
+    service NetworkManager start > /dev/null 2>&1
   else
     ifconfig $WI $1 > /dev/null 2>&1
   fi
@@ -1154,17 +1162,17 @@ function changeIP() {
 
 ##############
 function changeWImode() {
-  airmon-ng check kill
+  airmon-ng check kill > /dev/null 2>&1
   nmcli device disconnect "$WI" > /dev/null 2>&1
 	ifconfig "$WI" down > /dev/null 2>&1
 	iwconfig "$WI" mode $1 > /dev/null 2>&1
 	ifconfig "$WI" up > /dev/null 2>&1
-  service NetworkManager start
+  service NetworkManager start > /dev/null 2>&1
 }
 
 ############
 function changeMac() {
-  airmon-ng check kill
+  airmon-ng check kill > /dev/null 2>&1
   if [[ "$1" == "" ]]; then
     ifconfig ""$WI"" down > /dev/null 2>&1
     macchanger -r ""$WI"" > /dev/null 2>&1
@@ -1178,7 +1186,7 @@ function changeMac() {
     macchanger -m $1 "$WI" > /dev/null 2>&1
     ifconfig "$WI" up > /dev/null 2>&1
   fi
-  service NetworkManager start
+  service NetworkManager start > /dev/null 2>&1
 }
 
 ###################################################################

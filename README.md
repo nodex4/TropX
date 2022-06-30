@@ -144,6 +144,7 @@ Learn how to use **TropX** efficiently and to it's fullest.
 * To select any script, you will have to input its corresponding number like `4` and then press `Enter`
 * All tools and scripts will send you back to the main menu after executing
 * This same navigation also applies to navigation within scripts.
+* To return to the menu you can use `CTRL` + `C`
 
 
 ## First Steps
