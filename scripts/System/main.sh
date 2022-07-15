@@ -27,4 +27,5 @@ if [[ "$SO" == "1"]]; then
   history -c
   
   unset HISTFILE
+sleep 5
 fi
