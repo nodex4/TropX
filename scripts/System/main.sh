@@ -7,7 +7,7 @@ ready
     
 
 selectOptions "System Options" "Selection" "Try another selection" "Clean"
-if [[ "$SO" == "1"]]; then
+if [[ "$SO" == "1" ]]; then
   sudo apt update
   sudo apt upgrade -y
   sudo apt dist upgrade -y 
@@ -27,5 +27,4 @@ if [[ "$SO" == "1"]]; then
   history -c
   
   unset HISTFILE
-sleep 5
 fi
