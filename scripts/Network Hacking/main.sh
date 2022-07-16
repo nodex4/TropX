@@ -18,12 +18,12 @@ elif [[ "$SO" == "2" ]]; then # AP Spam
     # getInput "Number of APs" "Enter the number of Access Points to generate." "1000"
     changeWImode monitor
     changeMac
-    mdk3 $WI b -f ./random_wordlist.txt -s 1000
+    mdk3 $WI b -f ./random_wordlist.txt-a  -s 1000
   elif [[ "$SO" == "2" ]]; then # Wordlist
     getInput "Wordlist File" "Enter Wordlist Path." "/root/desktop/wordlist.txt"
     changeWImode monitor
     changeMac
-    mdk3 $WI b -f "$SI" -s 1000
+    mdk3 $WI b -f "$SI"-a  -s 1000
   elif [[ "$SO" == "3" ]]; then # Specific
     getInput "Network Name" "Type a string" "xPWNEDx"
     string=$SI
@@ -34,7 +34,7 @@ elif [[ "$SO" == "2" ]]; then # AP Spam
       echo $string $COUNT >> "$string.txt"
       let COUNT=COUNT+1
     done
-    mdk3 $WI b -f "./$string.txt" -s 1000 && rm "./$string.txt"
-    # mdk3 $WI b -n "$string" -s $N
+    mdk3 $WI b -f "./$string.txt"-a  -s 1000 && rm "./$string.txt"
+    # mdk3 $WI b -n "$string"-a  -s $N
   fi
 fi
