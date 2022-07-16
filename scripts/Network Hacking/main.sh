@@ -34,7 +34,7 @@ elif [[ "$SO" == "2" ]]; then # AP Spam
       echo $string $COUNT >> "$string.txt"
       let COUNT=COUNT+1
     done
-    mdk3 $WI b -f "./$string.txt" && rm "./$string.txt"
+    mdk3 $WI b -f "./$string.txt" -s 1000 && rm "./$string.txt"
     # mdk3 $WI b -n "$string" -s $N
   fi
 fi
