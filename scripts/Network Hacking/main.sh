@@ -33,15 +33,8 @@ elif [[ "$SO" == "2" ]]; then # AP Spam
     while [ $COUNT -lt $N ] || [ $COUNT -eq $N ]; do
       echo $WORD $COUNT >> "$WORD.txt"
       let COUNT=COUNT+1
-    
+    done
     mdk3 $WI b -f "./$WORD.txt" && rm 
     # mdk3 $WI b -n "$string" -s $N
   fi
 fi
-
-COUNT=1
-while [ $COUNT -lt $N ] || [ $COUNT -eq $N ]; do
-  echo $WORD $COUNT >> "$WORD.txt"
-  let COUNT=COUNT+1
-
-mdk3 $WI b -f "./$WORD.txt" && rm 
