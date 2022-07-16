@@ -12,19 +12,19 @@ if [[ "$SO" == "1" ]]; then
   sudo apt upgrade -y
   sudo apt dist upgrade -y 
   sudo apt update -y
-  sudo apt autoremove
-  sudo apt autoclean
-  sudo apt clean
+  sudo apt autoremove -y
+  sudo apt autoclean -y
+  sudo apt clean -y
   
-  rm -vf /etc/salt/pki/minion/*
-  rm -vf /etc/salt/minion_id
-  rm -rvf /tmp/*
+  rm -vf /etc/salt/pki/minion/* -y
+  rm -vf /etc/salt/minion_id -y
+  rm -rvf /tmp/* -y
 
-  rm -vf /var/log/wtmp /var/log/btmp
-  rm -vf /var/log/*.log.*
-  rm -vf /var/log/*/*
+  rm -vf /var/log/wtmp /var/log/btmp -y
+  rm -vf /var/log/*.log.* -y
+  rm -vf /var/log/*/*-y 
   
   history -c
   
-  unset HISTFILE
+  unset HISTFILE -y
 fi
