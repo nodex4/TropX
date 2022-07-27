@@ -17,7 +17,7 @@ elif [[ "$SO" == "2" ]]; then # Beacon Flooding
   if [[ "$SO" == "1" ]]; then   # Random
     changeWImode monitor
     changeMac
-    mdk3 $WI b -f ./wordlist.txt -a -s 1000
+    mdk3 $WI b -f "$folder/wordlist.txt" -a -s 1000
 
   elif [[ "$SO" == "2" ]]; then # Wordlist
     getInput "Wordlist File" "Enter Wordlist Path." "/root/desktop/wordlist.txt"
