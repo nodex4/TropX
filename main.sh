@@ -1153,8 +1153,8 @@ function changeIP() {
   if [[ "$1" == "" ]]; then
     ifconfig $WI $ip_address > /dev/null 2>&1
   elif [[ "$1" == "reset" ]]; then
-    airmon-ng check kill > /dev/null 2>&1
-    service NetworkManager start > /dev/null 2>&1
+    # airmon-ng check kill > /dev/null 2>&1
+    # service NetworkManager start > /dev/null 2>&1
   else
     ifconfig $WI $1 > /dev/null 2>&1
   fi
@@ -1162,17 +1162,17 @@ function changeIP() {
 
 ##############
 function changeWImode() {
-  # airmon-ng check kill > /dev/null 2>&1
+  # # airmon-ng check kill > /dev/null 2>&1
   nmcli device disconnect "$WI" > /dev/null 2>&1
 	ifconfig "$WI" down > /dev/null 2>&1
 	iwconfig "$WI" mode "$1" > /dev/null 2>&1
 	ifconfig "$WI" up > /dev/null 2>&1
-  # service NetworkManager start > /dev/null 2>&1
+  # # service NetworkManager start > /dev/null 2>&1
 }
 
 ############
 function changeMac() {
-  airmon-ng check kill > /dev/null 2>&1
+  # airmon-ng check kill > /dev/null 2>&1
   if [[ "$1" == "" ]]; then
     ifconfig ""$WI"" down > /dev/null 2>&1
     macchanger -r ""$WI"" > /dev/null 2>&1
@@ -1186,7 +1186,7 @@ function changeMac() {
     macchanger -m $1 "$WI" > /dev/null 2>&1
     ifconfig "$WI" up > /dev/null 2>&1
   fi
-  service NetworkManager start > /dev/null 2>&1
+  # service NetworkManager start > /dev/null 2>&1
 }
 
 ###################################################################
