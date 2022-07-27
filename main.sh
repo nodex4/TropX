@@ -1153,8 +1153,8 @@ function changeIP() {
   if [[ "$1" == "" ]]; then
     ifconfig $WI $ip_address > /dev/null 2>&1
   elif [[ "$1" == "reset" ]]; then
-    # airmon-ng check kill > /dev/null 2>&1
-    # service NetworkManager start > /dev/null 2>&1
+    airmon-ng check kill > /dev/null 2>&1
+    service NetworkManager start > /dev/null 2>&1
   else
     ifconfig $WI $1 > /dev/null 2>&1
   fi
