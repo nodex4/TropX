@@ -30,10 +30,10 @@ elif [[ "$SO" == "2" ]]; then # Beacon Flooding
     N=$SI
     COUNT=1
     while [ $COUNT -lt $N ]; do
-      echo $string $COUNT >> "$string.txt"
+      echo $string $COUNT >> "$folder/$string.txt"
       let COUNT=COUNT+1
     done
-    mdk3 $WI b -f "./$string.txt"-a  -s 1000 && rm "./$string.txt"
+    mdk3 $WI b -f "$folder/$string.txt" -a  -s 1000 && rm "$folder/$string.txt"
     # mdk3 $WI b -n "$string"-a  -s $N
     # mdk3 wlan0 b -n FreeWifi -m
   fi
