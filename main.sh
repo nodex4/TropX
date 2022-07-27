@@ -1165,7 +1165,7 @@ function changeWImode() {
   airmon-ng check kill #> /dev/null 2>&1
   nmcli device disconnect "$WI" #> /dev/null 2>&1
 	ifconfig "$WI" down #> /dev/null 2>&1
-	iwconfig "$WI" mode "$1" #> /dev/null 2>&1
+	iwconfig "$WI" mode monitor #> /dev/null 2>&1
 	ifconfig "$WI" up #> /dev/null 2>&1
   service NetworkManager start #> /dev/null 2>&1
 }
