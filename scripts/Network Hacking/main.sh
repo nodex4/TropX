@@ -15,10 +15,23 @@ if [[ "$SO" == "1" ]]; then   # Wifi Cracking
 elif [[ "$SO" == "2" ]]; then # AP Spam
   selectOptions "AP Spam" "Selection" "Try another selection" "Random Network Names" "Network Names from Worldist" "Specific Network Names"
   if [[ "$SO" == "1" ]]; then   # Random
-    # getInput "Number of APs" "Enter the number of Access Points to generate." "1000"
+   
     changeWImode monitor
     changeMac
-    mdk3 $WI b #-f "./random_wordlist.txt" -s 1000
+    mdk3 $WI b -f ./random_wordlist.txt -a -s 1000
+
+
+
+
+
+
+
+
+
+
+
+
+
   elif [[ "$SO" == "2" ]]; then # Wordlist
     getInput "Wordlist File" "Enter Wordlist Path." "/root/desktop/wordlist.txt"
     changeWImode monitor
@@ -30,6 +43,7 @@ elif [[ "$SO" == "2" ]]; then # AP Spam
     getInput "Number of APs" "Enter the number of Access Points to generate." "1000"
     N=$SI
     COUNT=1
+    mdk3 wlan0 b -n FreeWifi
     while [ $COUNT -lt $N ] || [ $COUNT -eq $N ]; do
       echo $string $COUNT >> "$string.txt"
       let COUNT=COUNT+1
