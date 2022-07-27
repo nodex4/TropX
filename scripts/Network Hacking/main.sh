@@ -8,22 +8,22 @@ ready
 
 
 
-selectOptions "Manage Mac & IP" "Selection" "Try another selection" "Wifi Cracking" "AP Spam"
+selectOptions "Manage Mac & IP" "Selection" "Try another selection" "Wifi Cracking" "Beacon Flooding"
 if [[ "$SO" == "1" ]]; then   # Wifi Cracking
   :
 
-elif [[ "$SO" == "2" ]]; then # AP Spam
-  selectOptions "AP Spam" "Selection" "Try another selection" "Random Network Names" "Network Names from Worldist" "Specific Network Names"
+elif [[ "$SO" == "2" ]]; then # Beacon Flooding
+  selectOptions "Beacon Flooding" "Selection" "Try another selection" "Random Network Names" "Network Names from Worldist" "Specific Network Names"
   if [[ "$SO" == "1" ]]; then   # Random
     changeWImode monitor
     changeMac
-    mdk3 $WI b -f wordlist.txt -a -s 1000
+    mdk3 $WI b -f ./wordlist.txt -a -s 1000
 
   elif [[ "$SO" == "2" ]]; then # Wordlist
     getInput "Wordlist File" "Enter Wordlist Path." "/root/desktop/wordlist.txt"
     changeWImode monitor
     changeMac
-    mdk3 $WI b -f "$SI"-a  -s 1000
+    mdk3 $WI b -f "$SI" -a  -s 1000
   elif [[ "$SO" == "3" ]]; then # Specific
     getInput "Network Name" "Type a string" "xPWNEDx"
     string=$SI
