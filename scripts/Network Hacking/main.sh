@@ -18,7 +18,7 @@ elif [[ "$SO" == "2" ]]; then # AP Spam
     # getInput "Number of APs" "Enter the number of Access Points to generate." "1000"
     changeWImode monitor
     changeMac
-    mdk3 $WI b -f ./random_wordlist.txt -a  -s 1000
+    mdk3 $WI b #-f "./random_wordlist.txt" -s 1000
   elif [[ "$SO" == "2" ]]; then # Wordlist
     getInput "Wordlist File" "Enter Wordlist Path." "/root/desktop/wordlist.txt"
     changeWImode monitor
