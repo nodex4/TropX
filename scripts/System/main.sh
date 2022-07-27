@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 source main.sh
-
 current="System"
+folder="scripts/$current"
 ready
 # END OF BOILER (DO NOT REMOVE OR MODIFY ABOVE CODE)
     

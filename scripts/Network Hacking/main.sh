@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 source main.sh
-
 current="Network Hacking"
+folder="scripts/$current"
 ready
 # END OF BOILER (DO NOT REMOVE OR MODIFY ABOVE CODE)
-    
+
 
 
 

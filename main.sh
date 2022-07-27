@@ -28,7 +28,6 @@ function checkSettings() {
 function ready() {
   checkSettings "Wireless Interface"
   WI=$value
-  folder="custom_scripts/$current"
 
   checkSettings "Primary Color"
   
@@ -523,7 +522,7 @@ if [[ $SS == "m" ]]; then
       "1")  #bash
         boiler='#!/usr/bin/env bash
 source main.sh
-
+folder="custom_scripts/$current"
 current="'"$si1"'"
 ready
 # END OF BOILER (DO NOT REMOVE OR MODIFY ABOVE CODE)
@@ -646,7 +645,7 @@ case "$language" in
   "1")  #bash
     boiler='#!/usr/bin/env bash
 source main.sh
-
+folder="scripts/$current"
 current="'"$si1"'"
 ready
 # END OF BOILER (DO NOT REMOVE OR MODIFY ABOVE CODE)
@@ -858,6 +857,7 @@ if [[ $SS -le $default_scripts ]]; then
   for i in $selection; do
     if [[ $SS == "$i" ]]; then
       inScript=true
+
       scriptName=$(sed -e "${SS}!d" script_names/defaultScripts.txt)
       bash "scripts/$scriptName/main.sh"
     fi
@@ -871,7 +871,6 @@ if [[ $SS -gt $default_scripts ]]; then
   for i in $customSelection; do
     scriptName=$(sed -e "${i}!d" script_names/customScripts.txt)
     if [[ $(sed -e "$((SS - default_scripts))!d" script_names/customScripts.txt) == "$scriptName" ]]; then
-      inScript=true
       
       bashScript=$(find "custom_scripts/$scriptName/" -maxdepth 1 -type f -name "*.sh")
       if [ ! -z "$bashScript" ]; then
