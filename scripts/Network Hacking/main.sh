@@ -8,7 +8,7 @@ ready
 
 
 
-selectOptions "Manage Mac & IP" "Selection" "Try another selection" "Wifi Cracking" "Beacon Flooding"
+selectOptions "Manage Mac & IP" "Selection" "Try another selection" "Wifi Cracking" "Beacon Flooding" "Deauth Attack"
 if [[ "$SO" == "1" ]]; then   # Wifi Cracking
   :
 
@@ -36,5 +36,6 @@ elif [[ "$SO" == "2" ]]; then # Beacon Flooding
     mdk3 $WI b -f "$folder/$string.txt" -a  -s 1000 && rm "$folder/$string.txt"
     # mdk3 $WI b -n "$string"-a  -s $N
     # mdk3 wlan0 b -n FreeWifi -m
+  elif
   fi
 fi

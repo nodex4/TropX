@@ -1212,6 +1212,7 @@ function installPackages {
 
 
 if [ "$0" = "$BASH_SOURCE" ] ; then
+  resize -s 40 100
   trap end EXIT
   mainMenu
 fi
