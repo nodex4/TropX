@@ -545,7 +545,7 @@ ready
         #     githubLanguage="python3"
         #     ;;
         # esac
-        getInput "Main File Name" "What is the main file name that has to be run for the tool/ script to start (Yes, include a file extension)" "run_TropX.py"
+        getInput "Main File Name" "What is the main file name that has to be run for the tool/ script to start (Yes, include a file extension)" "run_app.py"
         mainfile=$SI
         ;;
     
@@ -620,7 +620,7 @@ ready
     
         echo "$si1" | sed -e "s/\b\(.\)/\u\1/g " >> "script_names/defaultScripts.txt"
       
-        Message="To add files or edit this script, go to scripts/"$scriptToEdit" and commit your changes there! TropX will now restart so your changes take effect."
+        Message="To add files or edit this script, go to scripts/"$scriptToEdit" and commit your changes there!"
         message "Message" "$Message"
         reboot
 
@@ -743,7 +743,7 @@ esac
 
     echo "$si1" | sed -e "s/\b\(.\)/\u\1/g " >> "script_names/customScripts.txt"
   
-    Message="To edit the selected script or add additional files in it's file tree, please navigate to custom_scripts/"$scriptToEdit" and commit your changes there! tropx will now restart so your changes take effect."
+    Message="To edit the selected script or add additional files in it's file tree, please navigate to custom_scripts/"$scriptToEdit" and commit your changes there!"
     message "Message" "$Message"
     reboot
 
@@ -762,12 +762,15 @@ esac
 
     Message="To edit the selected script or add additional files in it's file tree, please navigate to custom_scripts/"$scriptToEdit" and commit your changes there!"
     message "Message" "$Message"
-
+    reboot
 
   elif [[ $so1 = "3" ]]; then # Rename
     checkSettings "Developer Mode"; devmode=$value
     if [[ $devmode == "ON" ]]; then
       selectOptions "Rename Custom or Default [DEV OPTION]" "Select Script" "Select Valid Script" "Custom" "Default"
+
+
+
       if [[ $SO = "1" ]]; then
         customScriptNames=$(<script_names/customScripts.txt)
     
@@ -781,22 +784,25 @@ esac
     
         scriptToRename=$(sed "${SO}!d" script_names/customScripts.txt)
     
-        grep -v "$scriptToRename" script_names/customScripts.txt > script_names/customScripts.tmp
-        mv script_names/customScripts.tmp script_names/customScripts.txt
         
         getInput "New Script Name" "Type a new script name" "Very Cool Script"
-        
+        SI=$(echo "$SI" | awk '{print tolower($0)}' | sed -e "s/\b\(.\)/\u\1/g ")
         cd custom_scripts
         mv "${scriptToRename}" "$SI"
         cd ../
         cd script_names
-        sed 's/'"${scriptToRename}"'/'"$SI"'/g' customScripts.txt
-        Message="Script sucessfully renamed! TropX will now restart so your changes take effect."
+        sed -i "s/$scriptToRename/$SI/g" customScripts.txt
+        cd ../
+        cd "custom_scripts/$SI"
+        bashScript=$(find -maxdepth 1 -type f -name "*.sh")
+        if [ ! -z "$bashScript" ]; then
+          sed -i 's/current="'$scriptToRename'"/current="'"$SI"'"/g' "$bashScript"
+        fi
+        cd ../../
+        Message="Script sucessfully renamed!"
         message "Message" "$Message"
         reboot
-  
-  
-  
+
   
       elif [[ $SO = "2" ]]; then
         defaultScriptNames=$(<script_names/defaultScripts.txt)
@@ -811,15 +817,22 @@ esac
     
         scriptToRename=$(sed "${SO}!d" script_names/defaultScripts.txt)
     
-        grep -v "$scriptToRename" script_names/defaultScripts.txt > script_names/defaultScripts.tmp
-        mv script_names/defaultScripts.tmp script_names/defaultScripts.txt
         
-        
-    
+        getInput "New Script Name" "Type a new script name" "Very Cool Script"
+        SI=$(echo "$SI" | awk '{print tolower($0)}' | sed -e "s/\b\(.\)/\u\1/g ")
         cd scripts
-        rm -rf "${scriptToRename}"
+        mv "${scriptToRename}" "$SI"
         cd ../
-        Message="Script sucessfully renamed! TropX will now restart so your changes take effect."
+        cd script_names
+        sed -i "s/$scriptToRename/$SI/g" defaultScripts.txt
+        cd ../
+        cd "scripts/$SI"
+        bashScript=$(find -maxdepth 1 -type f -name "*.sh")
+        if [ ! -z "$bashScript" ]; then
+          sed -i 's/current="'$scriptToRename'"/current="'"$SI"'"/g' "$bashScript"
+        fi
+        cd ../../
+        Message="Script sucessfully renamed!"
         message "Message" "$Message"
         reboot
       fi
@@ -852,7 +865,7 @@ esac
         cd custom_scripts
         rm -rf "${scriptToDelete}"
         cd ../
-        Message="Script sucessfully deleted! TropX will now restart so your changes take effect."
+        Message="Script sucessfully deleted!"
         message "Message" "$Message"
         reboot
   
@@ -880,7 +893,7 @@ esac
         cd scripts
         rm -rf "${scriptToDelete}"
         cd ../
-        Message="Script sucessfully deleted! TropX will now restart so your changes take effect."
+        Message="Default script sucessfully deleted!"
         message "Message" "$Message"
         reboot
       fi
@@ -927,8 +940,6 @@ if [[ $SS == "u" ]]; then
   else
     selectOptions "New version available" "Select Option" "Select valid Option" "Yes, Update TropX" "No, Don't Update TropX"
   git pull
-  Message="tropx will now restart so your changes take effect."
-  message "Message" "$Message"
   fi
 fi
 
@@ -1225,7 +1236,7 @@ selectSetting "$line" "$opt"
 # # sed -i '${newValue}s/.*/$newLine/' settings.tropx
 sed -i "${optionToChange}s/.*/$selected/" settings.tropx
 stty echo
-mainMenu back
+reboot
 }
 
 #########################################
@@ -1293,8 +1304,9 @@ function installPackages {
 #########################################
 
 function reboot {
-  exit
-  bash main.sh
+  Message="TropX will now restart so your changes take effect."
+  message "Message" "$Message"
+  exec main.sh
 }
 
 #########################################
@@ -1303,7 +1315,7 @@ function reboot {
 
 
 if [ "$0" = "$BASH_SOURCE" ] ; then
-  resize -s 40 75
+  resize -s 40 75 > /dev/null 2>&1
   trap end EXIT
   mainMenu
 fi
