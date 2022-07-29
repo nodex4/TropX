@@ -493,7 +493,7 @@ clear
 if [[ $SS == "m" ]]; then
   current="Manage Scripts"
 
-  selectOptions "Options" "Select Desired Option" "Select a Valid Option" "New Script" "Modify Existing" "Delete Script"
+  selectOptions "Options" "Select Desired Option" "Select a Valid Option" "New Script" "Modify Existing" "Rename Script" "Delete Script"
   so1=$SO
 
   if [[ $so1 == "1" ]]; then #NEW
@@ -746,12 +746,8 @@ esac
     Message="To edit the selected script or add additional files in it's file tree, please navigate to custom_scripts/"$scriptToEdit" and commit your changes there! tropx will now restart so your changes take effect."
     message "Message" "$Message"
     reboot
-  fi
 
-  if [[ $so1 == "2" ]]; then
-    
-
-
+  elif [[ $so1 == "2" ]]; then
     customScriptNames=$(<script_names/customScripts.txt)
 
     SAVEIFS=$IFS   # Save current IFS (Internal Field Separator)
@@ -766,11 +762,72 @@ esac
 
     Message="To edit the selected script or add additional files in it's file tree, please navigate to custom_scripts/"$scriptToEdit" and commit your changes there!"
     message "Message" "$Message"
-  fi
+
+
+  elif [[ $so1 = "3" ]]; then # Rename
+    checkSettings "Developer Mode"; devmode=$value
+    if [[ $devmode == "ON" ]]; then
+      selectOptions "Rename Custom or Default [DEV OPTION]" "Select Script" "Select Valid Script" "Custom" "Default"
+      if [[ $SO = "1" ]]; then
+        customScriptNames=$(<script_names/customScripts.txt)
+    
+        SAVEIFS=$IFS   # Save current IFS (Internal Field Separator)
+        IFS=$'\n'      # Change IFS to newline char
+        customScriptNames=($customScriptNames) # split the `customScriptNames` string into an array by the same name
+        IFS=$SAVEIFS   # Restore original IFS
+    
+    
+        selectOptions "Script to Rename" "Select Script to Rename" "Select a Valid Script to Rename" "${customScriptNames[@]}"
+    
+        scriptToRename=$(sed "${SO}!d" script_names/customScripts.txt)
+    
+        grep -v "$scriptToRename" script_names/customScripts.txt > script_names/customScripts.tmp
+        mv script_names/customScripts.tmp script_names/customScripts.txt
+        
+        getInput "New Script Name" "Type a new script name" "Very Cool Script"
+        
+        cd custom_scripts
+        mv "${scriptToRename}" "$SI"
+        cd ../
+        cd script_names
+        sed 's/'"${scriptToRename}"'/'"$SI"'/g' customScripts.txt
+        Message="Script sucessfully renamed! TropX will now restart so your changes take effect."
+        message "Message" "$Message"
+        reboot
+  
+  
+  
+  
+      elif [[ $SO = "2" ]]; then
+        defaultScriptNames=$(<script_names/defaultScripts.txt)
+    
+        SAVEIFS=$IFS   # Save current IFS (Internal Field Separator)
+        IFS=$'\n'      # Change IFS to newline char
+        defaultScriptNames=($defaultScriptNames) # split the `defaultScriptNames` string into an array by the same name
+        IFS=$SAVEIFS   # Restore original IFS
+    
+    
+        selectOptions "Script to Rename" "Select Script to Rename" "Select a Valid Script to Rename" "${defaultScriptNames[@]}"
+    
+        scriptToRename=$(sed "${SO}!d" script_names/defaultScripts.txt)
+    
+        grep -v "$scriptToRename" script_names/defaultScripts.txt > script_names/defaultScripts.tmp
+        mv script_names/defaultScripts.tmp script_names/defaultScripts.txt
+        
+        
+    
+        cd scripts
+        rm -rf "${scriptToRename}"
+        cd ../
+        Message="Script sucessfully renamed! TropX will now restart so your changes take effect."
+        message "Message" "$Message"
+        reboot
+      fi
+    fi
 
 
 
-  if [[ $so1 = "3" ]]; then
+  elif [[ $so1 = "4" ]]; then
     checkSettings "Developer Mode"; devmode=$value
     if [[ $devmode == "ON" ]]; then
       selectOptions "Delete Custom or Default [DEV OPTION]" "Select Script" "Select Valid Script" "Custom" "Default"
@@ -846,9 +903,7 @@ if [[ $SS == "s" ]]; then
       changeOption "$setting"
     fi
   done
-
 fi
-
 
 
 if [[ $SS == "h" ]]; then
@@ -861,8 +916,6 @@ fi
 if [[ $SS == "n" ]]; then
   x-terminal-emulator -e "bash main.sh"
 fi
-
-
 
 
 if [[ $SS == "u" ]]; then
