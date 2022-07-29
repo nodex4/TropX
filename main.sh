@@ -1306,7 +1306,7 @@ function installPackages {
 function reboot {
   Message="TropX will now restart so your changes take effect."
   message "Message" "$Message"
-  exec main.sh
+  exec bash main.sh
 }
 
 #########################################
