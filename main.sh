@@ -774,58 +774,59 @@ esac
     checkSettings "Developer Mode"; devmode=$value
     if [[ $devmode == "ON" ]]; then
       selectOptions "Delete Custom or Default [DEV OPTION]" "Select Script" "Select Valid Script" "Custom" "Default"
-    if [[ $SO = "1" ]]; then
-      customScriptNames=$(<script_names/customScripts.txt)
-  
-      SAVEIFS=$IFS   # Save current IFS (Internal Field Separator)
-      IFS=$'\n'      # Change IFS to newline char
-      customScriptNames=($customScriptNames) # split the `customScriptNames` string into an array by the same name
-      IFS=$SAVEIFS   # Restore original IFS
-  
-  
-      selectOptions "Script to Delete" "Select Script to Delete" "Select a Valid Script to Delete" "${customScriptNames[@]}"
-  
-      scriptToDelete=$(sed "${SO}!d" script_names/customScripts.txt)
-  
-      grep -v "$scriptToDelete" script_names/customScripts.txt > script_names/customScripts.tmp
-      mv script_names/customScripts.tmp script_names/customScripts.txt
-      
-  
-  
-      cd custom_scripts
-      rm -rf "${scriptToDelete}"
-      cd ../
-      Message="Script sucessfully deleted! TropX will now restart so your changes take effect."
-      message "Message" "$Message"
-      reboot
-
-
-
-
-    elif [[ $SO = "2" ]]; then
-      defaultScriptNames=$(<script_names/defaultScripts.txt)
-  
-      SAVEIFS=$IFS   # Save current IFS (Internal Field Separator)
-      IFS=$'\n'      # Change IFS to newline char
-      defaultScriptNames=($defaultScriptNames) # split the `defaultScriptNames` string into an array by the same name
-      IFS=$SAVEIFS   # Restore original IFS
+      if [[ $SO = "1" ]]; then
+        customScriptNames=$(<script_names/customScripts.txt)
+    
+        SAVEIFS=$IFS   # Save current IFS (Internal Field Separator)
+        IFS=$'\n'      # Change IFS to newline char
+        customScriptNames=($customScriptNames) # split the `customScriptNames` string into an array by the same name
+        IFS=$SAVEIFS   # Restore original IFS
+    
+    
+        selectOptions "Script to Delete" "Select Script to Delete" "Select a Valid Script to Delete" "${customScriptNames[@]}"
+    
+        scriptToDelete=$(sed "${SO}!d" script_names/customScripts.txt)
+    
+        grep -v "$scriptToDelete" script_names/customScripts.txt > script_names/customScripts.tmp
+        mv script_names/customScripts.tmp script_names/customScripts.txt
+        
+    
+    
+        cd custom_scripts
+        rm -rf "${scriptToDelete}"
+        cd ../
+        Message="Script sucessfully deleted! TropX will now restart so your changes take effect."
+        message "Message" "$Message"
+        reboot
   
   
-      selectOptions "Script to Delete" "Select Script to Delete" "Select a Valid Script to Delete" "${defaultScriptNames[@]}"
-  
-      scriptToDelete=$(sed "${SO}!d" script_names/defaultScripts.txt)
-  
-      grep -v "$scriptToDelete" script_names/defaultScripts.txt > script_names/defaultScripts.tmp
-      mv script_names/defaultScripts.tmp script_names/defaultScripts.txt
-      
   
   
-      cd scripts
-      rm -rf "${scriptToDelete}"
-      cd ../
-      Message="Script sucessfully deleted! TropX will now restart so your changes take effect."
-      message "Message" "$Message"
-      reboot
+      elif [[ $SO = "2" ]]; then
+        defaultScriptNames=$(<script_names/defaultScripts.txt)
+    
+        SAVEIFS=$IFS   # Save current IFS (Internal Field Separator)
+        IFS=$'\n'      # Change IFS to newline char
+        defaultScriptNames=($defaultScriptNames) # split the `defaultScriptNames` string into an array by the same name
+        IFS=$SAVEIFS   # Restore original IFS
+    
+    
+        selectOptions "Script to Delete" "Select Script to Delete" "Select a Valid Script to Delete" "${defaultScriptNames[@]}"
+    
+        scriptToDelete=$(sed "${SO}!d" script_names/defaultScripts.txt)
+    
+        grep -v "$scriptToDelete" script_names/defaultScripts.txt > script_names/defaultScripts.tmp
+        mv script_names/defaultScripts.tmp script_names/defaultScripts.txt
+        
+    
+    
+        cd scripts
+        rm -rf "${scriptToDelete}"
+        cd ../
+        Message="Script sucessfully deleted! TropX will now restart so your changes take effect."
+        message "Message" "$Message"
+        reboot
+      fi
     fi
   fi
 fi
