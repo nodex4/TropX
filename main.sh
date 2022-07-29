@@ -506,7 +506,7 @@ if [[ $SS == "m" ]]; then
         
     
     
-        getInput "Please choose a name for your new default script" "Do not incldue a file extension" "Script Name"
+        getInput "Please choose a name for your new default script" "do not include a file extension" "Script Name"
         si1=$(echo "$SI" | awk '{print tolower($0)}' | sed -e "s/\b\(.\)/\u\1/g ")
     
         until [ ! -f "scripts/${si1}/main.sh" ]
@@ -561,19 +561,19 @@ ready
             title
             breadcrumbs "Options"
             
-            echo -e "$PRIMARY(\e[1;31mDETAILS$PRIMARY) Type the \"$SECONDARY~$PRIMARY\" (tilda) character when done" | foldText 4
+            echo -e "$PRIMARY(${SECONDARY}DETAILS$PRIMARY) Type the \"$SECONDARY~$PRIMARY\" (tilda) character when done" | foldText 4
             echo " "
             echo -e "$SECONDARY  Paste Here > $PRIMARY" | foldText 4
             read -r -d '~' script
           fi
       
           if [[ $insertType == "2" ]]; then #path
-            getInput "Read Below" "Please type in the relative or full path of the script: " "Do not incldue a file extension" "/root/desktop/script_text.txt"
+            getInput "Read Below" "Please type in the relative or full path of the script: " "do not include a file extension" "/root/desktop/script_text.txt"
           path=$( echo $SI | sed 's/ //g')
       
             until [ -f $path ]
             do
-              getInput error "Read Below" "Please type in the relative or full path of the script: " "Do not incldue a file extension" "/root/desktop/script_text.txt"
+              getInput error "Read Below" "Please type in the relative or full path of the script: " "do not include a file extension" "/root/desktop/script_text.txt"
               path=$SI
             done
             script=$(<$path)  
@@ -620,16 +620,16 @@ ready
     
         echo "$si1" | sed -e "s/\b\(.\)/\u\1/g " >> "script_names/defaultScripts.txt"
       
-        Message="To add files or edit this script, go to scripts/"$scriptToEdit" and commit your changes there! TropX will now exit so your changes take effect."
+        Message="To add files or edit this script, go to scripts/"$scriptToEdit" and commit your changes there! TropX will now restart so your changes take effect."
         message "Message" "$Message"
-        exit
+        reboot
 
 
       fi
     fi
       
   
-    getInput "Please choose a name for your new script" "Do not incldue a file extension" "Script Name"
+    getInput "Please choose a name for your new script" "do not include a file extension" "Script Name"
     si1=$(echo "$SI" | awk '{print tolower($0)}' | sed -e "s/\b\(.\)/\u\1/g ")
 
     until [ ! -f "custom_scripts/${si1}/main.sh" ] && [ ! -f "scripts/${si1}/main.sh" ]
@@ -684,19 +684,19 @@ esac
         title
         breadcrumbs "Options"
         
-        echo -e "$PRIMARY(\e[1;31mDETAILS$PRIMARY) Type the \"$SECONDARY~$PRIMARY\" (tilda) character when done" | foldText 4
+        echo -e "$PRIMARY(${SECONDARY}DETAILS$PRIMARY) Type the \"$SECONDARY~$PRIMARY\" (tilda) character when done" | foldText 4
         echo " "
         echo -e "$SECONDARY  Paste Here > $PRIMARY" | foldText 4
         read -r -d '~' script
       fi
   
       if [[ $insertType == "2" ]]; then #path
-        getInput "Read Below" "Please type in the relative or full path of the script: " "Do not incldue a file extension" "/root/desktop/script_text.txt"
+        getInput "Read Below" "Please type in the relative or full path of the script: " "do not include a file extension" "/root/desktop/script_text.txt"
       path=$( echo $SI | sed 's/ //g')
   
         until [ -f $path ]
         do
-          getInput error "Read Below" "Please type in the relative or full path of the script: " "Do not incldue a file extension" "/root/desktop/script_text.txt"
+          getInput error "Read Below" "Please type in the relative or full path of the script: " "do not include a file extension" "/root/desktop/script_text.txt"
           path=$SI
         done
         script=$(<$path)  
@@ -743,9 +743,9 @@ esac
 
     echo "$si1" | sed -e "s/\b\(.\)/\u\1/g " >> "script_names/customScripts.txt"
   
-    Message="To edit the selected script or add additional files in it's file tree, please navigate to custom_scripts/"$scriptToEdit" and commit your changes there! TropX will now exit so your changes take effect."
+    Message="To edit the selected script or add additional files in it's file tree, please navigate to custom_scripts/"$scriptToEdit" and commit your changes there! tropx will now restart so your changes take effect."
     message "Message" "$Message"
-    exit 
+    reboot
   fi
 
   if [[ $so1 == "2" ]]; then
@@ -771,30 +771,62 @@ esac
 
 
   if [[ $so1 = "3" ]]; then
+    checkSettings "Developer Mode"; devmode=$value
+    if [[ $devmode == "ON" ]]; then
+      selectOptions "Delete Custom or Default [DEV OPTION]" "Select Script" "Select Valid Script" "Custom" "Default"
+    if [[ $SO = "1" ]]; then
+      customScriptNames=$(<script_names/customScripts.txt)
+  
+      SAVEIFS=$IFS   # Save current IFS (Internal Field Separator)
+      IFS=$'\n'      # Change IFS to newline char
+      customScriptNames=($customScriptNames) # split the `customScriptNames` string into an array by the same name
+      IFS=$SAVEIFS   # Restore original IFS
+  
+  
+      selectOptions "Script to Delete" "Select Script to Delete" "Select a Valid Script to Delete" "${customScriptNames[@]}"
+  
+      scriptToDelete=$(sed "${SO}!d" script_names/customScripts.txt)
+  
+      grep -v "$scriptToDelete" script_names/customScripts.txt > script_names/customScripts.tmp
+      mv script_names/customScripts.tmp script_names/customScripts.txt
+      
+  
+  
+      cd custom_scripts
+      rm -rf "${scriptToDelete}"
+      cd ../
+      Message="Script sucessfully deleted! TropX will now restart so your changes take effect."
+      message "Message" "$Message"
+      reboot
 
-    customScriptNames=$(<script_names/customScripts.txt)
-
-    SAVEIFS=$IFS   # Save current IFS (Internal Field Separator)
-    IFS=$'\n'      # Change IFS to newline char
-    customScriptNames=($customScriptNames) # split the `customScriptNames` string into an array by the same name
-    IFS=$SAVEIFS   # Restore original IFS
 
 
-    selectOptions "Script to Delete" "Select Script to Delete" "Select a Valid Script to Delete" "${customScriptNames[@]}"
 
-    scriptToDelete=$(sed "${SO}!d" script_names/customScripts.txt)
-
-    grep -v "$scriptToDelete" script_names/customScripts.txt > script_names/customScripts.tmp
-    mv script_names/customScripts.tmp script_names/customScripts.txt
-    
-
-
-    cd custom_scripts
-    rm -rf "${scriptToDelete}"
-    cd ../
-
-    exit
-
+    elif [[ $SO = "2" ]]; then
+      defaultScriptNames=$(<script_names/defaultScripts.txt)
+  
+      SAVEIFS=$IFS   # Save current IFS (Internal Field Separator)
+      IFS=$'\n'      # Change IFS to newline char
+      defaultScriptNames=($defaultScriptNames) # split the `defaultScriptNames` string into an array by the same name
+      IFS=$SAVEIFS   # Restore original IFS
+  
+  
+      selectOptions "Script to Delete" "Select Script to Delete" "Select a Valid Script to Delete" "${defaultScriptNames[@]}"
+  
+      scriptToDelete=$(sed "${SO}!d" script_names/defaultScripts.txt)
+  
+      grep -v "$scriptToDelete" script_names/defaultScripts.txt > script_names/defaultScripts.tmp
+      mv script_names/defaultScripts.tmp script_names/defaultScripts.txt
+      
+  
+  
+      cd scripts
+      rm -rf "${scriptToDelete}"
+      cd ../
+      Message="Script sucessfully deleted! TropX will now restart so your changes take effect."
+      message "Message" "$Message"
+      reboot
+    fi
   fi
 fi
 
@@ -841,9 +873,8 @@ if [[ $SS == "u" ]]; then
   else
     selectOptions "New version available" "Select Option" "Select valid Option" "Yes, Update TropX" "No, Don't Update TropX"
   git pull
-  Message="TropX will now exit so your changes take effect."
+  Message="tropx will now restart so your changes take effect."
   message "Message" "$Message"
-  exit
   fi
 fi
 
@@ -1013,14 +1044,14 @@ fi
 breadcrumbs "$1"
 
 if [[ $animations == "OFF" ]] || [[ $animations == "MINIMAL" ]]; then
-    echo -e "$PRIMARY(\e[1;31mDETAILS$PRIMARY) $2" | foldText 6
+    echo -e "$PRIMARY(${SECONDARY}DETAILS$PRIMARY) $2" | foldText 6
     echo " "
-    echo -e "$PRIMARY(\e[1;31mEXAMPLE$PRIMARY) $3" | foldText 6
+    echo -e "$PRIMARY(${SECONDARY}EXAMPLE$PRIMARY) $3" | foldText 6
 else
-    echo -e "$PRIMARY(\e[1;31mDETAILS$PRIMARY) $2" | foldText 6
+    echo -e "$PRIMARY(${SECONDARY}DETAILS$PRIMARY) $2" | foldText 6
     echo " "
     sleep 0.1
-    echo -e "$PRIMARY(\e[1;31mEXAMPLE$PRIMARY) $3" | foldText 6
+    echo -e "$PRIMARY(${SECONDARY}EXAMPLE$PRIMARY) $3" | foldText 6
     sleep 0.1
 fi
 
@@ -1206,13 +1237,19 @@ function installPackages {
 
 
 #########################################
+
+function reboot {
+  exit
+  bash main.sh
+}
+
 #########################################
 #########################################
 #########################################
 
 
 if [ "$0" = "$BASH_SOURCE" ] ; then
-  resize -s 40 100
+  resize -s 40 75
   trap end EXIT
   mainMenu
 fi
