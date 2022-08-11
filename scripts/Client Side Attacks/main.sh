@@ -10,9 +10,19 @@ ready
 selectOptions "Client Side Attacks" "Selection" "Try another selection" "Gaining Access" "Social Engineering"
 if [[ "$SO" == "1" ]]; then   # Gaining Access
   :
-  # installPackages veil
-  # veil
-  # update
+  installPackages veil
+    
+  expect -c "
+  set timeout -1
+  spawn \"veil\"
+  expect \"Veil>: \"
+  send -- \"update\r\"
+  send -- \"\r\"
+  expect \"Veil>: \"
+  send -- \"use\r\"
+  interact
+  "
+
 elif [[ "$SO" == "2" ]]; then # Social Engineering
   :
 fi
