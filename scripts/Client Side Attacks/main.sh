@@ -50,9 +50,10 @@ if [[ "$SO" == "1" ]]; then   # Gaining Access
 
     interact
     '
-    
+    pwd
     mv "$(find / -name ${NAME}.exe)" "output/$NAME/"
     mv "$(find / -name ${NAME}.rc)" "output/$NAME/"
+    sleep 5
   fi
     
 elif [[ "$SO" == "2" ]]; then # Social Engineering
