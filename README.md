@@ -336,6 +336,12 @@ TropX has some default **functions** and **variables** to simplify the programmi
 
 ---
 
+* #### **$IP**
+* The `IP` variable holds the ip of the primary Wireless Interface
+* This is obtained automatically
+
+---
+
 * #### **$PRIMARY & $SECONDARY**
 * The `$PRIMARY` variable holds the color code for the primary (*no shit*) color
 * The `$SECONDARY` variable holds the color code for the secondary (*no shit again*) color

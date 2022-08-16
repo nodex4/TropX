@@ -37,6 +37,7 @@ sudo apt install mdk3 -y
 sudo apt install nmcli -y
 sudo apt install aircrack-ng -y
 sudo apt install expect
+# sudo apt install locate
 
 # python
 

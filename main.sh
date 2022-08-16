@@ -1331,6 +1331,9 @@ function attackPending {
 }
 #########################################
 
+IP = "ifconfig" | sed -e 's/inet \(.*\) /\1/'
+
+#########################################
 function reboot {
   Message="TropX will now restart so your changes take effect."
   message "Message" "$Message"
