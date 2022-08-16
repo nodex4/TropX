@@ -1323,15 +1323,19 @@ function attackPending {
   title
   breadcrumbs "$1"
   
-  echo -e "Proccess Running ${SECONDARY}/${PRIMARY} Attack Pending" | foldText 6
-  echo -e "The current script is running." | foldText 6
+  echo -e "Proccess Running ${SECONDARY}/${PRIMARY} Attack Pending" | foldText 4
+  echo -e "The current script is running." | foldText 4
   echo " "
-  echo -e -n "${SECONDARY}You may open a new instance of TropX elsewhere.${PRIMARY}"  | foldText 4
+  echo -e "${SECONDARY}You may open a new instance of TropX elsewhere.${PRIMARY}"  | foldText 4
+  echo " "
+  echo " "
+  echo -e "Log:" | foldText 4
+  echo " "
   
 }
 #########################################
 
-IP = "ifconfig" | sed -e 's/inet \(.*\) /\1/'
+IP="$(ifconfig | fgrep inet | sed 's/inet \(.[^ ]*\).* /\1/')"
 
 #########################################
 function reboot {
