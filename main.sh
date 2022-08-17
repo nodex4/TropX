@@ -26,8 +26,9 @@ function checkSettings() {
 ################################################################################################################
 
 function ready() {
-  checkSettings "Wireless Interface"
-  WI=$value
+  checkSettings "Wireless Interface"; WI=$value
+  checkSettings "Default Interface"; DI=$value
+  IP="$(ip addr show dev $ | awk '/inet /{gsub("/[0-9]+", "", $2); print $2}')"
 
   checkSettings "Primary Color"
   
@@ -369,7 +370,6 @@ function niceTitle() {
 function mainMenu() {
   inScript=false
   stty -echo
-  checkSettings "Wireless Interface"; WI=$value
   checkSettings "Text Folding"; textfolding=$value;
   checkSettings "Animations"; animations=$value
   current="Main Menu"
@@ -1333,9 +1333,6 @@ function attackPending {
   echo " "
   
 }
-#########################################
-
-IP="$(ifconfig | fgrep inet | sed 's/inet \(.[^ ]*\).* /\1/')"
 
 #########################################
 function reboot {

@@ -346,6 +346,12 @@ TropX has some default **functions** and **variables** to simplify the programmi
 
 ---
 
+* #### **$DI**
+* The `DI` variable holds the name of the Default Interface (e.g. `eth0`), this is to be used when setting localports, etc
+* This is obtained from the user's settings and changed in the settings page also
+
+---
+
 * #### **$IP**
 * The `IP` variable holds the ip of the primary Wireless Interface
 * This is obtained automatically
