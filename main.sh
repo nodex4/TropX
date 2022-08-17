@@ -377,14 +377,7 @@ function mainMenu() {
   
   
   
-  git remote update
-  output=$(git status -uno)
-  if [[ $output != *"pull"* ]]; then
-    :
-  else
-    selectOptions "New version available" "Select Option" "Select valid Option" "Yes, Update TropX" "No, Don't Update TropX"
-  git pull
-  fi
+
   
   if [[ "$1" == "error" ]] || [[ "$1" == "back" ]] || [[ $animations == "OFF" ]]; then
     title
@@ -1354,6 +1347,14 @@ if [ "$0" = "$BASH_SOURCE" ] ; then
   fi
   trap end EXIT
   ready
+  git remote update
+  output=$(git status -uno)
+  if [[ $output != *"pull"* ]]; then
+    :
+  else
+    selectOptions "New version available" "Select Option" "Select valid Option" "Yes, Update TropX" "No, Don't Update TropX"
+    git pull
+  fi
   mainMenu
 fi
 

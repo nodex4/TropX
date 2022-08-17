@@ -229,7 +229,7 @@ TropX has some default **functions** and **variables** to simplify the programmi
 
 
   ```sh
-  selectOptions "Options" "Enter selection Here" "Try another selection" "Option1" "Option2" "Option3"
+  selectOptions "Options" "Select Desired Option" "Select a Valid Option" "Option1" "Option2" "Option3"
   ```
   *  `"Options"` is the title for the option choices
   *  `"Enter selection Here" "Try another selection"` These two are the `type here` text before the `>`, the second will be shown in case of an error.
