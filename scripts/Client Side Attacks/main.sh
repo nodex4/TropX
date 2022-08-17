@@ -22,7 +22,7 @@ if [[ "$SO" == "1" ]]; then   # Gaining Access
     PAYLOAD=$SO
     # getInput "Localhost IP" "Type your LHOST IP" "191.330.165.7"
     # LHOST=$SI
-    echo $IP
+    echo $DI
     sleep 5
     # auto-run and set options
     expect -c '
