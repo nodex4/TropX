@@ -33,7 +33,7 @@ if [[ "$SO" == "1" ]]; then   # Gaining Access
     expect ">: "
     send -- "use 1\r"
     expect ">: "
-    send -- "use "$PAYLOAD"\r"
+    send -- "use '$PAYLOAD'\r"
     expect "]: "
     send -- "set LHOST '$IP'\r"
     expect "]: "
