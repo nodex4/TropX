@@ -23,6 +23,10 @@ if [[ "$SO" == "1" ]]; then   # Gaining Access
     # getInput "Localhost IP" "Type your LHOST IP" "191.330.165.7"
     # LHOST=$SI
     # auto-run and set options
+
+    echo "DI: $DI"
+    echo "IP: $IP"
+    sleep 3
     expect -c '
     set timeout -1
     spawn "veil"
