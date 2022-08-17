@@ -288,6 +288,16 @@ TropX has some default **functions** and **variables** to simplify the programmi
 
 ---
 
+* #### **attackPending**
+* With the `attackPending` function you inform the user with a message that the script/tool is in progress.
+
+  ```sh
+  attackPending
+  ```
+
+
+---
+
 * #### **changeWImode**
 * With the `changeWImode` function, you can easily change the mode of your Wireless Interface
   ```sh
