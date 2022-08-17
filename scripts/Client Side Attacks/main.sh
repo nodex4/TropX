@@ -54,8 +54,7 @@ if [[ "$SO" == "1" ]]; then   # Gaining Access
     mkdir "output/$NAME/"
     mv "$(find / -name ${NAME}.exe)" "output/$NAME/"
     mv "$(find / -name ${NAME}.rc)" "output/$NAME/"
-    sleep 5
-    attackPending
+    message "Success" "You can find all files in under \"TropX/output/$NAME\""
   fi
     
 elif [[ "$SO" == "2" ]]; then # Social Engineering

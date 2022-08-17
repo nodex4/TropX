@@ -1331,6 +1331,7 @@ function attackPending {
   echo " "
   echo -e "Log:" | foldText 4
   echo " "
+  read
   
 }
 
