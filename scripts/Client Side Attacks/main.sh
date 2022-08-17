@@ -49,6 +49,7 @@ if [[ "$SO" == "1" ]]; then   # Gaining Access
     send -- "\r"
     expect ">: "
     send -- "exit\r"
+    interact
     '
     mkdir "output/$NAME/"
     mv "$(find / -name ${NAME}.exe)" "output/$NAME/"
