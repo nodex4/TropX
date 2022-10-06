@@ -1,6 +1,7 @@
-Manage Mac & IP
-Manage Wireless Interface
-Network Hacking
-System
-Bad Usb
+System Management
+Wireless Exploits
+Physical Exploits
 Client Side Attacks
+Server Side Attacks
+Social Engineering
+Web Exploits

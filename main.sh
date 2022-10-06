@@ -393,6 +393,7 @@ function mainMenu() {
     echo -e "$PRIMARY(${SECONDARY}S$PRIMARY) Settings" | foldText 6
     echo -e "$PRIMARY(${SECONDARY}M$PRIMARY) Manage Scripts" | foldText 6
     echo -e "$PRIMARY(${SECONDARY}H$PRIMARY) Help" | foldText 6
+    echo -e "$PRIMARY(${SECONDARY}C$PRIMARY) Console" | foldText 6
     echo -e "$PRIMARY(${SECONDARY}N$PRIMARY) New Instance" | foldText 6
     echo "      ------------------------"
   
@@ -404,6 +405,8 @@ function mainMenu() {
     echo -e "$PRIMARY(${SECONDARY}M$PRIMARY) Manage Scripts" | foldText 6
     sleep 0.1
     echo -e "$PRIMARY(${SECONDARY}H$PRIMARY) Help" | foldText 6
+    sleep 0.1
+    echo -e "$PRIMARY(${SECONDARY}C$PRIMARY) Console" | foldText 6
     sleep 0.1
     echo -e "$PRIMARY(${SECONDARY}N$PRIMARY) New Instance" | foldText 6
     sleep 0.1
@@ -488,7 +491,7 @@ function mainMenu() {
   scriptCount=$scripts
   numberOptions=$(echo $(seq $scriptCount))
   
-  options=("s" "m" "h" "u" $numberOptions)
+  options=("s" "m" "h" "u" "c" $numberOptions)
   
   if [[ $(containsElement "$SS" "${options[@]}") != "0" ]]; then 
     until [[ "$result" == "0" ]] #unti the result is not an error
@@ -938,6 +941,12 @@ function mainMenu() {
   
   if [[ $SS == "n" ]]; then
     x-terminal-emulator -e "bash main.sh"
+  fi
+
+  if [[ $SS == "c" ]]; then
+    title
+    getInput "Console" "Run Custom Command" "iwconfig wlan0"
+    eval $SI
   fi
   
   

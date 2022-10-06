@@ -150,6 +150,23 @@ Learn how to use **TropX** efficiently and to it's fullest.
 ## First Steps
 Find out what to do first after <a href="#initiation">Starting up TropX</a>
 
+## Function Tree
+Currently available tools offered by tropx by default.
+
+```
+System Management
+├── Manage Mac & IP
+└── Manage Wireless Interface
+Wireless Exploits
+└── Wifi Cracking
+Physical Exploits
+Client Side Attacks
+Server Side Attacks
+Social Engineering
+```
+
+
+
 * Configure your wireless Interface in the settings tab
 <p align="right">(<a href="#top">back to top</a>)</p>
 
