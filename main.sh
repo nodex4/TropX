@@ -6,7 +6,7 @@
 # |___/\_, | |_|\_\___/\__,_\___| |_|/_\_\
 #      |__/                               
 #
-# Github: https://github.com/node4x/
+# GitHub: https://github.com/node4x/
 
 
 
