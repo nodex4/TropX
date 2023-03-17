@@ -47,7 +47,7 @@ sudo apt install python3 -y
 # # create update repo
 
 # if [ ! -d "TropX/" ]; then
-#   git clone https://github.com/troopek/TropX
+#   git clone https://github.com/NodeX4/TropX
 # fi
 
 directory=$(pwd)
@@ -64,19 +64,23 @@ fi
 if [ ! -f "settings.tropx" ]; then
   touch settings.tropx;
   echo "Wireless Interface : (wlan0) | wlan1 | mon0 | mon1
+Default Interface : (eth0) | eth1
 Animations : ON | MINIMAL | (OFF)
 Default Scripts : (SHOW) | HIDE
 Breadcrumbs : (ON) | OFF
+Header Logo : (SHOW) | HIDE
 Primary Color : (WHITE) | RED | BLUE | GREEN | CYAN | PINK | YELLOW | GRAY
 Secondary Color : RED | WHITE | (BLUE) | GREEN | CYAN | PINK | YELLOW | GRAY
 Text Folding : ON | (OFF)
-Developer Mode : ON | (OFF)" >> settings.tropx
+Auto Resize : (ON) | OFF
+Developer Mode : (ON) | OFF
+" >> settings.tropx
 fi
 
 ##########################
 #explain usage
 clear
-echo -e "$PRIMARY  Check https://github.com/troopek/TropX for usage and startup instructions! $SECONDARY"
+echo -e "$PRIMARY  Check https://github.com/NodeX4/TropX for usage and startup instructions! $SECONDARY"
 read -rsp $'  Press any key to continue...\n' -n1 key
 
 
