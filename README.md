@@ -455,7 +455,7 @@ Distributed under the Apache 2.0 License. See `LICENSE.txt` for more information
 <!-- CONTACT -->
 # Contact
 
-eugene.chicevic@gmail.com
+odeX4@gmail.com
 
 Project Link: [https://github.com/troopek/TropX](https://github.com/troopek/TropX)
 

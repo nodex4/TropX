@@ -44,11 +44,6 @@ sudo apt install expect
 sudo apt install os -y
 sudo apt install python3 -y
 
-# # create update repo
-
-# if [ ! -d "TropX/" ]; then
-#   git clone https://github.com/NodeX4/TropX
-# fi
 
 directory=$(pwd)
 ##########################
@@ -91,44 +86,31 @@ echo -e "$PRIMARY  You can change your Wireless Interface name in settings! $SEC
 read -rsp $'  Press any key to continue...\n' -n1 key
 
 
-# create desktop shortcut\
 clear
-echo -e "$PRIMARY  Would you like to create a shortcut for TropX? $SECONDARY(y/n)"
-read ans
-until [[ $ans == "y" ]] || [[ $ans == "n" ]]; do
-  clear
-  echo -e "$PRIMARY  Would you like to create a shortcut for TropX? $SECONDARY(y/n)"
-  read ans
-done
+savingLocation="/usr/share"
 
-if [[ $ans == "y" ]]; then
-  clear
-  echo -e "$PRIMARY  What is the directory of where you want the shortcut saved? (${SECONDARY}specify full path!${PRIMARY})$SECONDARY"
-  read desktop
-
-  echo "[Desktop Entry]
+echo "[Desktop Entry]
 Type=Application
 Terminal=true
 Name=TropX
 Comment=Run TropX
 Icon="$directory"/images/logo.png
-Exec=bash -c 'cd "$directory"; bash "$directory"/main.sh'" > "$desktop/TropX.desktop"
-  chmod +x "$desktop/TropX.desktop"
-  gio set "$desktop/TropX.desktop" metadata::trusted true
-
-fi
+Exec=bash -c 'cd "$directory"; bash "$directory"/main.sh'" > "$savingLocation/TropX.savingLocation"
+chmod +x "$savingLocation/TropX.savingLocation"
+gio set "$savingLocation/TropX.savingLocation" metadata::trusted true
 
 
 
-  echo "[Desktop Entry]
+
+echo "[Desktop Entry]
 Type=Application
 Terminal=true
 Name=TropX
 Comment=Run TropX
 Icon="$directory"/images/logo.png
-Exec=bash -c 'cd "$directory"; bash "$directory"/main.sh'" > "/usr/share/applications/TropX.desktop"
-  chmod +x "/usr/share/applications/TropX.desktop"
-  gio set "/usr/share/applications/TropX.desktop" metadata::trusted true
+Exec=bash -c 'cd "$directory"; bash "$directory"/main.sh'" > "/usr/share/applications/TropX.savingLocation"
+chmod +x "/usr/share/applications/TropX.savingLocation"
+gio set "/usr/share/applications/TropX.savingLocation" metadata::trusted true
 
 
 
@@ -137,4 +119,4 @@ clear
 echo -e "$PRIMARY  Setup Complete $SECONDARY"
 read -rsp $'  Press any key to run TropX...\n' -n1 key
 
-# bash main.sh
+bash main.sh

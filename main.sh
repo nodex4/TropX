@@ -87,19 +87,19 @@ function end() {
     clear
     if [[ "$animations" == "ON" ]]; then
       echo " "
-      sleep 01
+      sleep 1
       echo -e "  Thanks for using"
       echo -e "  ${SECONDARY}TropX${PRIMARY}" | pv -qL 15
       echo -e "  ┌────────────────────────────────────────────
-  └─ ${SECONDARY}github.com/troopek/TropX"
-    sleep 01
+  └─ ${SECONDARY}github.com/NodeX4/TropX"
+    sleep 1
       echo " "
     else
       echo " "
       
       echo -e "  Thanks for using ${SECONDARY}TropX${PRIMARY}
   ┌────────────────────────────────────────────
-  └─ ${SECONDARY}github.com/troopek/TropX"
+  └─ ${SECONDARY}github.com/NodeX4/TropX"
       echo " "
     fi
   
@@ -231,7 +231,7 @@ function title() {
     else
       echo -e "$tropx"
       echo -e -n "$PRIMARY                                       "
-      echo -e "By$SECONDARY Troopek  "
+      echo -e "By$SECONDARY NodeX4  "
       echo " "
     fi
     
@@ -350,7 +350,7 @@ function niceTitle() {
       echo -e "$tropx"
       
       echo -e -n "$PRIMARY                                     "
-      echo -e "By$SECONDARY Troopek  " | pv -qL 15
+      echo -e "By$SECONDARY NodeX4  " | pv -qL 15
       echo " "
       sleep 0.1
     fi
@@ -370,10 +370,6 @@ function mainMenu() {
   checkSettings "Text Folding"; textfolding=$value;
   checkSettings "Animations"; animations=$value
   current="Main Menu"
-  
-  
-  
-  
 
   
   if [[ "$1" == "error" ]] || [[ "$1" == "back" ]] || [[ $animations == "OFF" ]]; then
@@ -409,10 +405,7 @@ function mainMenu() {
     sleep 0.1
     echo "      ------------------------"
   
-  
   fi
-  
-  
   
   
   
@@ -422,7 +415,7 @@ function mainMenu() {
   scripts=$(expr $default_scripts + $custom_scripts)
   
   # This is commented as both scriptName files have a blank line at the bottom now
-  # default_scripts=$((default_scripts+1))
+  default_scripts=$((default_scripts+1))
   export default_scripts
   
   if [[ "$1" == "error" ]] || [[ "$1" == "back" ]] || [[ $animations == "OFF" ]]; then
@@ -543,7 +536,7 @@ function mainMenu() {
             boiler=''
           ;;
         "3") #github
-          getInput "Github Link" "Copy the link of the repo from the browser" "https://github.com/troopek/TropX"
+          getInput "Github Link" "Copy the link of the repo from the browser" "https://github.com/NodeX4/TropX"
           link="$SI"
       
           # selectOptions "Main Language of this Script/ Tool" "Main Language" "Select Valid Script Language" "Bash" "Python" 
@@ -627,8 +620,15 @@ function mainMenu() {
       
           esac
     
-      
-          echo "$si1" | sed -e "s/\b\(.\)/\u\1/g " >> "script_names/defaultScripts.txt"
+          if [ -s "script_names/defaultScripts.txt" ]
+          then
+              printf "\n%s" "$si1" | sed -e "s/\b\(.\)/\u\1/g" >> "script_names/defaultScripts.txt"
+          else
+              printf "%s" "$si1" | sed -e "s/\b\(.\)/\u\1/g" >> "script_names/defaultScripts.txt"
+          fi
+          
+
+
         
           Message="To add files or edit this script, go to scripts/"$scriptToEdit" and commit your changes there!"
           message "Message" "$Message"
@@ -666,7 +666,7 @@ function mainMenu() {
         boiler=''
       ;;
     "3") #github
-      getInput "Github Link" "Copy the link of the repo from the browser" "https://github.com/troopek/TropX"
+      getInput "Github Link" "Copy the link of the repo from the browser" "https://github.com/NodeX4/TropX"
       link="$SI"
   
       # selectOptions "Main Language of this Script/ Tool" "Main Language" "Select Valid Script Language" "Bash" "Python" 
@@ -749,9 +749,14 @@ function mainMenu() {
           ;;
   
       esac
-  
-  
-      echo "$si1" | sed -e "s/\b\(.\)/\u\1/g " >> "script_names/customScripts.txt"
+      
+      if [ -s "script_names/customScripts.txt" ]
+      then
+          printf "\n%s" "$si1" | sed -e "s/\b\(.\)/\u\1/g" >> "script_names/customScripts.txt"
+      else
+          printf "%s" "$si1" | sed -e "s/\b\(.\)/\u\1/g" >> "script_names/customScripts.txt"
+      fi
+      
     
       Message="To edit the selected script or add additional files in it's file tree, please navigate to custom_scripts/"$scriptToEdit" and commit your changes there!"
       message "Message" "$Message"
@@ -867,9 +872,26 @@ function mainMenu() {
       
           scriptToDelete=$(sed "${SO}!d" script_names/customScripts.txt)
       
-          grep -v "$scriptToDelete" script_names/customScripts.txt > script_names/customScripts.tmp
-          mv script_names/customScripts.tmp script_names/customScripts.txt
+          # grep -v "$scriptToDelete" script_names/customScripts.txt > script_names/customScripts.tmp
+          # mv script_names/customScripts.tmp script_names/customScripts.txt
+
+
+
+
+
+
+          # sed -i "/^$scriptToDelete$/d; /^$/d" script_names/customScripts.txt
+          # sed -i '/^$/d' "script_names/customScripts.txt"
+sed -i "/^$scriptToDelete$/d; /^$/d; /^\s*$/d; s/\n//g" script_names/customScripts.txt
+# maybe check if scripttoDelete is the last line, and then after removing it cut the last line seperately.
+
+
           
+          # grep -n -w "$scriptToDelete" script_names/customScripts.txt | cut -d ":" -f 1 | xargs -I {} sed -i "{}d" script_names/customScripts.txt
+
+
+
+
       
       
           cd custom_scripts
@@ -931,7 +953,7 @@ function mainMenu() {
   
   if [[ $SS == "h" ]]; then
     current="Help"
-    helpMessage="To learn how to efficiently use ${SECONDARY}TropX${PRIMARY}, please refer to it's github:\n${SECONDARY}https://github.com/troopek/TropX${PRIMARY}"
+    helpMessage="To learn how to efficiently use ${SECONDARY}TropX${PRIMARY}, please refer to it's github:\n${SECONDARY}https://github.com/NodeX4/TropX${PRIMARY}"
     message "Message" "$helpMessage"
   fi
   
@@ -1337,6 +1359,7 @@ function attackPending {
 function reboot {
   Message="TropX will now restart so your changes take effect."
   message "Message" "$Message"
+  clear
   exec bash main.sh
 }
 
