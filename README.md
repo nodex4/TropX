@@ -7,7 +7,7 @@
 [![MIT License][license-shield]][license-url]
 
 
-<!-- PROJECT LOGO -->
+<!-- PROJECT LOGO BELOW -->
 <br />
 <div align="center">
   <a href="https://github.com/troopek/TropX">
