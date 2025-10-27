@@ -17,7 +17,7 @@
 <h3 align="center">TropX</h3>
 
   <p align="center">
-    The best penetration testing and tech tools unified into one beatiful command line interface!
+    Heyo gope you enjoy
     <br />
     ·
     <a href="https://github.com/troopek/TropX/issues/new">Report Bug</a>
